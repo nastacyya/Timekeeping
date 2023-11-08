@@ -1,0 +1,20 @@
+[{
+  "name": "strādnieks",
+  "value": 1
+},
+{
+  "name": "brigadieris",
+  "value": 2
+},
+{
+  "name": "vadības_novērotāji",
+  "value": 3
+},
+{
+  "name": "vadības_redaktori",
+  "value": 4
+},
+{
+  "name": "administrators",
+  "value": 5
+}]

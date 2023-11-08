@@ -1,0 +1,1270 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700&display=swap');
+
+:root {
+    --bg-purple: #211236;
+    --bg-violet: #bd7dff;;
+    --bg-gray: #cfcbcbb0;
+    --bg-red: #ff3535;
+    --outline-gray: #aaa0b2;
+    --initial: #FFF url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAKUlEQVQYlWNgwAT/sYhhKPiPT+F/LJgEsHv37v+EMGkmkuImoh2NoQAANlcun/q4OoYAAAAASUVORK5CYII=) no-repeat center center;
+
+    --absence-1:#fb8888; 
+    --absence-1-1: #fed7d8;
+    --absence-2: #b1ddf9;
+    --absence-2-2: #e0f1fd;
+    --absence-3: #b9a69b ;
+    --absence-3-3: #dcd3cd;
+    --absence-4: #e38efa;
+    --absence-4-4: #f6d9fd ; 
+    --absence-5: #a3c88c;
+    --absence-5-5: #d1e9c3 ;
+    --absence-6: #829ae1;
+    --absence-6-6: #d5ddf5;
+    --absence-7: #beb1c1;
+    --absence-7-7: #dfd8e0;
+    --absence-8: #fecd33;
+    --absence-8-8: #ffe699;
+    --absence-9: #df7590;
+    --absence-9-9: #f4d1da;
+    --absence-10: #a6d2ca;
+    --absence-10-10: #daf0eb ;
+    --absence-11: #ff9d4f;
+    --absence-11-11: #ffcea7;
+    --absence-12: #939b65;
+    --absence-12-12: #c9ceb1;
+    --absence-13: #ffcfb4;
+    --absence-13-13: #ffebe0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+body {
+    background: url(/static/img/gray2.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.side-nav {
+    height: 100%; 
+    width: 18%; 
+    position: fixed;
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    background-color: white;
+    overflow-x: scroll; 
+    box-shadow: 10px 0 10px rgb(0, 0, 0, .2);
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+/* Hiding scrollbar for Chrome, Safari and Opera */
+.side-nav::-webkit-scrollbar, body::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hiding scrollbar for IE, Edge and Firefox */
+.side-nav, body {
+  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+
+.side-nav .logout-div{
+    padding: 15px;
+}
+
+.sub-logout {
+    display: flex;
+    flex-direction: row;
+}
+
+.sub-logout i, p {
+    transition: color 0.3s; /* Adding transition for smooth color change */
+}
+.sub-logout i {
+    font-size: 22px;
+}
+
+.sub-logout p{
+    color: var(--bg-purple);
+    font-weight: 600;
+    padding: 3px 0 0 7px;
+}
+
+.sub-logout i:hover,
+.sub-logout p:hover {
+    color: var(--bg-violet);
+    cursor: pointer;
+}
+
+.myCalendar {
+    display: none;
+    flex-direction: row;
+    padding: 20px 0 20px 20px;
+}
+
+.myCalendar p{
+    color: var(--bg-purple);
+    font-weight: 600;
+    padding: 3px 0 0 7px;
+}
+
+.myCalendar i {
+    font-size: 22px;
+} 
+
+.myCalendar i:hover, .myCalendar p:hover {
+    color: var(--bg-violet);
+    cursor: pointer;
+}
+
+.myCalendar i, .myCalendar p {
+    transition: color 0.3s; /* Adding transition for smooth color change */
+}
+.profile-img {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 10px;
+}
+
+.profile-img #welcome{
+    font-size: 23px;
+    text-align: center;
+    font-weight: 600;
+}
+
+
+/* The list of employees */
+/* For 1st and 2nd roles */
+
+.tree-view h3 {
+    padding: 20px 30px;
+    border-bottom: 3px solid transparent;
+    border-top: 3px solid transparent;
+    border-image: linear-gradient(to right,var(--bg-purple), var(--bg-violet), rgba(56,2,155,0));
+    border-image-slice: 1;
+    width: 98%;
+    color: var(--bg-purple);
+}
+
+.tree-view ul {
+    padding: 0 30px;
+}
+
+.tree-view ul li {
+    list-style: none;
+    padding-top: 24px;
+    font-weight: 500;
+}
+
+.tree-view .hover-design:hover {
+    color: var(--bg-violet);
+    cursor: pointer;
+}
+  
+.tree-view .employee {
+    font-weight: 600;
+}
+
+.tree-view .employee:hover {
+    color: black !important;
+}
+
+/* For 3rd and 4th roles */
+.dropdown {
+    padding-left: 20px;  
+    height: 50px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.dropdown:hover .sub-btn{
+    font-weight: 600;
+}
+
+.dropdown::before,
+.dropdown::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 98%;
+  height: 3px;
+  background-image: linear-gradient(to right,var(--bg-purple), var(--bg-violet), rgba(56,2,155,0)); /* Adjust colors as per your preference */
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+.dropdown::before {
+  top: 0;
+  transform-origin: top left;
+}
+
+.dropdown::after {
+  bottom: 0;
+  transform-origin: bottom left;
+}
+
+.dropdown:hover::before,
+.dropdown:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.disable-hover-effects::before,
+.disable-hover-effects::after {
+  transform-origin: none !important; /* Use !important to ensure it overrides existing styles */
+  background-image: none;
+}
+
+.disable-hover-effects {
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-image: linear-gradient(to right,var(--bg-purple), var(--bg-violet), rgba(56,2,155,0));
+    border-image-slice: 1;
+    width: 98%;
+}
+
+.tree-view .sub-menu a {
+    text-decoration: none;
+    color: var(--bg-purple);
+    display: block;
+    cursor: default;
+}
+.tree-view .sub-menu a:first-of-type {
+    padding-top: 5px;
+}
+.tree-view .sub-menu a:hover{
+    cursor: pointer;
+    color: var(--bg-violet);
+}
+
+.tree-view i {  /* Arrow */
+    right: 0;
+    position: absolute;
+    margin-right: 20px;
+    padding-top: 2px;
+}
+
+.tree-view i.rotate {
+    transform: rotate(90deg);
+    margin-right: 13px !important;
+    margin-top: 2px !important;
+}
+
+.sub-menu {
+    line-height: 50px;
+    padding-left: 30px;
+    display: none;
+    position: absolute;
+    top: 100%; 
+    left: 0; 
+    width: 100%; 
+}
+
+/* Calendar */
+.calendar-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 95vh;
+    float: right;
+}
+
+.calendarAndColorLegend {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    padding: 60px 40px 30px;
+}
+
+.color-legend {
+    width: 100%;
+    padding-top: 30px;
+}
+
+.colors-ul {
+    list-style: none;
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.colors-ul li {
+    display: flex;
+    flex-direction: row;
+    margin: 0 12px 10px 0;
+}
+
+.colors-ul li p {
+    padding-left: 5px;
+}
+
+.wrapper {
+    width: 100%;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}
+
+.wrapper header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px 25px 10px;
+    user-select: none;
+}
+
+.wrapper header .current-month {
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.wrapper header .icons span {
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    cursor: pointer;
+    border-radius: 50%;
+    color: #878787;
+    font-size: 1.9rem;
+    text-align: center;
+}
+
+.wrapper header .icons span:hover{
+    background: var(--bg-gray);
+}
+
+#next {
+    padding-left: 2px;
+}
+#prev {
+    padding-right: 2px;
+}
+
+.calendar {
+    padding: 15px 15px 10px;
+    margin-top: 15px;
+}
+.calendar ul {
+    display: flex;
+    list-style: none;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.calendar ul li {
+    width: calc(100%/7);
+    position: relative;
+    font-size: 20px;
+    user-select: none;
+}
+
+.calendar .weeks {
+    font-weight: 600;
+    padding-bottom: 30px;
+}
+
+.calendar .days {
+    margin-bottom: 20px;
+}
+
+.calendar .days li{
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    position: relative;
+    font-size: 20px;
+    user-select: none;
+    margin: 8px 0;
+}
+
+.days li::before {
+    position: absolute;
+    content: "";
+    height: 80px;
+    width: 80px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    border-radius: 50%;
+}
+
+.days li.inactive {
+    color: #aaa;
+}
+
+.days li.active {
+    color: var(--bg-purple);
+    font-weight: 500;
+}
+
+.days li.active::before {
+    border: 3px dashed var(--bg-purple);
+    height: 71px;
+    width: 71px;
+}
+.days.hoverable li:not(.inactive):hover{
+    cursor: pointer;
+}
+.days.hoverable li:not([class^="startenddate-"]):not([class^="absence-"]):not([class^="start-"]):not([class^="end-"]):not(.inactive):not(.active):hover::before {
+    cursor: pointer;
+    background-color: #e1dcdc;
+}
+
+.selected-start, .selected-end, .selected-range, .matching-dates   {
+    color: white;
+    cursor: pointer;
+} 
+
+.selected-end {
+    background-image: linear-gradient(to right, var(--bg-violet) 50%, transparent 50%) !important; 
+}
+
+.selected-range  {
+    background: var(--bg-violet) !important;
+}
+
+.selected-start::before,
+.selected-end::before,
+.selected-range::before,
+.matching-dates::before {
+    background: var(--bg-violet) !important; 
+} 
+
+
+/* Form container forms and buttons */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    padding: 0 80px;
+    justify-content: center;
+    align-items: center;
+    margin-top: -30px;
+}
+
+.buttons-div {
+    width: 100%;
+}
+.form-container button {
+    font-size: 16px;
+}
+.form-container .add-btn, .delete-btn, .edit-btn, .delete-absence-btn, .save-btn, .update-btn {
+    width: 100%;
+    padding: 10px;
+    border-radius: 0.7em;
+    border: none;
+    background-color: var(--bg-violet);
+    color: white;
+    font-weight: 500;
+    margin-top: 15px;
+}
+
+.add-btn:hover,
+.delete-btn:hover,
+.edit-btn:hover, 
+.update-btn:hover,
+.save-btn:hover {
+    background-color: #a754fb;
+    cursor: pointer;
+} 
+
+.delete-absence-btn {
+    display: none;
+    background-color: rgb(251, 142, 142);
+}
+
+.delete-absence-btn:hover {
+    background-color: #f83d3d;
+    cursor: pointer;
+}
+
+.date-form .save-btn {
+    margin-bottom: 20px;
+}
+
+.absence_data .update-btn {
+    display: none;
+    margin: 15px 0 10px !important;
+}
+
+.date-form, .absence_data {
+    display: none;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 15px 30px rgb(0, 0, 0, .2);
+    justify-content: center;
+}
+
+.absence_data {
+    padding: 15px 20px 10px;
+}
+
+.date-form {
+    padding: 0 20px;
+}
+
+.date-form label span {
+    color: #ff3535;
+    margin-right: 1px;
+}
+
+.date-form label {
+    padding: 15px 0 5px;
+    font-weight: 600;
+}
+
+.date-form label#add_note {
+    padding-left: 8px;
+}
+
+.date-form .custom-select, input, textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 0.7em;
+    background-color: rgb(232, 231, 231);
+    border: none;
+    outline-color: var(--bg-gray);
+}
+
+.date-form .custom-select, .absence_select {
+    padding: 0 !important;
+    position: relative;
+}
+  
+.selected-option {
+    display: flex;
+    cursor: pointer;
+    font-size: 14px;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
+    padding: 13px;
+}
+.absence_type {
+    width: 100%;
+    box-sizing: border-box; 
+    display: flex;
+    font-size: 14px;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
+    cursor: default;
+    padding: 10px;
+}
+
+.absence_type #invisible {
+    visibility: hidden;
+}
+
+.selected-option, .options, .absences_list {
+    width: 100%;
+    box-sizing: border-box; 
+} 
+
+#arrow-icon {
+    margin-left: 93%;
+    font-size: 20px;
+}
+
+#selected-arrow {
+    font-size: 20px;
+}
+
+.options, .absences_list {
+    list-style: none;
+    display: none;
+    position: absolute;
+    border-radius: 0.7em;
+    background: rgb(231, 231, 231);
+    margin-top: 7px;
+    z-index: 1;
+}
+
+.options li, .absences_list li {
+    padding: 10px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.options li:hover, .absences_list li:hover {
+    background-color: #f9f9f9;
+}
+
+.options p, .absences_list p {
+    padding-left: 32px;
+}
+
+.selected-option p, .absence_type p{
+    padding-left: 32px;
+}
+
+.date-form textarea {
+    margin-bottom: 10px;
+}
+
+.enter-value {
+    margin-top: 15px;
+    display: none;
+    flex-direction: row;
+    margin-bottom: -5px;
+    align-items: center;
+}
+
+.enter-value label {
+    padding: 0;
+    padding-right: 10px !important;
+}
+
+.enter-value input, .value-div input {
+    width: 70px !important;
+    text-align: center;
+}
+.value-div label {
+    padding-right: 10px;
+}
+#add-note {
+    height: 80px;
+}
+
+/* SHow the info about absence */
+.show-data, .add-data {
+    width: 100%;
+}
+.absence_data {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 15px 30px rgb(0, 0, 0, .2);
+    justify-content: center;
+}
+
+.absence_data h3 {
+    margin-bottom: 20px;
+}
+
+.absence_data label {
+    padding-bottom: 5px;
+    font-weight: 600;
+}
+
+.absence_data input, .absence_select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 0.7em;
+    background-color: rgb(232, 231, 231);
+    border: none;
+    outline: none;
+    margin-bottom: 10px;
+    cursor: default;
+}
+
+/* Spin Buttons modified */
+input[type="number"]::-webkit-outer-spin-button, 
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    background: var(--initial);
+    width: 1em;
+    border-left: 1px solid #BBB;
+    opacity: .5; /* shows Spin Buttons per default (Chrome >= 39) */
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+input[type="number"]::-webkit-inner-spin-button:hover,
+input[type="number"]::-webkit-inner-spin-button:active{
+    box-shadow: 0 0 2px rgb(37, 37, 37, 0.5);
+    opacity: .8;
+}
+
+.absence_data .notes-div{
+    display: none;
+} 
+.absence_data .notes-div textarea {
+   margin-top: 5px;
+   outline: none;
+}
+.notes-div textarea {
+    margin-bottom: 10px;
+}
+
+.notes-div textarea:hover,
+.value-div input:hover {
+    cursor: default;
+}
+
+.value-div {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+}
+
+/* Absences dates highlighting on the calendar */
+[class^="start-"], [class^="absence-"], [class^="end-"], [class^="startenddate-"],   
+[class^="edit-start-"], [class^="edit-absence-"], [class^="edit-end-"], [class^="edit-startenddate-"]   {
+    color: white !important;
+    cursor: pointer;
+}
+[class^="edit-start-"]::before, [class^="edit-end-"]::before, [class^="edit-startenddate-"]::before  {
+    height: 76px !important;
+    width: 76px !important;
+}
+
+[class^="color-circle-"] {
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+}
+
+[class^="remove-start-"], [class^="remove-end-"], [class^="remove-startenddate-"], [class^="remove-absence-"] {
+    color: white;
+}
+
+.info-text {
+    display: flex;
+    flex-direction: row;
+    background-color: #FFF;
+    cursor: default;
+    border-radius: 20px;
+    border: 2px solid rgb(255,255,255, .2);
+    box-shadow: 0 0 10px rgb(0, 0, 0, .2);
+    height: 80px;
+    padding: 15px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.info-text i {
+    font-size: 29px;
+    padding-right: 40px;
+    color: #393838;
+    padding-left: 10px;
+}
+
+.info-text p  {
+    text-align: left;
+    font-size: 16px;
+    font-weight: 500;
+    color: #393838;
+}
+
+.error p, .errortxt p {
+    color: #ff3535 ;
+    font-weight: 500;
+    font-size: 14px;
+    margin-left: 20px;
+}
+.error, .errortxt {
+    flex-direction: row;
+    align-items: center;
+    display: none;
+}
+
+.error {
+    padding-top: 5px;
+}
+
+.error i, .errortxt i {
+    color: var(--bg-red);
+    font-size: 34px;
+    margin-left: 15px;
+}
+
+.errortxt i {
+    margin-left: 20px !important;
+}
+.errortxt p {
+    margin-left: 28px !important;
+}
+.arcstart {
+    position: absolute;
+    width: calc(100% - ((100% - 80px) / 2));
+    height: 80px;
+    background: transparent;
+    border-radius: 46% 0 0 46%;
+    border: 3px solid var(--outline-gray);
+    border-right: none;
+    top: 0;
+    right: 0;
+}
+.arcend {
+    position: absolute;
+    width: calc(100% - ((100% - 80px) / 2));
+    height: 80px;
+    background: transparent;
+    border-radius: 0 46% 46% 0;
+    border: 3px solid var(--outline-gray);
+    border-left: none;
+    top: 0;
+    left: 0;
+}
+
+.menu-box {
+    background-color: white;
+    box-shadow: 5px 5px 5px rgb(0, 0, 0, .2);
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    width: 50px;
+    height: 40px; 
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+}
+
+.menu-box i {
+    font-size: 30px;
+}
+
+.side-nav.active {
+    transform: translateX(0); /* Slide the side-nav in when it has the "active" class */
+}
+
+.menu-box.active {
+    margin-left: 25%;
+    z-index: 3;
+}
+.selected-option i, .absence_type i {
+    padding-left: 6px;
+ 
+}
+
+
+
+@media only screen and (min-width: 1920px) {
+    #arrow-icon {
+        margin-left: 95%;
+    }
+} 
+@media only screen and (max-width: 1740px) {
+    .form-container {
+        padding: 0 45px !important;
+    }
+} 
+
+@media only screen and (max-width: 1560px) {
+    .profile-img #welcome {
+        font-size: 21px;
+    }
+    .calendarAndColorLegend {
+        padding: 30px 20px 10px 40px;
+    }
+    .calendar .days li {
+        font-size: 18px;
+        height: 60px;
+    }
+    .calendar {
+        padding: 0 10px !important;
+    }
+    .form-container {
+        padding: 0 40px !important;
+    }
+    [class^="start-"]::before, [class^="end-"]::before, [class^="startenddate-"]::before {
+        height: 60px !important;
+        width: 60px !important;
+    }
+    [class^="edit-start-"]::before, [class^="edit-end-"]::before, [class^="edit-startenddate-"]::before  {
+        height: 58px !important;
+        width: 58px !important;
+    }
+    .calendar .days li::before{
+        height: 60px;
+        width: 60px;
+    }
+    .days li.active::before {
+        height: 51px !important;
+        width: 51px !important;
+    }
+    .info-text p, .form-container button {
+        font-size: 15px;
+    }
+    .options li, .absences_list li, .absence_type, .selected-option p, .error p, .errortxt p {
+        font-size: 13px;
+    }
+    .delete-absence-btn {
+        margin-top: 15px;
+    }
+    .arcstart, .arcend {
+        height: 60px;
+        width: calc(100% - ((100% - 60px) / 2));
+    }
+    .side-nav {
+        width: 20%;
+    }
+    .error i, .errortxt i {
+        font-size: 26px;
+    }
+}
+
+@media only screen and (max-width: 1440px) {
+    .profile-img #welcome {
+        font-size: 19px;
+    }
+    .side-nav {
+        width: 20%;
+    } 
+}
+
+@media only screen and (max-width: 1330px) {
+    .side-nav {
+        width: 21%;
+    }
+    .menu-box.active {
+        margin-left: 21%;
+    }
+    .wrapper header .current-month  {
+        font-size: 24px;
+    }
+    .calendar .weeks li {
+        font-size: 19px;
+    }
+    .profile-img #welcome {
+        font-size: 18px;
+    }
+    .tree-view h3 {
+        font-size: 17px;
+        padding: 15px 20px;
+    }
+    #exit, .tree-view li, .myCalendar p, .absence_data label,  .date-form label{
+        font-size: 15px;
+    }
+    #exit, .myCalendar p{
+        padding-top: 2px !important;
+    }
+    .info-text p {
+        font-size: 14px;
+    }
+    .info-text {
+        padding: 10px;
+    }
+    .absence_data h3 {
+        font-size: 17px;
+    }
+    .absence_data input, .absence_type, .selected-option p, .date-form input, textarea  {
+        font-size: 13px;
+    }
+    .delete-absence-btn {
+        margin-top: 13px;
+    }
+    .selected-option {
+        padding: 10px;
+    }
+    .form-container {
+        padding: 0 40px 0 25px!important;
+    }
+}
+@media only screen and (min-width: 1220px) {
+    .side-nav {
+        display: block !important;
+    }
+}
+@media only screen and (max-width: 1220px) {
+    .profile-img #welcome {
+        font-size: 20px;
+    }
+    .side-nav {
+        z-index: 2;
+        width: 25%;
+        display: none;
+        border-top-right-radius: 0;
+    }
+    .menu-box {
+        display: flex;
+    }
+    .menu-box.active {
+        margin-left: 25%;
+    }
+    .calendar-div, .calendarAndVersion {
+        width: 100% !important;
+    }
+    .calendarAndColorLegend {
+        width: 60%;
+    }
+    .form-container {
+        width: 40%;
+    }
+}
+
+@media only screen and (max-width: 980px) {
+    .wrapper header .current-month {
+        font-size: 23px;
+    }
+    .calendar .weeks li{
+        font-size: 17px;
+    }
+    .menu-box {
+        display: flex;
+    }
+    .profile-img {
+        padding: 30px 10px;
+    }
+    .info-text p {
+        font-size: 13px;
+    }
+    .calendar .days li {
+        font-size: 16px;
+        height: 50px;
+    }
+    .calendar .days li::before{
+        height: 50px;
+        width: 50px;
+    }
+    [class^="start-"]::before, [class^="end-"]::before, [class^="startenddate-"]::before {
+        height: 50px !important;
+        width: 50px !important;
+    }
+    [class^="edit-start-"]::before, [class^="edit-end-"]::before, [class^="edit-startenddate-"]::before  {
+        height: 48px !important;
+        width: 48px !important;
+    }
+    .days li.active::before {
+        height: 41px !important;
+        width: 41px !important;
+    }
+    .calendar .weeks {
+        padding-bottom: 15px;
+    }
+    .tree-view h3 {
+        font-size: 16px;
+    }
+    .arcstart, .arcend {
+        height: 50px;
+        width: calc(100% - ((100% - 50px) / 2));
+    }
+    .side-nav  {
+        width: 30%;
+    }
+    .menu-box.active {
+        margin-left: 30%;
+    }
+    .absences_list li, .options li {
+        font-size: 12px;
+        padding: 8px;
+    }
+    .form-container {
+        padding: 20px 40px 10px 10px !important;
+    }
+    .form-container .add-btn, .delete-btn, .edit-btn, .save-btn {
+        margin-top: 15px;
+    }
+    .info-text {
+        margin-bottom: 15px;
+    }
+    .selected-option p, .absence_type p{
+        font-size: 12px;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .form-container button {
+        font-size: 14px;
+    }
+    .side-nav {
+        width: 33%;
+    }
+    .menu-box.active {
+        margin-left: 33%;
+    }
+    .wrapper header .current-month {
+        font-size: 25px;
+    }
+    .calendar .weeks li{
+        font-size: 19px;
+    }
+    .calendar-div {
+        flex-direction: column;
+    }
+    .calendarAndColorLegend  {
+        width: 100%;
+        padding: 45px 40px 40px!important;
+    }
+    .calendar .days li {
+        font-size: 18px;
+        height: 60px;
+    }
+    .calendar .days li::before{
+        height: 60px;
+        width: 60px;
+    }
+    [class^="start-"]::before, [class^="end-"]::before, [class^="startenddate-"]::before {
+        height: 60px !important;
+        width: 60px !important;
+    }
+    [class^="edit-start-"]::before, [class^="edit-end-"]::before, [class^="edit-startenddate-"]::before  {
+        height: 58px !important;
+        width: 58px !important;
+    }
+    .days li.active::before {
+        height: 51px !important;
+        width: 51px !important;
+    }
+
+    .form-container {
+        flex-direction: row;
+        margin: 0;
+        padding: 0 40px 40px!important;
+        width: 100%;
+    }
+    .show-data {
+        margin-right: -50%;
+    }
+    
+    .buttons-div {
+        width: 60%;
+    }
+    .arcstart, .arcend {
+        height: 60px;
+        width: calc(100% - ((100% - 60px) / 2));
+    }
+    .info-text i{
+        padding-right: 16px;
+    }
+    .info-text p{
+        font-size: 12px;
+    }
+    .add-data {
+        margin-right: 40px;
+        margin-left: -10%;
+    }
+}
+@media only screen and (max-width: 765px) {
+    .side-nav {
+        width: 40%;
+    }
+    .menu-box.active {
+        margin-left: 40%;
+    }
+}
+@media only screen and (max-width: 672px) {
+    .profile-img #welcome {
+        font-size: 18px;
+    }
+    .form-container button {
+        font-size: 13px;
+    }
+    .info-text p {
+        font-size: 11px;
+    }
+    .info-text {
+        padding-right: 5px;
+    }
+    .info-text i{
+        font-size: 25px;
+        padding-left: 0;
+    }
+    .menu-box.active {
+        margin-left: 42%;
+    }
+    .side-nav {
+        width: 42%;
+    }
+    #arrow-icon {
+        margin-left: 90%;
+    }
+}
+@media only screen and (max-width: 604px) {
+    .menu-box.active {
+        margin-left: 50%;
+    }
+    .side-nav {
+        width: 50%;
+    }
+    .wrapper header .current-month {
+        font-size: 21px;
+    }
+    .wrapper header {
+        padding: 20px 25px 6px;
+    }
+    .calendar .weeks li, .absence_data h3{
+        font-size: 16px;
+    }
+    .form-container button {
+        font-size: 12px;
+    }
+    .calendar .days li {
+        font-size: 15px;
+        height: 45px;
+        margin: 5px 0;
+    }
+    .calendar .days li::before{
+        height: 45px;
+        width: 45px;
+    }
+    [class^="start-"]::before, [class^="end-"]::before, [class^="startenddate-"]::before {
+        height: 45px !important;
+        width: 45px !important;
+    }
+    [class^="edit-start-"]::before, [class^="edit-end-"]::before, [class^="edit-startenddate-"]::before  {
+        height: 43px !important;
+        width: 43px !important;
+    }
+    .days li.active::before {
+        height: 36px !important;
+        width: 36px !important;
+    }
+    .form-container input, textarea, .absence_type{
+        font-size: 12px;
+    }
+    .arcstart, .arcend {
+        height: 45px;
+        width: calc(100% - ((100% - 45px) / 2));
+    }
+    .add-data {
+        margin-right: 30px;
+    }
+    .value-div input {
+        margin-top: 5px;
+    }
+    .date-form label, .absence_data label {
+        font-size: 14px;
+    }
+
+}
+     
+.calendarAndVersion {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    min-height: 100vh;
+    float: right;
+}
+.version-div {
+    display: flex;
+    flex-direction: column;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    font-size: 13px;
+    color:#707070;
+}
+
+.version-div p{
+    margin-left: auto;
+    padding-bottom: 5px;
+}

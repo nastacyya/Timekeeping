@@ -1,0 +1,40 @@
+[{
+  "_id": 1,
+  "name": "Iepakošanas nodaļa",
+  "value": 1
+},
+{
+  "_id": 2,
+  "name": "IT nodaļa",
+  "value": 2
+},
+{
+  "_id": 3,
+  "name": "Loģistikas nodaļa",
+  "value": 3
+},
+{
+  "_id": 4,
+  "name": "Lodēšanas nodaļa",
+  "value": 4
+},
+{
+  "_id": 5,
+  "name": "Montāžas nodaļa",
+  "value": 5
+},
+{
+  "_id": 6,
+  "name": "Ekspluatācijas nodaļa",
+  "value": 6
+},
+{
+  "_id": 7,
+  "name": "Mehāniskā nodaļa",
+  "value": 7
+},
+{
+  "_id": 8,
+  "name": "Noliktavas nodaļa",
+  "value": 8
+}]

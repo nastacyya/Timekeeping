@@ -1,0 +1,65 @@
+[{
+  "name": "ikgadējais apmaksātais atvaļinājums",
+  "value": 1,
+  "short_name": "ia"
+},
+{
+  "name": "bezalgas atvaļinājums",
+  "value": 2,
+  "short_name": "b"
+},
+{
+  "name": "darba nespēja (slim., karant. u.c.) (a)",
+  "value": 3,
+  "short_name": "a"
+},
+{
+  "name": "darba nespēja (slim., karant. u.c.) (b)",
+  "value": 4,
+  "short_name": "b"
+},
+{
+  "name": "atvaļinājums sakarā ar grūtniec",
+  "value": 5,
+  "short_name": "g"
+},
+{
+  "name": "mācību atvaļinājums",
+  "value": 6,
+  "short_name": "m"
+},
+{
+  "name": "darbā neierašanās gadījumi",
+  "value": 7,
+  "short_name": "0"
+},
+{
+  "name": "paternitātes atvaļinājums",
+  "value": 8,
+  "short_name": "PA"
+},
+{
+  "name": "atļauts darba kavējums, sakarā ar radinieka nāvi",
+  "value": 9,
+  "short_name": "AP"
+},
+{
+  "name": "valsts svētki",
+  "value": 10,
+  "short_name": "VS"
+},
+{
+  "name": "bērna kopšanas atvaļinājums",
+  "value": 11,
+  "short_name": "BK"
+},
+{
+  "name": "komandējums",
+  "value": 12,
+  "short_name": "KO"
+},
+{
+  "name": "virsstundas",
+  "value": 13,
+  "short_name": "ov"
+}]

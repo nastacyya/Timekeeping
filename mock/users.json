@@ -1,0 +1,16 @@
+[
+    {
+        "_id": 12,
+        "sn": "Saveika",
+        "givenName": "Anastasija",
+        "role": 2, 
+        "department": 3
+    },
+    {
+        "_id": 8,
+        "sn": "Nurlan",
+        "givenName": "Saburov",
+        "role": 2, 
+        "department": 3
+    }
+]
