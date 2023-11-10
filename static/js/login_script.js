@@ -59,10 +59,6 @@ function submitForm() {
     password.style.border = "2px solid #ccc";
     errorText.innerText = "";
     
-            // var creds = {
-            //     "login": username.value,
-            //     "passw": password.value
-            //     }
                 fetch('/mock/creds.json')  
                 .then(response => response.json())
                 .then(data => {

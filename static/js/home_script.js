@@ -582,15 +582,11 @@ function workerRolePermissions(userRole) {
                             selectedUserId = user_id;
                         } else {
                             selectedUserId = savedSelectedUserId;
-                            fetch(`/api/users/${selectedUserId}`, {
-                                headers: {
-                                    'Authorization': "Bearer " + token
-                                }
-                            })
+                            fetch('/mock/users.json')
                             .then(response => response.json())
-                            .then(data => {
-
-                                const user_role = data.role; 
+                            .then(users => {
+                                const userFromDB = users.find(user => user._id === user_id);
+                                const user_role = userFromDB.role; 
                                 // Check user role here and adjust button visibility
                                 if (user_role === 1 || selectedUserId === user_id) {
                                 addBtn.style.display = 'block';
@@ -649,11 +645,7 @@ function workerRolePermissions(userRole) {
                                 sendUserAbsences();
                                 daysTag.addEventListener('click', showAbsenceData);
 
-                                fetch(`/api/users/${selectedUserId}`, {
-                                    headers: {
-                                        'Authorization': "Bearer " + token
-                                    }
-                                })
+                                fetch('/mock/users.json')
                                 .then(response => response.json())
                                 .then(data => {
 
@@ -967,23 +959,22 @@ async function markUserAbsencesOnCalendar(userId) {
             day.classList.remove(`start-${i}`,`end-${i}`,`absence-${i}`, `startenddate-${i}`);
         }
     });
-    fetch(`/api/users/${userId}/user_Absences`, {
-        headers: {
-            'Authorization': "Bearer " + token
-        }
-    })
+    fetch('/mock/user_absences.json')
     .then(response => response.json())
     .then(absences => {
   
         absences.forEach(absence => {
             const startDate = new Date(absence.start_date);
+            startDate.setHours(0, 0, 0, 0); // Set hours, minutes, seconds to zero
             const endDate = new Date(absence.end_date);
+            endDate.setHours(0, 0, 0, 0); 
             const absenceValue = absence.absenceType;
-            
+           
             days.forEach(day => {
                 const dayDate = new Date(currYear, currMonth, parseInt(day.innerText));
+                
                 if (dayDate >= startDate && dayDate <= endDate && !day.classList.contains('inactive')) {
-                    
+                    console.log(`Start date ${startDate}`)
                     if (dayDate.getTime() === startDate.getTime()) {
                         day.classList.add(`start-${absenceValue}`);
                     } else if (dayDate.getTime() === endDate.getTime()) {
@@ -1378,20 +1369,12 @@ function showAbsenceData(event) {
         const dayDate = new Date(currYear, currMonth, parseInt(target.innerText));
 
         if (!cachedData[selectedUserId] || !cachedAbsenceTypes) {
-            fetch(`/api/users/${selectedUserId}/user_Absences`, {
-                headers: {
-                    'Authorization': "Bearer " + token
-                }
-            })
+            fetch('/mock/user_absences.json')
             .then(response => response.json())
             .then(absences => {
                 cachedData[selectedUserId] = { absences };
 
-                fetch(`/api/absence_types`, {
-                    headers: {
-                        'Authorization': "Bearer " + token
-                    }
-                })
+                fetch('/mock/absences.json')
                 .then(response => response.json())
                 .then(absenceTypes => {
                     cachedAbsenceTypes = absenceTypes;
@@ -1781,12 +1764,7 @@ async function getAbsence(event) {
 function deleteAbsence(absenceId) {
     const token = localStorage.getItem('token');
 
-    fetch(`/api/user_absences/${absenceId}`, {
-        method: 'DELETE',
-        headers: {
-            'Authorization': "Bearer " + token
-        }
-    })
+    fetch('/mock/user_absences.json')
     .then(response => {
         if (!response.ok) {
             throw new Error('Error deleting absence');

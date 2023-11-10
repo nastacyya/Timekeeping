@@ -1,0 +1,24 @@
+[
+    {
+    "_id":"8",
+    "absenceType": 1,
+    "start_date": "2023-11-15",
+    "end_date": "2023-11-17",
+    "person_id": 12
+    },
+    {
+    "_id":"4",
+    "absenceType": 6,
+    "start_date": "2023-11-02",
+    "end_date": "2023-11-05",
+    "person_id": 12
+    },
+    {
+    "_id":"6",
+    "absenceType": 3,
+    "start_date": "2023-11-08",
+    "end_date": "2023-11-08",
+    "person_id": 12
+    }
+    
+]
