@@ -415,8 +415,8 @@ body {
 
 .days li.active::before {
     border: 2px dashed var(--bg-purple);
-    height: 71px;
-    width: 71px;
+    height: 74px;
+    width: 74px;
 }
 .days.hoverable li:not(.inactive):hover{
     cursor: pointer;
@@ -899,8 +899,8 @@ input[type="number"]::-webkit-inner-spin-button:active{
         width: 60px;
     }
     .days li.active::before {
-        height: 51px !important;
-        width: 51px !important;
+        height: 54px !important;
+        width: 54px !important;
     }
     .info-text p, .form-container button {
         font-size: 15px;

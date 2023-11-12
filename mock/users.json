@@ -3,13 +3,20 @@
         "_id": 12,
         "sn": "Saveika",
         "givenName": "Anastasija",
-        "role": 1, 
+        "role": 2, 
         "department": 3
     },
     {
         "_id": 8,
         "sn": "Nurlan",
         "givenName": "Saburov",
+        "role": 1, 
+        "department": 3
+    },
+    {
+        "_id": 9,
+        "sn": "Jack",
+        "givenName": "Harlow",
         "role": 2, 
         "department": 3
     }

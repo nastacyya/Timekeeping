@@ -522,22 +522,10 @@ async function getUserData() {
     }
 }
 
-//Display user name and surname on the screen
-// function showUserData() {
-//     const userDataDiv = document.getElementById('welcome');
-//     getUserData().then(data => {
-//         if (data) {
-//             userDataDiv.innerHTML = vocabulary.welcome[currentLang] + `<br> ${data.givenName} ${data.sn}!`;
-//         } else {
-//             userDataDiv.innerHTML = '';
-//         }
-//     });
-// }
-
 //Permissions for role 1 and 2
 function workerRolePermissions(userRole) {
     const user_id = parseInt(localStorage.getItem('user_id'));
-    const savedSelectedUserId = localStorage.getItem('selectedUserId');
+    const savedSelectedUserId = parseInt(localStorage.getItem('selectedUserId'));
 
         fetch('/mock/users.json')
         .then(response => response.json())
@@ -554,9 +542,7 @@ function workerRolePermissions(userRole) {
     
                 if (department) {
                 const department_id = department._id;
-                console.log(`${department._id}`)
                 const department_name = department.name;
-                console.log(`${department.name}`)
                 // Update the DOM with the department name
                 const h3 = document.createElement('h3');
                 h3.textContent = department_name;
@@ -590,11 +576,13 @@ function workerRolePermissions(userRole) {
                             selectedUserId = user_id;
                         } else {
                             selectedUserId = savedSelectedUserId;
+                            console.log(`${selectedUserId}`)
                             fetch('/mock/users.json')
                             .then(response => response.json())
                             .then(users => {
                                 const userFromDB = users.find(user => user._id === user_id);
                                 const user_role = userFromDB.role; 
+                                
                                 // Check user role here and adjust button visibility
                                 if (user_role === 1 || selectedUserId === user_id) {
                                 addBtn.style.display = 'block';
@@ -615,7 +603,7 @@ function workerRolePermissions(userRole) {
                             li.classList.add('authorized');
                         }
                         if (employee._id === selectedUserId ) {
-                            //selectedUserId = user_id;
+                            
                             markUserAbsencesOnCalendar(selectedUserId);
                             daysTag.addEventListener('click', showAbsenceData);
                             sendUserAbsences();
@@ -656,8 +644,9 @@ function workerRolePermissions(userRole) {
                                 fetch('/mock/users.json')
                                 .then(response => response.json())
                                 .then(data => {
-
-                                    const user_role = data.role; 
+                                    const userFromDB = data.find(data => data._id === selectedUserId);
+                                    const user_role = userFromDB.role; 
+                                    
                                     // Check user role here and adjust button visibility
                                     if (user_role === 1 || selectedUserId === user_id) {
                                     addBtn.style.display = 'block';
@@ -764,7 +753,7 @@ function supervisorRolePermissions(userRole) {
                 employeeItem.href = '#';
                 employeeItem.innerText = `${employee.givenName} ${employee.sn}`;
 
-                if (employee._id.$oid === user_id) {
+                if (employee._id === user_id) {
                     employeeItem.classList.add("authorized");
                 }
 
@@ -779,7 +768,7 @@ function supervisorRolePermissions(userRole) {
                         returnToDefaultView();
                     }
                     
-                    const newSelectedUserId = employee._id.$oid;
+                    const newSelectedUserId = employee._id;
 
                     // Check if the selected user has changed
                     if (newSelectedUserId !== selectedUserId) {
@@ -812,7 +801,7 @@ function supervisorRolePermissions(userRole) {
                     
                 });
             
-                if (employee._id.$oid === selectedUserId) {
+                if (employee._id === selectedUserId) {
                     employeeItem.classList.add('employee');
                 }
         
@@ -822,7 +811,7 @@ function supervisorRolePermissions(userRole) {
 
             return data.length; // Return the number of employees
         });
-        }
+    }
 
     function toggleSubMenu(subMenu, departmentId, iconElement) {
 
@@ -955,7 +944,7 @@ async function sendUserAbsences() {
 }
 
 // Function to mark absence dates on the calendar
-async function markUserAbsencesOnCalendar(userId) {
+function markUserAbsencesOnCalendar(userId) {
     const days = daysTag.querySelectorAll('li');
     
     // Clear existing markings on the calendar
@@ -967,7 +956,8 @@ async function markUserAbsencesOnCalendar(userId) {
     fetch('/mock/user_absences.json')
     .then(response => response.json())
     .then(absences => {
-  
+        const currentUser = absences.find(absence => absence.person_id === userId);
+        console.log(`${currentUser}`)
         absences.forEach(absence => {
             const startDate = new Date(absence.start_date);
             startDate.setHours(0, 0, 0, 0); // Set hours, minutes, seconds to zero
@@ -1039,7 +1029,6 @@ document.addEventListener ('DOMContentLoaded', function() {
       })
       .catch(error => console.error('Error:', error));
 
-    //showUserData();
     absenceTypeSelect();
     colorLegend();
     renderCalendar();
