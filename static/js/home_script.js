@@ -106,6 +106,14 @@ function applyTranslation() {
   document.getElementById('overtime').textContent = vocabulary.overtime[currentLang];
   document.getElementById('notes_label').textContent = vocabulary.notes[currentLang];
   infoText.textContent = vocabulary.show_info[currentLang];
+  const userDataDiv = document.getElementById('welcome');
+    getUserData().then(data => {
+        if (data) {
+            userDataDiv.innerHTML = vocabulary.welcome[currentLang] + `<br> ${data.givenName} ${data.sn}!`;
+        } else {
+            userDataDiv.innerHTML = '';
+        }
+    });
 }
 // getting new date, current year and month
 let date = new Date(),
@@ -515,16 +523,16 @@ async function getUserData() {
 }
 
 //Display user name and surname on the screen
-function showUserData() {
-    const userDataDiv = document.getElementById('welcome');
-    getUserData().then(data => {
-        if (data) {
-            userDataDiv.innerHTML = vocabulary.welcome[currentLang] + `<br> ${data.givenName} ${data.sn}!`;
-        } else {
-            userDataDiv.textContent = '';
-        }
-    });
-}
+// function showUserData() {
+//     const userDataDiv = document.getElementById('welcome');
+//     getUserData().then(data => {
+//         if (data) {
+//             userDataDiv.innerHTML = vocabulary.welcome[currentLang] + `<br> ${data.givenName} ${data.sn}!`;
+//         } else {
+//             userDataDiv.innerHTML = '';
+//         }
+//     });
+// }
 
 //Permissions for role 1 and 2
 function workerRolePermissions(userRole) {
@@ -854,10 +862,7 @@ function supervisorRolePermissions(userRole) {
 //Logout function
 function logout() {
     // Clear token from localStorage
-    localStorage.removeItem('token');
-    localStorage.removeItem('user_id');
-    localStorage.removeItem('selectedUserId');
-    localStorage.removeItem('user_role');
+    localStorage.clear();
     
     window.location.href = '/templates/login.html';
 }
@@ -974,7 +979,7 @@ async function markUserAbsencesOnCalendar(userId) {
                 const dayDate = new Date(currYear, currMonth, parseInt(day.innerText));
                 
                 if (dayDate >= startDate && dayDate <= endDate && !day.classList.contains('inactive')) {
-                    console.log(`Start date ${startDate}`)
+                    
                     if (dayDate.getTime() === startDate.getTime()) {
                         day.classList.add(`start-${absenceValue}`);
                     } else if (dayDate.getTime() === endDate.getTime()) {
@@ -1001,7 +1006,7 @@ async function markUserAbsencesOnCalendar(userId) {
     `;
     const startStyle = `
         .start-${i} {
-            background-image: linear-gradient(to right, transparent 50%, var(--absence-${i}-${i}) 50% );
+            background-image: linear-gradient(to right, transparent 50%, var(--absence-${i}-${i}) 50%);
         }
     `;
     const endStyle = `
@@ -1034,7 +1039,7 @@ document.addEventListener ('DOMContentLoaded', function() {
       })
       .catch(error => console.error('Error:', error));
 
-    showUserData();
+    //showUserData();
     absenceTypeSelect();
     colorLegend();
     renderCalendar();
@@ -1411,7 +1416,9 @@ function processAbsenceData(dayDate, target, startInput, endInput, absenceTypeIn
     const userAbsences = cachedData[selectedUserId].absences;
     const matchingAbsence = userAbsences.find(absence => {
         const startDate = new Date(absence.start_date);
+        startDate.setHours(0, 0, 0, 0); 
         const endDate = new Date(absence.end_date);
+        endDate.setHours(0, 0, 0, 0); 
         return dayDate >= startDate && dayDate <= endDate;
     });
     
@@ -1558,7 +1565,9 @@ function styleSelectedEditAbsence(matchingAbsence) {
         });     
     }
     const startDate = new Date(matchingAbsence.start_date);
+    startDate.setHours(0, 0, 0, 0); 
     const endDate = new Date(matchingAbsence.end_date);
+    endDate.setHours(0, 0, 0, 0); 
 
     selectedEditAbsence = matchingAbsence.absenceType;
     
@@ -1643,26 +1652,20 @@ async function getAbsence(event) {
         if (target.tagName === 'LI') {
             const dayDate = new Date(currYear, currMonth, parseInt(target.innerText));
             if (!cachedData[selectedUserId] || !cachedAbsenceTypes) {
-                const absencesResponse = await fetch(`/api/users/${selectedUserId}/user_Absences`, {
-                headers: {
-                    'Authorization': "Bearer " + token
-                }
-                });
+                const absencesResponse = await fetch('/mock/user_absences.json');
                 const absences = await absencesResponse.json();
                 cachedData[selectedUserId] = { absences };
 
-                const typesResponse = await fetch(`/api/absence_types`, {
-                    headers: {
-                        'Authorization': "Bearer " + token
-                    }
-                });;
+                const typesResponse = await fetch('/mock/absences.json');
                 const types = await typesResponse.json();
                 cachedAbsenceTypes = types;
             }
             const userAbsences = cachedData[selectedUserId].absences;
             const matchingAbsence = userAbsences.find(absence => {
                 const startDate = new Date(absence.start_date);
+                startDate.setHours(0, 0, 0, 0); 
                 const endDate = new Date(absence.end_date);
+                endDate.setHours(0, 0, 0, 0); 
                 return dayDate >= startDate && dayDate <= endDate;
             });
 
@@ -1681,7 +1684,9 @@ async function getAbsence(event) {
                         });     
                     }
                     const startDate = new Date(matchingAbsence.start_date);
+                    startDate.setHours(0, 0, 0, 0); 
                     const endDate = new Date(matchingAbsence.end_date);
+                    endDate.setHours(0, 0, 0, 0); 
 
                     selectedAbsenceValue = matchingAbsence.absenceType;
                     absenceId = matchingAbsence._id;
@@ -1712,15 +1717,14 @@ async function getAbsence(event) {
                     });
                     
                     const startEndStyle = `
-                        .remove-start-${selectedAbsenceValue}::before, .remove-end-${selectedAbsenceValue}::before, .remove-startenddate-${selectedAbsenceValue}::before {
-                            background: var(--bg-red) !important;
-                            cursor: pointer;
-                        }
+                    .remove-start-${selectedAbsenceValue}::before, .remove-end-${selectedAbsenceValue}::before, .remove-startenddate-${selectedAbsenceValue}::before {
+                        background: var(--bg-red) !important;
+                        cursor: pointer;
+                    }
                     `;
                     const startStyle = `
                     .remove-start-${selectedAbsenceValue} {
-                        background-image: linear-gradient(to right, white 50%, var(--bg-red) 50%);
-                        
+                        background-image: linear-gradient(to right, white 50%, var(--bg-red) 50%) !important;
                     }
                     `;
                     const endStyle = `

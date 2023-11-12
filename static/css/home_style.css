@@ -414,7 +414,7 @@ body {
 }
 
 .days li.active::before {
-    border: 3px dashed var(--bg-purple);
+    border: 2px dashed var(--bg-purple);
     height: 71px;
     width: 71px;
 }
@@ -920,6 +920,9 @@ input[type="number"]::-webkit-inner-spin-button:active{
     }
     .error i, .errortxt i {
         font-size: 26px;
+    }
+    .form-container input, textarea{
+        font-size: 14px;
     }
 }
 
