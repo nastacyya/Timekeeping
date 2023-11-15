@@ -541,7 +541,6 @@ function workerRolePermissions(userRole) {
                 const department = departments.find(dep => dep.value === department_number);
     
                 if (department) {
-                const department_id = department._id;
                 const department_name = department.name;
                 // Update the DOM with the department name
                 const h3 = document.createElement('h3');
@@ -576,7 +575,7 @@ function workerRolePermissions(userRole) {
                             selectedUserId = user_id;
                         } else {
                             selectedUserId = savedSelectedUserId;
-                            console.log(`${selectedUserId}`)
+                            
                             fetch('/mock/users.json')
                             .then(response => response.json())
                             .then(users => {
@@ -677,10 +676,10 @@ function workerRolePermissions(userRole) {
 
 //Permissions for role 3, 4
 function supervisorRolePermissions(userRole) {
-    const user_id = localStorage.getItem("user_id");
+    const user_id = parseInt(localStorage.getItem("user_id"));
     const treeView = document.querySelector('.tree-view');
     myCalendar.style.display = "flex";
-    const savedSelectedUserId = localStorage.getItem('selectedUserId');
+    const savedSelectedUserId = parseInt(localStorage.getItem('selectedUserId'));
 
     if(!savedSelectedUserId) {
         selectedUserId = user_id;
@@ -702,22 +701,18 @@ function supervisorRolePermissions(userRole) {
 
     async function fetchDepartmentsAndPopulateTreeView() {
         try {
-            const response = await fetch('/api/departments', {
-                headers: {
-                    'Authorization': "Bearer " + token
-                }
-            })
+            const response = await fetch('/mock/departments.json');
             const data = await response.json();
 
             for (const department of data) {
                 const dropdown = document.createElement('div');
                 dropdown.classList.add('dropdown');
                 dropdown.innerHTML = `
-                    <a class="sub-btn" data-department-id="${department._id}">${department.name}<i class='bx bxs-chevron-right'></i></a>
+                    <a class="sub-btn" data-department-id="${department.value}">${department.name}<i class='bx bxs-chevron-right'></i></a>
                     <div class="sub-menu"></div>
                 `;
                 const subMenu = dropdown.querySelector('.sub-menu');
-                fetchEmployeesByDepartment(department._id, subMenu); //so the authorized user had class "authorized" straightaway
+                fetchEmployeesByDepartment(department.value, subMenu); //so the authorized user had class "authorized" straightaway
 
                 dropdown.addEventListener('click', function() {
                     const departmentId = dropdown.querySelector('.sub-btn').dataset.departmentId;
@@ -736,19 +731,13 @@ function supervisorRolePermissions(userRole) {
   
     async function fetchEmployeesByDepartment(departmentId, subMenu) {
 
-        return fetch(`/api/departments/${departmentId}/users`, {
-            headers: {
-                'Authorization': "Bearer " + token
-            }
-        })
+        return fetch('/mock/users.json')
         .then(response => response.json())
-        .then(data => {
-                            
-            subMenu.innerHTML = '';
-            // Sort employees by surname
-            data.sort((a, b) => a.sn.localeCompare(b.sn));
+        .then(users => {
+            users = users.filter(user => user.department === departmentId); // Filter users based on the departmentId
+            users.sort((a, b) => a.sn.localeCompare(b.sn));
 
-            data.forEach(employee => {
+            users.forEach(employee => {
                 const employeeItem = document.createElement('a');
                 employeeItem.href = '#';
                 employeeItem.innerText = `${employee.givenName} ${employee.sn}`;
@@ -809,41 +798,46 @@ function supervisorRolePermissions(userRole) {
 
             });
 
-            return data.length; // Return the number of employees
+            return users.length; // Return the number of employees
         });
     }
 
-    function toggleSubMenu(subMenu, departmentId, iconElement) {
+    async function toggleSubMenu(subMenu, departmentId, iconElement) {
 
         const subMenuHeight = subMenu.offsetHeight;
 
-        fetchEmployeesByDepartment(departmentId, subMenu)
-            .then(employeeCount => {
-                if (subMenu.style.display === 'none' || subMenu.style.display === '') {
-                    subMenu.style.display = 'block';
-                    subMenu.style.position = 'absolute'; 
-                    iconElement.classList.add('rotate');
-                    
-                    const dropdown = subMenu.parentElement;
-                    dropdown.classList.add('disable-hover-effects');
-                    const departmentName = dropdown.querySelector('.sub-btn');
-                    departmentName.style.fontWeight = '600';
-                    if (dropdown) {
-                        dropdown.style.marginBottom = (subMenuHeight + (employeeCount * 50)) + 'px';
-                    }
-                } else {
-                    subMenu.style.display = 'none';
-                    iconElement.classList.remove('rotate');
-                    const dropdown = subMenu.parentElement;
-                    dropdown.classList.remove('disable-hover-effects');
-                    const departmentName = dropdown.querySelector('.sub-btn');
-                    departmentName.style.fontWeight = '';
-                    if (dropdown) {
-                        dropdown.style.marginBottom = '0';
-                    }
+        try {
+            await fetchEmployeesByDepartment(departmentId, subMenu);
+
+            if (subMenu.style.display === 'none' || subMenu.style.display === '') {
+                subMenu.style.display = 'block';
+                subMenu.style.position = 'absolute'; 
+                iconElement.classList.add('rotate');
+                
+               // Calculate the height after employees are loaded
+                const employeeCount = subMenu.querySelectorAll('a').length;
+                const dropdown = subMenu.parentElement;
+                dropdown.classList.add('disable-hover-effects');
+                const departmentName = dropdown.querySelector('.sub-btn');
+
+                if (dropdown) {
+                    dropdown.style.marginBottom = (subMenuHeight + (employeeCount * 50)) + 'px';
                 }
-            });
+            } else {
+                subMenu.style.display = 'none';
+                iconElement.classList.remove('rotate');
+                const dropdown = subMenu.parentElement;
+                dropdown.classList.remove('disable-hover-effects');
+                const departmentName = dropdown.querySelector('.sub-btn');
+                departmentName.style.fontWeight = '';
+                if (dropdown) {
+                    dropdown.style.marginBottom = '0';
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching employee data:', error);
         }
+    }
         //Calling the function
         fetchDepartmentsAndPopulateTreeView();
 }
@@ -956,14 +950,14 @@ function markUserAbsencesOnCalendar(userId) {
     fetch('/mock/user_absences.json')
     .then(response => response.json())
     .then(absences => {
-        const currentUser = absences.find(absence => absence.person_id === userId);
-        console.log(`${currentUser}`)
-        absences.forEach(absence => {
-            const startDate = new Date(absence.start_date);
+        absences
+            .filter(absence => absence.person_id === userId)
+            .forEach(currentUserAbsence => {
+            const startDate = new Date(currentUserAbsence.start_date);
             startDate.setHours(0, 0, 0, 0); // Set hours, minutes, seconds to zero
-            const endDate = new Date(absence.end_date);
+            const endDate = new Date(currentUserAbsence.end_date);
             endDate.setHours(0, 0, 0, 0); 
-            const absenceValue = absence.absenceType;
+            const absenceValue = currentUserAbsence.absenceType;
            
             days.forEach(day => {
                 const dayDate = new Date(currYear, currMonth, parseInt(day.innerText));
@@ -984,7 +978,7 @@ function markUserAbsencesOnCalendar(userId) {
                     }
                 }
             });
-        });
+        })
     });
 
 
@@ -1017,7 +1011,6 @@ function markUserAbsencesOnCalendar(userId) {
     }
     
 }
-
 
 //Button listeners
 document.addEventListener ('DOMContentLoaded', function() { 
@@ -1273,10 +1266,7 @@ document.addEventListener ('DOMContentLoaded', function() {
         });
 
         deleteAbsenceBtn.addEventListener('click', () => {
-
-                deleteAbsence(absenceId);
-                location.reload(); 
-            
+            deleteAbsence(absenceId);
         });
 
         editBtn.addEventListener('click', function() {
@@ -1366,7 +1356,8 @@ function showAbsenceData(event) {
             fetch('/mock/user_absences.json')
             .then(response => response.json())
             .then(absences => {
-                cachedData[selectedUserId] = { absences };
+                const userAbsences = absences.filter(absence => absence.person_id === selectedUserId);
+                cachedData[selectedUserId] = { absences: userAbsences };
 
                 fetch('/mock/absences.json')
                 .then(response => response.json())
@@ -1643,7 +1634,8 @@ async function getAbsence(event) {
             if (!cachedData[selectedUserId] || !cachedAbsenceTypes) {
                 const absencesResponse = await fetch('/mock/user_absences.json');
                 const absences = await absencesResponse.json();
-                cachedData[selectedUserId] = { absences };
+                const userAbsences = absences.filter(absence => absence.person_id === selectedUserId);
+                cachedData[selectedUserId] = { absences: userAbsences };
 
                 const typesResponse = await fetch('/mock/absences.json');
                 const types = await typesResponse.json();
@@ -1766,7 +1758,7 @@ function deleteAbsence(absenceId) {
     })
     .then(data => {
         console.log('Absence deleted successfully', data);
-        renderCalendar();
+        location.reload(); 
     })
     
 }

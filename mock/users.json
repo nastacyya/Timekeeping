@@ -3,21 +3,28 @@
         "_id": 12,
         "sn": "Saveika",
         "givenName": "Anastasija",
-        "role": 2, 
+        "role": 4, 
         "department": 3
     },
     {
         "_id": 8,
-        "sn": "Nurlan",
-        "givenName": "Saburov",
+        "sn": "Magomedov",
+        "givenName": "Nurlan",
         "role": 1, 
         "department": 3
     },
     {
         "_id": 9,
-        "sn": "Jack",
-        "givenName": "Harlow",
+        "sn": "Harlow",
+        "givenName": "Jack",
         "role": 2, 
-        "department": 3
+        "department": 2
+    },
+    {
+        "_id": 10,
+        "sn": "Abols",
+        "givenName": "Janis",
+        "role": 2, 
+        "department": 2
     }
 ]
