@@ -109,7 +109,7 @@ function applyTranslation() {
   const userDataDiv = document.getElementById('welcome');
     getUserData().then(data => {
         if (data) {
-            userDataDiv.innerHTML = vocabulary.welcome[currentLang] + `<br> ${data.givenName} ${data.sn}!`;
+            userDataDiv.innerHTML = vocabulary.welcome[currentLang] + "," + `<br> ${data.givenName} ${data.sn}!`;
         } else {
             userDataDiv.innerHTML = '';
         }
@@ -902,28 +902,15 @@ async function sendUserAbsences() {
             error.innerText = "";
 
             if (note.trim() === "") {
-                note = null;
+                note = "";
             }
-
-            const data = {
-                absenceType: parseInt(absenceType),
-                start_date: startDate,
-                end_date: endDate,
-                person_id: selectedUserId,
-                value: parseInt(value),
-                note: note
-            };
-
-            fetch('/api/user_absences', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': "Bearer " + token
-                },
-                body: JSON.stringify(data)
-            })
+            
+            fetch('/mock/saved_absence.json')
             .then(response => response.json())
             .then(data => {
+                answer = data.message;
+                alert(`${answer}: 
+${absenceType} ${startDate} ${endDate} ${selectedUserId} ${note} ${value}`);
                 location.reload();
             })
             .catch(error => console.error('Error saving user absence:', error));
