@@ -18,7 +18,7 @@
     </div>
     <div class="side-nav">
         <div class="logout-div">
-            <div class="sub-logout" onmouseover="changeColor(true)" onmouseout="changeColor(false)" onclick="logout()">
+            <div class="sub-logout" id="sub-logout" onmouseover="changeColor(true)" onmouseout="changeColor(false)" onclick="logout()">
                 <i class='bx bx-log-out' ></i>
                 <p id="exit"></p>
             </div>
@@ -66,7 +66,7 @@
                     <p></p>
                 </div>
                 <div class="show-data">
-                        <form class="absence_data">
+                    <form class="absence_data">
                             <h3 id="show-data-text"></h3>
                         <label for="absence_type" id="reason"></label>
                         <div class="absence_select">
@@ -91,7 +91,7 @@
                             <p></p>
                         </div>
                         <button class="update-btn" type="button" id="update-btn"></button>
-                        </form>
+                    </form>
                 </div>
                 
             <div class="add-data">
@@ -133,10 +133,9 @@
             
     </div>
     <div class="version-div">
-        <p id="front-v">Front v1.0</p>
+        <p id="front-v">Front v1.2</p>
         <p id="back-v"></p>
     </div>
 </div>
 </body>
 </html>
-

@@ -1,8 +1,10 @@
-// window.addEventListener('pageshow', function(event) {
-//     if(!localStorage.getItem('token')) {
-//         window.location.href = '/';
-//     }
-// });
+window.addEventListener('pageshow', function(event) {
+    const token = localStorage.getItem('token');
+    if(!token) {
+        window.location.href = '/templates/login.html';
+    } 
+});
+
 let currentLang = 'ru'; // Установите текущий язык ('ru' или 'en')
 
 const daysTag = document.querySelector(".days");
@@ -43,8 +45,8 @@ const infoDiv = document.querySelector('.info-text');
 const formContainer = document.querySelector('.form-container');
 const buttonsDiv = document.querySelector('.buttons-div');
 
-const token = localStorage.getItem('token');
 const styleSheet = document.styleSheets[0];
+const token = localStorage.getItem('token');
 
 let cachedAbsenceTypes = null;
 let cachedUserAbsences = null;
@@ -196,7 +198,7 @@ function colorLegend() {
           });
     })
 
-    for (let i = 1; i <= 13; i++) {
+    for (let i = 1; i <= 16; i++) {
         const style = `
           .color-${i} {
             background: var(--absence-${i});
@@ -293,7 +295,6 @@ function handleDateSelection(event) {
             const startIsEnd  = selectedStart.className.match(/end-(\d+)/);
             const matching = startIsEnd ? parseInt(startIsEnd[1]) : null;
                    
-
             if (absenceValueMatch) {
                 if (startIsEnd) {
                     const selectedStart = `
@@ -465,7 +466,7 @@ function absenceTypeSelect() {
         }
       });
 
-      for (let i = 1; i <= 13; i++) {
+      for (let i = 1; i <= 16; i++) {
         const style = `
           .color-circle-${i} {
             background: var(--absence-${i});
@@ -520,8 +521,8 @@ async function getUserData() {
         console.error('Error fetching users:', error);
         return null;
     }
-}
 
+}
 //Permissions for role 1 and 2
 function workerRolePermissions(userRole) {
     const user_id = parseInt(localStorage.getItem('user_id'));
@@ -666,9 +667,9 @@ function workerRolePermissions(userRole) {
                     ul.appendChild(li);
                 });
 
-                    treeView.appendChild(ul);
-                    });
-                }
+                treeView.appendChild(ul);
+                });
+            }
                 
         });
     });
@@ -802,51 +803,47 @@ function supervisorRolePermissions(userRole) {
         });
     }
 
-    async function toggleSubMenu(subMenu, departmentId, iconElement) {
+    function toggleSubMenu(subMenu, departmentId, iconElement) {
 
         const subMenuHeight = subMenu.offsetHeight;
 
-        try {
-            await fetchEmployeesByDepartment(departmentId, subMenu);
-
-            if (subMenu.style.display === 'none' || subMenu.style.display === '') {
-                subMenu.style.display = 'block';
-                subMenu.style.position = 'absolute'; 
-                iconElement.classList.add('rotate');
-                
-               // Calculate the height after employees are loaded
-                const employeeCount = subMenu.querySelectorAll('a').length;
-                const dropdown = subMenu.parentElement;
-                dropdown.classList.add('disable-hover-effects');
-                const departmentName = dropdown.querySelector('.sub-btn');
+        fetchEmployeesByDepartment(departmentId, subMenu)
+            .then(employeeCount => {
+                if (subMenu.style.display === 'none' || subMenu.style.display === '') {
+                    subMenu.style.display = 'block';
+                    subMenu.style.position = 'absolute'; 
+                    iconElement.classList.add('rotate');
+                    
+                    // Calculate the height after employees are loaded
+                    const employeeCount = subMenu.querySelectorAll('a').length;
+                    const dropdown = subMenu.parentElement;
+                    dropdown.classList.add('disable-hover-effects');
+                    const departmentName = dropdown.querySelector('.sub-btn');
 
                 if (dropdown) {
                     dropdown.style.marginBottom = (subMenuHeight + (employeeCount * 50)) + 'px';
                 }
-            } else {
-                subMenu.style.display = 'none';
-                iconElement.classList.remove('rotate');
-                const dropdown = subMenu.parentElement;
-                dropdown.classList.remove('disable-hover-effects');
-                const departmentName = dropdown.querySelector('.sub-btn');
-                departmentName.style.fontWeight = '';
-                if (dropdown) {
-                    dropdown.style.marginBottom = '0';
+                } else {
+                    subMenu.style.display = 'none';
+                    iconElement.classList.remove('rotate');
+                    const dropdown = subMenu.parentElement;
+                    dropdown.classList.remove('disable-hover-effects');
+                    const departmentName = dropdown.querySelector('.sub-btn');
+                    departmentName.style.fontWeight = '';
+                    if (dropdown) {
+                        dropdown.style.marginBottom = '0';
+                    }
                 }
-            }
-        } catch (error) {
-            console.error('Error fetching employee data:', error);
+            });
         }
-    }
         //Calling the function
         fetchDepartmentsAndPopulateTreeView();
 }
 
 //Logout function
 function logout() {
-    // Clear token from localStorage
     localStorage.clear();
-    
+    // Redirect to the login page 
     window.location.href = '/templates/login.html';
 }
 
@@ -925,12 +922,12 @@ ${absenceType} ${startDate} ${endDate} ${selectedUserId} ${note} ${value}`);
 }
 
 // Function to mark absence dates on the calendar
-function markUserAbsencesOnCalendar(userId) {
+async function markUserAbsencesOnCalendar(userId) {
     const days = daysTag.querySelectorAll('li');
-    
+    const currentDay = daysTag.querySelector('.active');
     // Clear existing markings on the calendar
     days.forEach(day => {
-        for (let i = 1; i <= 13; i++) {
+        for (let i = 1; i <= 16; i++) {
             day.classList.remove(`start-${i}`,`end-${i}`,`absence-${i}`, `startenddate-${i}`);
         }
     });
@@ -948,7 +945,6 @@ function markUserAbsencesOnCalendar(userId) {
            
             days.forEach(day => {
                 const dayDate = new Date(currYear, currMonth, parseInt(day.innerText));
-                
                 if (dayDate >= startDate && dayDate <= endDate && !day.classList.contains('inactive')) {
                     
                     if (dayDate.getTime() === startDate.getTime()) {
@@ -963,13 +959,20 @@ function markUserAbsencesOnCalendar(userId) {
                         day.classList.remove(`end-${absenceValue}`);
                         day.classList.add(`startenddate-${absenceValue}`);
                     }
+                    day.classList.forEach(cls => {
+                        if (day.classList.contains('active') && (cls.startsWith('startenddate-') || cls.startsWith('start-') || cls.startsWith('end-') || cls.startsWith('absence-'))) {
+                            currentDay.style.cursor = 'pointer';
+                        } else {
+                            currentDay.style.cursor = 'default';
+                        }
+                    });
                 }
             });
-        })
+        });
     });
 
 
-    for (let i = 1; i <= 13; i++) {
+    for (let i = 1; i <= 16; i++) {
     const startEndStyle = `
         .start-${i}::before, .end-${i}::before, .startenddate-${i}::before {
             background: var(--absence-${i});
@@ -977,7 +980,7 @@ function markUserAbsencesOnCalendar(userId) {
     `;
     const startStyle = `
         .start-${i} {
-            background-image: linear-gradient(to right, transparent 50%, var(--absence-${i}-${i}) 50%);
+            background-image: linear-gradient(to right, transparent 50%, var(--absence-${i}-${i}) 50% );
         }
     `;
     const endStyle = `
@@ -1001,6 +1004,8 @@ function markUserAbsencesOnCalendar(userId) {
 
 //Button listeners
 document.addEventListener ('DOMContentLoaded', function() { 
+    localStorage.setItem('loginTime', new Date().getTime());  //Set time for expiry token tracking
+
     fetch('/static/translate/translations.json')  
       .then(response => response.json())
       .then(data => {
@@ -1020,82 +1025,67 @@ document.addEventListener ('DOMContentLoaded', function() {
     notesTextarea.setAttribute('readonly', 'true');
 
     startInput.addEventListener('input', function() {
+        errortxtDiv.style.display = "none";
+        errortxt.textContent = "";
         // Remove non-numeric characters from the input value
         startInput.value = startInput.value.replace(/\D/g, '');
     
-        if (startInput.value.length > 4) {
-        let enteredYear = parseInt(startInput.value.slice(0, 4));
-        let enteredMonth = parseInt(startInput.value.slice(4, 6));
-        let enteredDay = parseInt(startInput.value.slice(6, 8));
+        if (startInput.value.length > 1) {
+            startInput.value = startInput.value.slice(0, 2);
+            let enteredDay = startInput.value;
+            let currentDate = new Date();
+            let currentYear = currentDate.getFullYear();
+            let currentMonth = currentDate.getMonth() + 1; // getMonth() returns 0-based month
+           
+            let lastDayOfMonth = new Date(currentYear, currentMonth, 0).getDate();
+            let endDay = endInput.value;
 
-        let currentDate = new Date();
-        let currentYear = currentDate.getFullYear();
-        let currentMonth = currentDate.getMonth() + 1; // getMonth() returns 0-based month
-
-        if (enteredYear != currentYear || (enteredYear === currentYear && enteredMonth !== currentMonth)) {
-            errortxtDiv.style.display = "flex";
-            errortxt.innerText = vocabulary.wrong_date[currentLang];
-        } else {
-            let lastDayOfMonth = new Date(enteredYear, enteredMonth, 0).getDate();
-            if (enteredDay > lastDayOfMonth) {
+            if (enteredDay > lastDayOfMonth || enteredDay === "00") {
                 errortxtDiv.style.display = "flex";
                 errortxt.innerText = vocabulary.invalid_date[currentLang];
             } else {
-                // Check if start date day is greater than end date day
-                let endInputDate = new Date(endInput.value);
-                let endDay = endInputDate.getDate();
-
-                if (enteredDay > endDay) {
+                if (enteredDay > endDay && endDay !== "") {
                     errortxtDiv.style.display = "flex";
                     errortxt.innerText = vocabulary.wrong_start[currentLang];
                 } else {
                     errortxtDiv.style.display = "none";
                     errortxt.innerText = "";
+                    startInput.value = startInput.value.padStart(2, '0');
                 }
             }
-        }
-            startInput.value = startInput.value.slice(0, 4) + '-' + startInput.value.slice(4, 6) + '-' + startInput.value.slice(6, 8);
         }
     });
 
     endInput.addEventListener('input', function() {
+        errortxtDiv.style.display = "none";
+        errortxt.textContent = "";
         // Remove non-numeric characters from the input value
         endInput.value = endInput.value.replace(/\D/g, '');
     
-        // Format the date as yyyy-mm-dd
-        if (endInput.value.length > 4) {
-        let enteredYear = parseInt(endInput.value.slice(0, 4));
-        let enteredMonth = parseInt(endInput.value.slice(4, 6));
-        let enteredDay = parseInt(endInput.value.slice(6, 8));
-
-        let currentDate = new Date();
-        let currentYear = currentDate.getFullYear();
-        let currentMonth = currentDate.getMonth() + 1; // getMonth() returns 0-based month
-
-        if (enteredYear != currentYear || (enteredYear === currentYear && enteredMonth !== currentMonth)) {
-            errortxtDiv.style.display = "flex";
-            errortxt.innerText = vocabulary.wrong_date[currentLang];
-        } else {
-            let lastDayOfMonth = new Date(enteredYear, enteredMonth, 0).getDate();
-            if (enteredDay > lastDayOfMonth) {
+        if (endInput.value.length > 1) { 
+            endInput.value = endInput.value.slice(0, 2);
+            let enteredDay = endInput.value;
+            let currentDate = new Date();
+            let currentYear = currentDate.getFullYear();
+            let currentMonth = currentDate.getMonth() + 1; 
+            let lastDayOfMonth = new Date(currentYear, currentMonth, 0).getDate();
+            let startDay = startInput.value;
+            
+            if (enteredDay > lastDayOfMonth || enteredDay === "00") {
                 errortxtDiv.style.display = "flex";
                 errortxt.innerText = vocabulary.invalid_date[currentLang];
             } else {
-                // Check if end date day is smaller than start date day
-                let startInputDate = new Date(startInput.value);
-                let startDay = startInputDate.getDate();
-
                 if (enteredDay < startDay) {
                     errortxtDiv.style.display = "flex";
                     errortxt.innerText = vocabulary.wrong_end[currentLang];
                 } else {
                     errortxtDiv.style.display = "none";
                     errortxt.innerText = "";
+                    endInput.value = endInput.value.padStart(2, '0');
                 }
             }
         }
-            endInput.value = endInput.value.slice(0, 4) + '-' + endInput.value.slice(4, 6) + '-' + endInput.value.slice(6, 8);
-        }
+        
     });
     
 
@@ -1131,11 +1121,9 @@ document.addEventListener ('DOMContentLoaded', function() {
     //When user clicks on "My calendar" it returns authorized user's calendar
     myCalendar.addEventListener('click', () => {
         const authorizedUserLi = document.querySelector('.authorized');
-        
         if (authorizedUserLi) {
             authorizedUserLi.click();
         }
-     
     });
 
     addBtn.addEventListener('click', function() {
@@ -1166,10 +1154,8 @@ document.addEventListener ('DOMContentLoaded', function() {
             noteInput.value = "";
             clearAbsenceDataForm();
             daysTag.addEventListener('click', showAbsenceData);
-           
         } else {
             isAddingMode = true;
-            
             // Check if user is currently viewing a different month, then redirect to current month
             if (currMonth !== date.getMonth() || currYear !== date.getFullYear() || currMonth === date.getMonth() || currYear === date.getFullYear()) {
                 currMonth = date.getMonth();
@@ -1220,6 +1206,7 @@ document.addEventListener ('DOMContentLoaded', function() {
                 });
                 daysTag.addEventListener('click', showAbsenceData);
                 daysTag.removeEventListener('click', getAbsence);
+                daysTag.removeEventListener('click', getAbsence);
                 infoDiv.style.marginBottom = "20px";
             } else {
                 
@@ -1253,11 +1240,11 @@ document.addEventListener ('DOMContentLoaded', function() {
         });
 
         deleteAbsenceBtn.addEventListener('click', () => {
-            deleteAbsence(absenceId);
+                deleteAbsence(absenceId);  
         });
 
         editBtn.addEventListener('click', function() {
-            
+           
             if (isEditMode) {
                 isEditMode = false;
                 errortxtDiv.style.display = "none";
@@ -1282,6 +1269,7 @@ document.addEventListener ('DOMContentLoaded', function() {
                 styleSheet.insertRule(cursorStyle, styleSheet.cssRules.length);
                 absenceTypeInput.style.cursor = "default";
                 const days = daysTag.querySelectorAll('li');
+                const currentDay = daysTag.querySelector('.active');
                 days.forEach(day => {
                     day.classList.forEach(cls => {
                         if(cls.startsWith('edit-')){
@@ -1297,6 +1285,10 @@ document.addEventListener ('DOMContentLoaded', function() {
                                 arc2.remove();
                             }
                         }
+                        if (day.classList.contains('active') && cls.startsWith('edit-startenddate-')) {
+                            currentDay.style.color = 'black';
+                            currentDay.style.fontWeight = '500';
+                        } 
                     });
                 });   
             } else {
@@ -1390,12 +1382,19 @@ function processAbsenceData(dayDate, target, startInput, endInput, absenceTypeIn
     });
     
     if (matchingAbsence && !target.classList.contains('inactive')) {
-        startInput.value = matchingAbsence.start_date.split(' ')[0]; 
-        endInput.value = matchingAbsence.end_date.split(' ')[0];
         
         const matchingType = cachedAbsenceTypes.find(type => type.value === matchingAbsence.absenceType);
 
-        if (isEditMode === true) {
+        if (isEditMode === true) { 
+            startInput.removeAttribute('readonly');
+            endInput.removeAttribute('readonly');
+            overtimeValue.removeAttribute('readonly');
+            notesTextarea.removeAttribute('readonly');
+            const startDay = new Date(matchingAbsence.start_date).getDate().toString().padStart(2, '0');
+            const endDay = new Date(matchingAbsence.end_date).getDate().toString().padStart(2, '0');
+
+            startInput.value = startDay;
+            endInput.value = endDay;
             if (matchingAbsence.note) {
                 notesDiv.style.display = "block"; 
                 notesTextarea.value = matchingAbsence.note;
@@ -1435,6 +1434,8 @@ function processAbsenceData(dayDate, target, startInput, endInput, absenceTypeIn
             return absence_id;
               
         } else {
+            startInput.value = matchingAbsence.start_date.split(' ')[0]; 
+            endInput.value = matchingAbsence.end_date.split(' ')[0];
             absenceTypeInput.innerHTML = matchingType ? matchingType.name : "";
             absenceTypeInput.removeEventListener('click', displayList);
         }
@@ -1474,6 +1475,7 @@ function processAbsenceData(dayDate, target, startInput, endInput, absenceTypeIn
         overtimeValue.value = "";
         updateBtn.style.display = 'none';
         const days = daysTag.querySelectorAll('li');
+        const currentDay = daysTag.querySelector('.active');
         days.forEach(day => {
             day.classList.forEach(cls => {
                 if(cls.startsWith('edit-')){
@@ -1489,6 +1491,10 @@ function processAbsenceData(dayDate, target, startInput, endInput, absenceTypeIn
                         arc2.remove();
                     }
                 }
+                if (day.classList.contains('active') && cls.startsWith('edit-startenddate-')) {
+                    currentDay.style.color = 'black';
+                    currentDay.style.fontWeight = '500';
+                } 
             });
         });
         selectedEditAbsence = null;
@@ -1497,11 +1503,8 @@ function processAbsenceData(dayDate, target, startInput, endInput, absenceTypeIn
 
 //Absence highlighting design and other
 function styleSelectedEditAbsence(matchingAbsence) {
+    const currentDay = daysTag.querySelector('.active');
     updateBtn.style.display = "block";
-    startInput.removeAttribute('readonly');
-    endInput.removeAttribute('readonly');
-    overtimeValue.removeAttribute('readonly');
-    notesTextarea.removeAttribute('readonly');
     const cursorStyle = `
         #absence_start:hover, #absence_end:hover, .value-div input:hover, .notes-div textarea:hover{
             cursor: text;
@@ -1528,6 +1531,12 @@ function styleSelectedEditAbsence(matchingAbsence) {
                         arc2.remove();
                     }
                 }
+
+                if (day.classList.contains('active') && cls.startsWith('edit-startenddate-')) {
+                    currentDay.style.color = 'black';
+                    currentDay.style.fontWeight = '500';
+                } 
+           
             });
         });     
     }
@@ -1564,6 +1573,13 @@ function styleSelectedEditAbsence(matchingAbsence) {
                     day.classList.add(`edit-${cls}`);
                 }
             });
+            
+            day.classList.forEach(cls => {
+                if (day.classList.contains('active') && cls.startsWith('edit-startenddate-')) {
+                    currentDay.style.color = 'white';
+                    currentDay.style.fontWeight = '400';
+                } 
+            });
     }
     
     });
@@ -1574,7 +1590,7 @@ function styleSelectedEditAbsence(matchingAbsence) {
         }`;
     const startEndStyle2 = `
         .edit-startenddate-${selectedEditAbsence}::before {
-            border: 3px solid var(--outline-gray);
+            border: 3px solid var(--outline-gray) !important;
         }`;
     const startStyle = `
         .edit-start-${selectedEditAbsence} {
@@ -1628,6 +1644,7 @@ async function getAbsence(event) {
                 const types = await typesResponse.json();
                 cachedAbsenceTypes = types;
             }
+            
             const userAbsences = cachedData[selectedUserId].absences;
             const matchingAbsence = userAbsences.find(absence => {
                 const startDate = new Date(absence.start_date);
@@ -1685,14 +1702,15 @@ async function getAbsence(event) {
                     });
                     
                     const startEndStyle = `
-                    .remove-start-${selectedAbsenceValue}::before, .remove-end-${selectedAbsenceValue}::before, .remove-startenddate-${selectedAbsenceValue}::before {
-                        background: var(--bg-red) !important;
-                        cursor: pointer;
-                    }
+                        .remove-start-${selectedAbsenceValue}::before, .remove-end-${selectedAbsenceValue}::before, .remove-startenddate-${selectedAbsenceValue}::before {
+                            background: var(--bg-red) !important;
+                            cursor: pointer;
+                        }
                     `;
                     const startStyle = `
                     .remove-start-${selectedAbsenceValue} {
-                        background-image: linear-gradient(to right, white 50%, var(--bg-red) 50%) !important;
+                        background-image: linear-gradient(to right, white 50%, var(--bg-red) 50%);
+                        
                     }
                     `;
                     const endStyle = `
@@ -1728,14 +1746,13 @@ async function getAbsence(event) {
                     }
                     deleteAbsenceBtn.style.display = 'none';
                 }
+            
         }
                  
 }                  
 
 // Delete an absence record
 function deleteAbsence(absenceId) {
-    const token = localStorage.getItem('token');
-
     fetch('/mock/user_absences.json')
     .then(response => {
         if (!response.ok) {
@@ -1747,7 +1764,6 @@ function deleteAbsence(absenceId) {
         console.log('Absence deleted successfully', data);
         location.reload(); 
     })
-    
 }
 
 // Return to main view when switching to another employee
@@ -1767,6 +1783,7 @@ function returnToDefaultView() {
     daysTag.classList.remove('hoverable');
     daysTag.removeEventListener('click', handleDateSelection);
     daysTag.removeEventListener('click', getAbsence);
+    daysTag.addEventListener('click', showAbsenceData);
     selectedOption.innerHTML = "<i class='bx bxs-chevron-down' id='arrow-icon'></i>";  
     options.style.display = 'none';
     valueDiv.style.display = 'none';
@@ -1785,6 +1802,7 @@ function returnToDefaultView() {
 
     // Remove "remove-" from class names
     const days = daysTag.querySelectorAll('li');
+    const currentDay = daysTag.querySelector('.active');
     days.forEach(day => {
         day.classList.forEach(cls => {
             if (cls.startsWith('remove-')) {
@@ -1804,6 +1822,10 @@ function returnToDefaultView() {
             if (arc2) {
                 arc2.remove();
             }
+            if (day.classList.contains('active') && cls.startsWith('edit-startenddate-')) {
+                currentDay.style.color = 'black';
+                currentDay.style.fontWeight = '500';
+            } 
         });
     });
 
@@ -1884,7 +1906,7 @@ function editAbsenceType() {
         } 
       });
 
-      for (let i = 1; i <= 13; i++) {
+      for (let i = 1; i <= 16; i++) {
         const style = `
           .color-circle-${i} {
             background: var(--absence-${i});
@@ -1896,12 +1918,6 @@ function editAbsenceType() {
     .catch(error => console.error('Error fetching absence types:', error));
 }
 
-// Date format validation before updating the absence
-function isValidDateFormat(dateString) {
-    const regex = /^\d{4}-\d{2}-\d{2}$/;
-    return regex.test(dateString);
-}
-
 //Send request to update the absence
 function updateAbsence(absence_id) {
         const absenceType = document.querySelector('.absence_type').value;
@@ -1910,42 +1926,58 @@ function updateAbsence(absence_id) {
         var noteValue = document.getElementById('notes').value;
         const value = document.getElementById('absence_value').value;
 
+        function formatSingleDigit(value) {
+            // Add a leading zero if the value is a single digit
+            return value < 10 ? `0${value}` : value;
+        }
+          
+        const formattedEndDate = formatSingleDigit(endDate);  //So the Safari converted date correctly
+        const formattedStartDate = formatSingleDigit(startDate);
+
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        const currentMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+
+        const startDateValue = new Date(`${currentYear}-${currentMonth}-${formattedStartDate}`);
+        const endDateValue = new Date(`${currentYear}-${currentMonth}-${formattedEndDate}`);
+        
         // Check if all fields are filled
         if (startDate === "" && endDate === "")  {
             errortxtDiv.style.display = "flex";
             errortxt.innerText = vocabulary.fill_dates[currentLang];
             return;  
-        } else if (startDate === "") {
+        } else if (startDate === "" || startDate === "0") {
             errortxtDiv.style.display = "flex";
             errortxt.innerText = vocabulary.fill_start[currentLang];
             return;
-        } else if (endDate === "") {
+        } else if (endDate === "" || endDate === "0") {
             errortxtDiv.style.display = "flex";
             errortxt.innerText = vocabulary.fill_end[currentLang];
-            return;  
+            return;   
+        } else if (startDateValue > endDateValue) {
+            errortxtDiv.style.display = "flex";
+            errortxt.innerText = vocabulary.wrong_start[currentLang];
+            return;   
         } else if (absenceType === 13 && value === "") {
             errortxtDiv.style.display = "flex";
             errortxt.innerText = vocabulary.fill_overtime[currentLang];
             return;
         } else if (errortxtDiv.style.display === "flex" && errortxt.innerText != "") {
             return;
-        } else if (!isValidDateFormat(startDate) || !isValidDateFormat(endDate)) {
-            errortxtDiv.style.display = "flex";
-            errortxt.innerText = vocabulary.invalid_date_format[currentLang];
-            return;
         } else {
             errortxtDiv.style.display = "none";
             errortxt.innerText = "";
-            const token = localStorage.getItem('token');
 
             if (noteValue.trim() === "") {
-                noteValue = null;
+                noteValue = "";
             }
 
+            const startDateValue = `${currentYear}-${currentMonth}-${startDate}`;
+            const endDateValue = `${currentYear}-${currentMonth}-${endDate}`;
             const updatedAbsenceData = {
                 absenceType: parseInt(absenceType),
-                start_date: startDate,
-                end_date: endDate,
+                start_date: startDateValue,
+                end_date: endDateValue,
                 person_id: selectedUserId,
                 value: parseInt(value),
                 note: noteValue
@@ -2014,3 +2046,34 @@ function versionControl() {
     })
     .catch(error => console.error('Error:', error));
 }
+
+// Function to check for user activity
+function checkUserActivity() {
+  var lastActivityTime = localStorage.getItem('lastActivityTime');
+
+  if (!lastActivityTime) {
+    localStorage.setItem('lastActivityTime', localStorage.getItem('loginTime'));
+    lastActivityTime = localStorage.getItem('loginTime');
+  }
+
+  var currentTime = new Date().getTime();
+
+  // Calculate the time difference in milliseconds
+  var timeDifference = currentTime - lastActivityTime;
+
+  // If more than 11 minutes pass without activity, clear localStorage and redirect
+  if (timeDifference > 11 * 60 * 1000) {
+    localStorage.clear();
+    window.location.href = "/";
+    localStorage.setItem('expired', true);
+  }
+}
+
+// Set up a timer to check for user activity every second
+setInterval(function () {
+  checkUserActivity();
+}, 1000);
+
+document.addEventListener('click', function () {
+  localStorage.setItem('lastActivityTime', new Date().getTime());
+});

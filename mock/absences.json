@@ -1,65 +1,82 @@
-[{
-  "name": "Ikgadējais apmaksātais atvaļinājums",
-  "value": 1,
-  "short_name": "IA"
-},
-{
-  "name": "Bezalgas atvaļinājums",
-  "value": 2,
-  "short_name": "BA"
-},
-{
-  "name": "Darba nespēja (slim., karant. u.c.) (a)",
-  "value": 3,
-  "short_name": "DN(b)"
-},
-{
-  "name": "Darba nespēja (slim., karant. u.c.) (b)",
-  "value": 4,
-  "short_name": "DN(b)"
-},
-{
-  "name": "Atvaļinājums sakarā ar grūtniecību",
-  "value": 5,
-  "short_name": "ASG"
-},
-{
-  "name": "Mācību atvaļinājums",
-  "value": 6,
-  "short_name": "MA"
-},
-{
-  "name": "Darbā neierašanās gadījumi",
-  "value": 7,
-  "short_name": "DNG"
-},
-{
-  "name": "Paternitātes atvaļinājums",
-  "value": 8,
-  "short_name": "PA"
-},
-{
-  "name": "Atļauts darba kavējums, sakarā ar radinieka nāvi",
-  "value": 9,
-  "short_name": "ADK"
-},
-{
-  "name": "Valsts svētki",
-  "value": 10,
-  "short_name": "VS"
-},
-{
-  "name": "Bērna kopšanas atvaļinājums",
-  "value": 11,
-  "short_name": "BKA"
-},
-{
-  "name": "Komandējums",
-  "value": 12,
-  "short_name": "K"
-},
-{
-  "name": "Virsstundas",
-  "value": 13,
-  "short_name": "V"
-}]
+[
+  {
+    "name": "Ikgadējais apmaksātais atvaļinājums",
+    "value": 1,
+    "short_name": "IA"
+  },
+  {
+    "name": "Bezalgas atvaļinājums",
+    "value": 2,
+    "short_name": "BA"
+  },
+  {
+    "name": "Darba nespēja (slim., karant. u.c.) (a)",
+    "value": 3,
+    "short_name": "DN(b)"
+  },
+  {
+    "name": "Darba nespēja (slim., karant. u.c.) (b)",
+    "value": 4,
+    "short_name": "DN(b)"
+  },
+  {
+    "name": "Atvaļinājums sakarā ar grūtniecību",
+    "value": 5,
+    "short_name": "ASG"
+  },
+  {
+    "name": "Mācību atvaļinājums",
+    "value": 6,
+    "short_name": "MA"
+  },
+  {
+    "name": "Darbā neierašanās gadījumi",
+    "value": 7,
+    "short_name": "DNG"
+  },
+  {
+    "name": "Paternitātes atvaļinājums",
+    "value": 8,
+    "short_name": "PA"
+  },
+  {
+    "name": "Atļauts darba kavējums, sakarā ar radinieka nāvi",
+    "value": 9,
+    "short_name": "ADK"
+  },
+  {
+    "name": "Valsts svētki",
+    "value": 10,
+    "short_name": "VS"
+  },
+  {
+    "name": "Bērna kopšanas atvaļinājums",
+    "value": 11,
+    "short_name": "BKA"
+  },
+  {
+    "name": "Komandējums",
+    "value": 12,
+    "short_name": "K"
+  },
+  {
+    "name": "Virsstundas",
+    "value": 13,
+    "short_name": "V"
+  },
+  {
+    "name": "Papild",
+    "value": 14,
+    "short_name": "P"
+  },
+  {
+    "name": "Bernam",
+    "value": 15,
+    "short_name": "B"
+  },
+  {
+    "name": "Atval",
+    "value": 16,
+    "short_name": "A"
+  }
+]

@@ -1,9 +1,9 @@
-// window.addEventListener('pageshow', function(event) {
-//   if(localStorage.getItem('token')) {
-//       window.location.href = '/homepage';
-//     } 
+window.addEventListener('pageshow', function(event) {
+  if(localStorage.getItem('token')) {
+      window.location.href = '/templates/homepage.html';
+    } 
   
-// });
+});
 
 // Login by clicking on Enter key
 document.addEventListener("keypress", function(event) {
