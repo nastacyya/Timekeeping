@@ -420,10 +420,9 @@ body {
 }
 
 .days li.active::before {
-    border: 2px dashed var(--bg-purple);
+    border: 3px dashed var(--bg-purple);
     height: 74px;
     width: 74px;
-
 }
 .days.hoverable li:not(.inactive):hover{
     cursor: pointer !important;
@@ -717,6 +716,7 @@ input[type="number"] {
 
 input[type="number"]::-webkit-inner-spin-button:hover,
 input[type="number"]::-webkit-inner-spin-button:active{
+    box-shadow: 0 0 2px rgb(37, 37, 37, 0.5);
     opacity: .8;
 }
 
@@ -956,8 +956,8 @@ input[type="number"]::-webkit-inner-spin-button:active{
         width: 60px;
     }
     .days li.active::before {
-        height: 56px !important;
-        width: 56px !important;
+        height: 54px !important;
+        width: 54px !important;
     }
     .info-text p, .form-container button {
         font-size: 15px;
@@ -1102,8 +1102,8 @@ input[type="number"]::-webkit-inner-spin-button:active{
         width: 48px !important;
     }
     .days li.active::before {
-        height: 46px !important;
-        width: 46px !important;
+        height: 44px !important;
+        width: 44px !important;
     }
     .calendar .weeks {
         padding-bottom: 15px;
@@ -1179,8 +1179,8 @@ input[type="number"]::-webkit-inner-spin-button:active{
         width: 58px !important;
     }
     .days li.active::before {
-        height: 56px !important;
-        width: 56px !important;
+        height: 54px !important;
+        width: 54px !important;
     }
 
     .form-container {
@@ -1283,8 +1283,8 @@ input[type="number"]::-webkit-inner-spin-button:active{
         width: 43px !important;
     }
     .days li.active::before {
-        height: 41px !important;
-        width: 41px !important;
+        height: 39px !important;
+        width: 39px !important;
     }
     .form-container input, textarea, .absence_type{
         font-size: 12px;

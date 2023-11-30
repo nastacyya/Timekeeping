@@ -35,6 +35,12 @@
     "start_date": "2023-11-20",
     "end_date": "2023-11-23",
     "person_id": 8
+    },
+    {
+    "absenceType": 14,
+    "start_date": "2023-11-27",
+    "end_date": "2023-11-30",
+    "person_id": 9
     }
     
 ]

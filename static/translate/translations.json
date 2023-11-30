@@ -218,6 +218,10 @@
     "invalid_date": {
       "ru": "Недействительная дата",
       "en": "Invalid date"
+    },
+    "session": {
+      "ru": "Ваша сессия истекла. Пожалуйста, войдите заново.",
+      "en": "Your session has expired. Please login again."
     }
 
 }

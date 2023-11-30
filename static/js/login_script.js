@@ -1,8 +1,14 @@
+const username = document.getElementById('login');
+const password = document.getElementById('passw');
+
 window.addEventListener('pageshow', function(event) {
   if(localStorage.getItem('token')) {
       window.location.href = '/templates/homepage.html';
     } 
-  
+  username.value = "";
+  password.value = "";
+  localStorage.removeItem('lastActivityTime');
+  localStorage.removeItem('loginTime');
 });
 
 // Login by clicking on Enter key
@@ -15,6 +21,7 @@ document.addEventListener("keypress", function(event) {
 
 let currentLanguage = 'ru'; // Установите текущий язык (может быть, например, 'ru' или 'en')
 let vocabulary; // Declare a variable to store translations
+var errorText = document.getElementById("errorText");
 
 document.addEventListener('DOMContentLoaded', function() {
   fetch('/static/translate/translations.json')  
@@ -24,21 +31,36 @@ document.addEventListener('DOMContentLoaded', function() {
         applyTranslations(); 
       })
       .catch(error => console.error('Error:', error));
+
+    username.addEventListener('input', () => {
+      username.style.border = "2px solid #ccc";
+      password.style.border = "2px solid #ccc";
+      errorText.innerText = "";
+    });
+    password.addEventListener('input', () => {
+      username.style.border = "2px solid #ccc";
+      password.style.border = "2px solid #ccc";
+      errorText.innerText = "";
+    })
 });
 
 function applyTranslations() {
   document.getElementById('title').textContent = vocabulary.title[currentLanguage];
-  document.getElementById('login').placeholder = vocabulary.username[currentLanguage];
-  document.getElementById('passw').placeholder = vocabulary.password[currentLanguage];
+  username.placeholder = vocabulary.username[currentLanguage];
+  password.placeholder = vocabulary.password[currentLanguage];
   document.getElementById('submit').textContent = vocabulary.submit[currentLanguage];
+  const expired = localStorage.getItem('expired');
+  
+  if(expired) {
+    errorText.innerText = vocabulary.session[currentLanguage];
+    localStorage.removeItem('expired');
+  } else {
+    errorText.innerText = "";
+  }
 }
 
 //Login function
 function submitForm() {
-    const username = document.getElementById('login');
-    const password = document.getElementById('passw');
-    var errorText = document.getElementById("errorText");
-
     // Check if login or password is empty
     if (username.value === "" || password.value === "") {
       errorText.innerText = vocabulary.fill_in[currentLanguage];
@@ -72,7 +94,7 @@ function submitForm() {
                       if (data.user_id === user.user_id) {
                         console.log(`token: ${user.token}`);
                         localStorage.setItem('token', user.token);
-                        window.location.href = '/templates/homepage.html';
+                        window.location.href = '';
                       }
                     })
                      

@@ -565,7 +565,6 @@ function workerRolePermissions(userRole) {
                             li.innerHTML = `<strong>${employee.givenName} ${employee.sn}</strong>`;
                             
                             markUserAbsencesOnCalendar(selectedUserId);
-                            daysTag.addEventListener('click', showAbsenceData);
                             sendUserAbsences();
                         } else {
                             li.innerHTML = `${employee.givenName} ${employee.sn}`;
@@ -605,7 +604,6 @@ function workerRolePermissions(userRole) {
                         if (employee._id === selectedUserId ) {
                             
                             markUserAbsencesOnCalendar(selectedUserId);
-                            daysTag.addEventListener('click', showAbsenceData);
                             sendUserAbsences();
 
                             li.classList.add('employee');
@@ -639,7 +637,6 @@ function workerRolePermissions(userRole) {
                                 
                                 markUserAbsencesOnCalendar(selectedUserId);
                                 sendUserAbsences();
-                                daysTag.addEventListener('click', showAbsenceData);
 
                                 fetch('/mock/users.json')
                                 .then(response => response.json())
@@ -673,6 +670,7 @@ function workerRolePermissions(userRole) {
                 
         });
     });
+    daysTag.addEventListener('click', showAbsenceData);
 }
 
 //Permissions for role 3, 4
@@ -818,11 +816,10 @@ function supervisorRolePermissions(userRole) {
                     const employeeCount = subMenu.querySelectorAll('a').length;
                     const dropdown = subMenu.parentElement;
                     dropdown.classList.add('disable-hover-effects');
-                    const departmentName = dropdown.querySelector('.sub-btn');
 
-                if (dropdown) {
-                    dropdown.style.marginBottom = (subMenuHeight + (employeeCount * 50)) + 'px';
-                }
+                    if (dropdown) {
+                        dropdown.style.marginBottom = (subMenuHeight + (employeeCount * 50)) + 'px';
+                    }
                 } else {
                     subMenu.style.display = 'none';
                     iconElement.classList.remove('rotate');
@@ -934,41 +931,66 @@ async function markUserAbsencesOnCalendar(userId) {
     fetch('/mock/user_absences.json')
     .then(response => response.json())
     .then(absences => {
-        absences
-            .filter(absence => absence.person_id === userId)
-            .forEach(currentUserAbsence => {
+        const userAbsences = absences.filter(absence => absence.person_id === userId);
+        if (!userAbsences || userAbsences.length === 0) {
+            currentDay.style.cursor = 'default';
+            const style = `
+                    .days li.active::before {
+                        cursor: default;
+                    }
+                    `;
+            styleSheet.insertRule(style, styleSheet.cssRules.length);
+        } else {
+            userAbsences.forEach(currentUserAbsence => {
             const startDate = new Date(currentUserAbsence.start_date);
             startDate.setHours(0, 0, 0, 0); // Set hours, minutes, seconds to zero
             const endDate = new Date(currentUserAbsence.end_date);
             endDate.setHours(0, 0, 0, 0); 
             const absenceValue = currentUserAbsence.absenceType;
-           
-            days.forEach(day => {
-                const dayDate = new Date(currYear, currMonth, parseInt(day.innerText));
-                if (dayDate >= startDate && dayDate <= endDate && !day.classList.contains('inactive')) {
-                    
-                    if (dayDate.getTime() === startDate.getTime()) {
-                        day.classList.add(`start-${absenceValue}`);
-                    } else if (dayDate.getTime() === endDate.getTime()) {
-                        day.classList.add(`end-${absenceValue}`);
-                    } else {
-                        day.classList.add(`absence-${absenceValue}`);
-                    }
-                    if (startDate.getTime() === endDate.getTime()) {
-                        day.classList.remove(`start-${absenceValue}`);
-                        day.classList.remove(`end-${absenceValue}`);
-                        day.classList.add(`startenddate-${absenceValue}`);
-                    }
-                    day.classList.forEach(cls => {
-                        if (day.classList.contains('active') && (cls.startsWith('startenddate-') || cls.startsWith('start-') || cls.startsWith('end-') || cls.startsWith('absence-'))) {
-                            currentDay.style.cursor = 'pointer';
+        
+                days.forEach(day => {
+                    const dayDate = new Date(currYear, currMonth, parseInt(day.innerText));
+                    if (dayDate >= startDate && dayDate <= endDate && !day.classList.contains('inactive')) {
+                        
+                        if (dayDate.getTime() === startDate.getTime()) {
+                            day.classList.add(`start-${absenceValue}`);
+                        } else if (dayDate.getTime() === endDate.getTime()) {
+                            day.classList.add(`end-${absenceValue}`);
                         } else {
-                            currentDay.style.cursor = 'default';
+                            day.classList.add(`absence-${absenceValue}`);
                         }
-                    });
-                }
+                        if (startDate.getTime() === endDate.getTime()) {
+                            day.classList.remove(`start-${absenceValue}`);
+                            day.classList.remove(`end-${absenceValue}`);
+                            day.classList.add(`startenddate-${absenceValue}`);
+                        }
+                    }
+                    const classArray = Array.from(day.classList);
+                    // Check if the day is 'active' and contains the specified classes
+                    const hasActiveClass = classArray.includes('active');
+                    const hasStartOrAbsenceClass = classArray.some(cls => cls.startsWith('startenddate-') || cls.startsWith('start-') || cls.startsWith('absence-') || cls.startsWith('end-'));
+
+                    if (hasActiveClass && hasStartOrAbsenceClass) {
+                        currentDay.style.cursor = "pointer";
+                        const style = `
+                        .days li.active::before {
+                            cursor: pointer;
+                        }
+                        `;
+                        styleSheet.insertRule(style, styleSheet.cssRules.length);
+                    } 
+                    if (hasActiveClass && !hasStartOrAbsenceClass) {
+                        currentDay.style.cursor = "default";
+                        const style = `
+                        .days li.active::before {
+                            cursor: default;
+                        }
+                        `;
+                        styleSheet.insertRule(style, styleSheet.cssRules.length);
+                    } 
+                });
             });
-        });
+        }
     });
 
 
@@ -1946,11 +1968,11 @@ function updateAbsence(absence_id) {
             errortxtDiv.style.display = "flex";
             errortxt.innerText = vocabulary.fill_dates[currentLang];
             return;  
-        } else if (startDate === "" || startDate === "0") {
+        } else if (startDate === "" || startDate === "0" || startDate === "00") {
             errortxtDiv.style.display = "flex";
             errortxt.innerText = vocabulary.fill_start[currentLang];
             return;
-        } else if (endDate === "" || endDate === "0") {
+        } else if (endDate === "" || endDate === "0" || endDate === "00") {
             errortxtDiv.style.display = "flex";
             errortxt.innerText = vocabulary.fill_end[currentLang];
             return;   
@@ -2064,7 +2086,7 @@ function checkUserActivity() {
   // If more than 11 minutes pass without activity, clear localStorage and redirect
   if (timeDifference > 11 * 60 * 1000) {
     localStorage.clear();
-    window.location.href = "/";
+    window.location.href = "/templates/login.html";
     localStorage.setItem('expired', true);
   }
 }
