@@ -330,6 +330,7 @@ body {
     justify-content: space-between;
     padding: 25px 25px 10px;
     user-select: none;
+    -webkit-user-select: none;
 }
 
 .wrapper header .current-month {
@@ -375,6 +376,7 @@ body {
     position: relative;
     font-size: 20px;
     user-select: none;
+    -webkit-user-select: none;
 }
 
 .calendar .weeks {
@@ -612,6 +614,7 @@ textarea {
     padding: 10px;
     cursor: pointer;
     user-select: none;
+    -webkit-user-select: none;
     font-size: 14px;
     display: flex;
     flex-direction: row;

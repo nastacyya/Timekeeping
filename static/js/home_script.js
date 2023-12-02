@@ -554,9 +554,10 @@ function workerRolePermissions(userRole) {
                 .then(response => response.json())
                 .then(employees => {
                 const ul = document.createElement('ul');
-                employees.sort((a, b) => a.sn.localeCompare(b.sn));
+                const depEmployees = employees.filter(employee => employee.department === department_number);
+                depEmployees.sort((a, b) => a.sn.localeCompare(b.sn));
                 // Populate the list with employees
-                employees.forEach(employee => {
+                depEmployees.forEach(employee => {
                     const li = document.createElement('li');
 
                     if(userRole === 1) {                    //If userRole is 1, user can only see and edit his calendar
@@ -579,7 +580,7 @@ function workerRolePermissions(userRole) {
                             fetch('/mock/users.json')
                             .then(response => response.json())
                             .then(users => {
-                                const userFromDB = users.find(user => user._id === user_id);
+                                const userFromDB = users.find(user => user._id === selectedUserId);
                                 const user_role = userFromDB.role; 
                                 
                                 // Check user role here and adjust button visibility
@@ -2059,16 +2060,6 @@ window.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('resize', moveInfoText);
 });
 
-function versionControl() {
-    const back_v = document.getElementById("back-v");
-    fetch('/mock/version.json')
-    .then(response => response.json())
-    .then(data => {
-        back_v.textContent = "Back " + data.version;
-    })
-    .catch(error => console.error('Error:', error));
-}
-
 // Function to check for user activity
 function checkUserActivity() {
   var lastActivityTime = localStorage.getItem('lastActivityTime');
@@ -2084,10 +2075,10 @@ function checkUserActivity() {
   var timeDifference = currentTime - lastActivityTime;
 
   // If more than 11 minutes pass without activity, clear localStorage and redirect
-  if (timeDifference > 11 * 60 * 1000) {
+  if (timeDifference > 5 * 60 * 1000) {
     localStorage.clear();
-    window.location.href = "/templates/login.html";
     localStorage.setItem('expired', true);
+    window.location.href = "/templates/login.html";
   }
 }
 
