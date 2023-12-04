@@ -19,7 +19,7 @@ document.addEventListener("keypress", function(event) {
   }
 });
 
-let currentLanguage = 'ru'; // Установите текущий язык (может быть, например, 'ru' или 'en')
+let currentLanguage = 'en'; // Установите текущий язык (может быть, например, 'ru' или 'en')
 let vocabulary; // Declare a variable to store translations
 var errorText = document.getElementById("errorText");
 
@@ -84,16 +84,16 @@ function submitForm() {
                 fetch('/mock/creds.json')  
                 .then(response => response.json())
                 .then(data => {
-                  if (username.value === data.username && password.value === data.password) {
-                    localStorage.setItem('user_id', data.user_id);
-                   
-                    console.log(`user_id: ${data.user_id}`);
+                  const existing = data.find(access => access.username === username.value);
+                  if (existing) {
+                    localStorage.setItem('user_id', existing.user_id);
+
                     fetch('/mock/token.json')  
                     .then(response => response.json())
-                    .then(user => {
-                      if (data.user_id === user.user_id) {
-                        console.log(`token: ${user.token}`);
-                        localStorage.setItem('token', user.token);
+                    .then(tokens => {
+                      const user_found = tokens.find(token => token.user_id === existing.user_id);
+                      if (user_found) {
+                        localStorage.setItem('token', user_found.token);
                         window.location.href = '';
                       }
                     })
@@ -105,42 +105,6 @@ function submitForm() {
                   }
                 })
                 .catch(error => console.error('Error:', error));
-
-/* 
-                try {
-                    const data = await response.json();
-            
-                    if (data.token && data.user_id) {
-                      
-                      localStorage.setItem('token', data.token);
-                      localStorage.setItem('user_id', data.user_id);
-                      const response2 = await fetch(`/api/users/${data.user_id}`, {
-                        headers: {
-                            'Authorization': "Bearer " + data.token
-                        }
-                    });
-                
-                    try {
-                        const role_data = await response2.json();
-                        const userRole = role_data.role; // API returns the user's role in a field called 'role'
-                        localStorage.setItem('user_role', userRole);
-                        // Check user roles permissions
-                        if (userRole === 5) {
-                          window.location.href = '/admin';
-                        } else if (userRole !== 5) {
-                          window.location.href = '/homepage';
-                        }
-                        
-                      } catch (error) {
-                          console.error('Error:', error);
-                          return null;
-                      }
-                      
-                   
-                } catch (error) {
-                    console.error('Error:', error);
-                } 
-                 */
         }
                    
 }

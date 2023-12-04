@@ -5,7 +5,7 @@ window.addEventListener('pageshow', function(event) {
     } 
 });
 
-let currentLang = 'ru'; // Установите текущий язык ('ru' или 'en')
+let currentLang = 'en'; // Установите текущий язык ('ru' или 'en')
 
 const daysTag = document.querySelector(".days");
 currentDate = document.querySelector(".current-month");
@@ -51,14 +51,14 @@ const token = localStorage.getItem('token');
 let cachedAbsenceTypes = null;
 let cachedUserAbsences = null;
 let cachedData = {};
-let absenceId; //id for deleting
+//let absenceId; //id for deleting
 let selectedStartDate = null;
 let selectedEndDate = null;
 let selectedUserId = null;  // a global variable to store the selected user ID
 let isAddingMode = false;
 let isDeleteMode = false; 
 let isEditMode = false;
-let absence_id; //id for editing
+//let absence_id; //id for editing
 let vocabulary; // A variable to store translations
 
 function toggleSideNav() {
@@ -899,16 +899,10 @@ async function sendUserAbsences() {
             if (note.trim() === "") {
                 note = "";
             }
-            
-            fetch('/mock/saved_absence.json')
-            .then(response => response.json())
-            .then(data => {
-                answer = data.message;
-                alert(`${answer}: 
+            alert(`Successfully saved absence:
 ${absenceType} ${startDate} ${endDate} ${selectedUserId} ${note} ${value}`);
                 location.reload();
-            })
-            .catch(error => console.error('Error saving user absence:', error));
+            
         }
     };
 
@@ -1041,7 +1035,6 @@ document.addEventListener ('DOMContentLoaded', function() {
     colorLegend();
     renderCalendar();
     editAbsenceType();
-    versionControl();
     startInput.setAttribute('readonly', 'true');
     endInput.setAttribute('readonly', 'true');
     overtimeValue.setAttribute('readonly', 'true');
@@ -1263,7 +1256,7 @@ document.addEventListener ('DOMContentLoaded', function() {
         });
 
         deleteAbsenceBtn.addEventListener('click', () => {
-                deleteAbsence(absenceId);  
+                deleteAbsence();  
         });
 
         editBtn.addEventListener('click', function() {
@@ -1336,7 +1329,7 @@ document.addEventListener ('DOMContentLoaded', function() {
         });
 
         updateBtn.addEventListener('click', function() {
-            updateAbsence(absence_id);
+            updateAbsence();
         });   
 
 });
@@ -1442,7 +1435,7 @@ function processAbsenceData(dayDate, target, startInput, endInput, absenceTypeIn
                 overtimeValue.value = "";
             }
 
-            absence_id = matchingAbsence._id;
+            //absence_id = matchingAbsence._id;
             absenceTypeInput.style.cursor = "pointer";
             absenceTypeInput.addEventListener('click', displayList);
             absenceTypeInput.innerHTML = matchingType ? `<span class="color-circle-${matchingType.value}"></span><p>${matchingType.name}</p>` + "<i class='bx bxs-chevron-down' id='selected-arrow'></i>" : "";
@@ -1454,7 +1447,7 @@ function processAbsenceData(dayDate, target, startInput, endInput, absenceTypeIn
                 `;
             styleSheet.insertRule(style, styleSheet.cssRules.length);
             styleSelectedEditAbsence(matchingAbsence);
-            return absence_id;
+            //return absence_id;
               
         } else {
             startInput.value = matchingAbsence.start_date.split(' ')[0]; 
@@ -1661,8 +1654,9 @@ async function getAbsence(event) {
                 const absencesResponse = await fetch('/mock/user_absences.json');
                 const absences = await absencesResponse.json();
                 const userAbsences = absences.filter(absence => absence.person_id === selectedUserId);
+         
                 cachedData[selectedUserId] = { absences: userAbsences };
-
+                
                 const typesResponse = await fetch('/mock/absences.json');
                 const types = await typesResponse.json();
                 cachedAbsenceTypes = types;
@@ -1676,7 +1670,7 @@ async function getAbsence(event) {
                 endDate.setHours(0, 0, 0, 0); 
                 return dayDate >= startDate && dayDate <= endDate;
             });
-
+            
                 if (matchingAbsence && isDeleteMode === true && !target.classList.contains('inactive')) { 
 
                     if (selectedAbsenceValue !== null ) {
@@ -1697,7 +1691,8 @@ async function getAbsence(event) {
                     endDate.setHours(0, 0, 0, 0); 
 
                     selectedAbsenceValue = matchingAbsence.absenceType;
-                    absenceId = matchingAbsence._id;
+                    //absenceId = matchingAbsence._id;
+                    
                     deleteAbsenceBtn.style.display = 'block';
                     
                     // Add the "remove-" at the beginning of the selected absence li elements
@@ -1752,7 +1747,7 @@ async function getAbsence(event) {
                     styleSheet.insertRule(startStyle, styleSheet.cssRules.length);
                     styleSheet.insertRule(endStyle, styleSheet.cssRules.length);
                     
-                    return absenceId; //absence Id which is passed to the deleteAbsence() function
+                    //return absenceId; //absence Id which is passed to the deleteAbsence() function
                 } else {
                     if (selectedAbsenceValue !== null) {
                         // Clear existing markings for the previously selected absence
@@ -1775,18 +1770,9 @@ async function getAbsence(event) {
 }                  
 
 // Delete an absence record
-function deleteAbsence(absenceId) {
-    fetch('/mock/user_absences.json')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Error deleting absence');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Absence deleted successfully', data);
-        location.reload(); 
-    })
+function deleteAbsence() {
+    alert('Successfully deleted absence');
+    location.reload();
 }
 
 // Return to main view when switching to another employee
@@ -1942,12 +1928,12 @@ function editAbsenceType() {
 }
 
 //Send request to update the absence
-function updateAbsence(absence_id) {
+function updateAbsence() {
         const absenceType = document.querySelector('.absence_type').value;
         const startDate = document.getElementById('absence_start').value;
         const endDate = document.getElementById('absence_end').value;
         var noteValue = document.getElementById('notes').value;
-        const value = document.getElementById('absence_value').value;
+        var value = document.getElementById('absence_value').value;
 
         function formatSingleDigit(value) {
             // Add a leading zero if the value is a single digit
@@ -1995,31 +1981,16 @@ function updateAbsence(absence_id) {
                 noteValue = "";
             }
 
-            const startDateValue = `${currentYear}-${currentMonth}-${startDate}`;
-            const endDateValue = `${currentYear}-${currentMonth}-${endDate}`;
-            const updatedAbsenceData = {
-                absenceType: parseInt(absenceType),
-                start_date: startDateValue,
-                end_date: endDateValue,
-                person_id: selectedUserId,
-                value: parseInt(value),
-                note: noteValue
-            };
+            if(absenceType !== 13 && value) {
+                value = "";
+            }
 
-            fetch(`/api/user_absences/${absence_id}`, {
-                method: 'PUT',
-                headers: {
-                    "Content-Type": "application/json",
-                    'Authorization': "Bearer " + token
-                },
-    
-                body: JSON.stringify(updatedAbsenceData)
-            })
-            .then(response => response.json())
-            .then(data => {
+            const startDateValue = `${currentYear}-${currentMonth}-${formattedStartDate}`;
+            const endDateValue = `${currentYear}-${currentMonth}-${formattedEndDate}`;
+
+            alert(`Successfully updated absence:
+${startDateValue} ${endDateValue} ${absenceType} ${noteValue} ${value}`);
                 location.reload();
-            })
-            .catch(error => console.error('Error updating user absence:', error));
         }
 }
 
