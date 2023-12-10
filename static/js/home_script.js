@@ -5,7 +5,8 @@ window.addEventListener('pageshow', function(event) {
     } 
 });
 
-let currentLang = 'en'; // Установите текущий язык ('ru' или 'en')
+let currentLang = 'en'; // set current language ('ru' or 'en')
+var typeCount = 16;  //a variable that stores number of existing absence types in the database
 
 const daysTag = document.querySelector(".days");
 currentDate = document.querySelector(".current-month");
@@ -198,7 +199,7 @@ function colorLegend() {
           });
     })
 
-    for (let i = 1; i <= 16; i++) {
+    for (let i = 1; i <= typeCount; i++) {
         const style = `
           .color-${i} {
             background: var(--absence-${i});
@@ -466,7 +467,7 @@ function absenceTypeSelect() {
         }
       });
 
-      for (let i = 1; i <= 16; i++) {
+      for (let i = 1; i <= typeCount; i++) {
         const style = `
           .color-circle-${i} {
             background: var(--absence-${i});
@@ -919,7 +920,7 @@ async function markUserAbsencesOnCalendar(userId) {
     const currentDay = daysTag.querySelector('.active');
     // Clear existing markings on the calendar
     days.forEach(day => {
-        for (let i = 1; i <= 16; i++) {
+        for (let i = 1; i <= typeCount; i++) {
             day.classList.remove(`start-${i}`,`end-${i}`,`absence-${i}`, `startenddate-${i}`);
         }
     });
@@ -989,7 +990,7 @@ async function markUserAbsencesOnCalendar(userId) {
     });
 
 
-    for (let i = 1; i <= 16; i++) {
+    for (let i = 1; i <= typeCount; i++) {
     const startEndStyle = `
         .start-${i}::before, .end-${i}::before, .startenddate-${i}::before {
             background: var(--absence-${i});
@@ -1642,7 +1643,8 @@ function clearAbsenceDataForm() {
     valueDiv.style.display = "none"; 
 }
 
-let selectedAbsenceValue = null;
+let selectedAbsenceValue = null;  //store the absence type of the selected absence
+
 // Function to get absence data to delete it
 async function getAbsence(event) {
     const days = daysTag.querySelectorAll('li');
@@ -1915,7 +1917,7 @@ function editAbsenceType() {
         } 
       });
 
-      for (let i = 1; i <= 16; i++) {
+      for (let i = 1; i <= typeCount; i++) {
         const style = `
           .color-circle-${i} {
             background: var(--absence-${i});
