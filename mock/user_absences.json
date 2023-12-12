@@ -1,12 +1,5 @@
 [
   {
-    "_id": 1,
-    "absenceType": 6,
-    "start_date": "2023-12-15",
-    "end_date": "2023-12-17",
-    "person_id": 2
-  },
-  {
     "_id": 2,
     "absenceType": 6,
     "start_date": "2023-11-02",
@@ -51,32 +44,23 @@
   },
   {
     "_id": 8,
-    "absenceType": 1,
-    "start_date": "2023-12-19",
-    "end_date": "2023-12-21",
-    "person_id": 2,
-    "note": "hello"
-  },
-  {
-    "_id": 9,
-    "absenceType": 13,
-    "start_date": "2023-12-22",
-    "end_date": "2023-12-23",
-    "person_id": 2,
-    "value": 2
+    "absenceType": 11,
+    "start_date": "2023-12-20",
+    "end_date": "2023-12-22",
+    "person_id": 4
   },
   {
     "_id": 10,
-    "absenceType": 3,
-    "start_date": "2023-12-27",
-    "end_date": "2023-12-28",
-    "person_id": 2
+    "absenceType": 2,
+    "start_date": "2023-12-14",
+    "end_date": "2023-12-15",
+    "person_id": 4
   },
   {
     "_id": 11,
-    "absenceType": 2,
-    "start_date": "2023-12-05",
-    "end_date": "2023-12-06",
-    "person_id": 2
+    "absenceType": 5,
+    "start_date": "2023-12-08",
+    "end_date": "2023-12-09",
+    "person_id": 4
   }
 ]

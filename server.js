@@ -192,25 +192,31 @@ app.delete('/api/user_absences/:id', (req, res) => {
     const absenceId = req.params.id;
    
     // Implement the logic to delete the absence with the specified ID
-    deleteAbsence(absenceId);
+    deleteAbsenceById(absenceId);
 
     res.json({ message: 'Absence deleted successfully' });
 });
 
 // Function to delete an absence from user_absences.json
-function deleteAbsence(absenceId) {
+function deleteAbsenceById(absenceId) {
+    try {
     // Read existing data
     const existingData = readUserAbsences();
 
     // Find the index of the absence with the given id
-    const index = existingData.findIndex(absence => absence._id === absenceId);
-    console.log(`${index}`)
+    const index = existingData.findIndex((absence) => absence._id === parseInt(absenceId));
     // If the absence is found, remove it from the array
     if (index !== -1) {
         existingData.splice(index, 1);
 
         // Save the updated data
         saveUserAbsences(existingData);
+        console.log(`Absence with _id ${absenceId} deleted successfully.`);
+    } else {
+        console.log(`Absence with _id ${absenceId} not found.`);
+    }
+    } catch (error) {
+        console.error('Error deleting absence:', error.message);
     }
 }
 

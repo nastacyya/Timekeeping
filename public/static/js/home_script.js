@@ -193,7 +193,7 @@ function colorLegend() {
         data.forEach(absenceType => {
             const absenceValue = absenceType.value;
             const listItem = document.createElement('li');
-            listItem.innerHTML = `<span class="color-${absenceValue}"></span><p>- ${absenceType.short_name}</p>`;
+            listItem.innerHTML = `<span class="circle-${absenceValue}"></span><p>- ${absenceType.short_name}</p>`;
             
             absencesList.appendChild(listItem);
           });
@@ -201,16 +201,12 @@ function colorLegend() {
 
     for (let i = 1; i <= typeCount; i++) {
         const style = `
-          .color-${i} {
+          .circle-${i} {
             background: var(--absence-${i});
-            height: 20px;
-            width: 20px;
-            border-radius: 50%;
-            display: block;
           }
         `;
         styleSheet.insertRule(style, styleSheet.cssRules.length);
-      }
+    }
 }
 
 //Choose dates and write them to the form
@@ -1799,7 +1795,7 @@ function deleteAbsence(absenceId) {
     })
     .then(response => response.json())
     .then(data => {
-        //location.reload();
+        window.location.reload(true);
     })
 }
 
@@ -2018,7 +2014,7 @@ function updateAbsence() {
 
             alert(`Successfully updated absence:
 ${startDateValue} ${endDateValue} ${absenceType} ${noteValue} ${value}`);
-                location.reload();
+            window.location.reload(true);
         }
 }
 
