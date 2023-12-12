@@ -159,37 +159,60 @@ app.post('/api/save_user_absence', (req, res) => {
 
     // Read existing data
     const existingData = readUserAbsences();
-
+    // Generate a new _id for the absence by taking the last _id and adding +1
+    const newId = existingData.length > 0 ? existingData[existingData.length - 1]._id + 1 : 1;
+    
     // Conditionally add note and value only if they are not null or empty
-    if (newData.note === "" && newData.value === null) {
-        existingData.push({
-            absenceType: newData.absenceType,
-            start_date: newData.start_date,
-            end_date: newData.end_date,
-            person_id: newData.person_id
-        });
-    } else if (newData.note === "" && newData.value !== null) {
-        existingData.push({
-            absenceType: newData.absenceType,
-            start_date: newData.start_date,
-            end_date: newData.end_date,
-            person_id: newData.person_id,
-            value: newData.person_id
-        });
-    } else if (newData.note !== "" && newData.value === null) {
-        existingData.push({
-            absenceType: newData.absenceType,
-            start_date: newData.start_date,
-            end_date: newData.end_date,
-            person_id: newData.person_id,
-            note: newData.note
-        });
+    const newAbsence = {
+        _id: newId,
+        absenceType: newData.absenceType,
+        start_date: newData.start_date,
+        end_date: newData.end_date,
+        person_id: newData.person_id
+    };
+
+    if (newData.note !== "") {
+        newAbsence.note = newData.note;
     }
+
+    if (newData.value !== null) {
+        newAbsence.value = newData.value;
+    }
+
+    existingData.push(newAbsence);
+    
     // Save the updated data
     saveUserAbsences(existingData);
 
     res.send(`${JSON.stringify(existingData, null, 2)}`);
 });
+
+// Example route to handle DELETE requests for deleting an absence
+app.delete('/api/user_absences/:id', (req, res) => {
+    const absenceId = req.params.id;
+   
+    // Implement the logic to delete the absence with the specified ID
+    deleteAbsence(absenceId);
+
+    res.json({ message: 'Absence deleted successfully' });
+});
+
+// Function to delete an absence from user_absences.json
+function deleteAbsence(absenceId) {
+    // Read existing data
+    const existingData = readUserAbsences();
+
+    // Find the index of the absence with the given id
+    const index = existingData.findIndex(absence => absence._id === absenceId);
+    console.log(`${index}`)
+    // If the absence is found, remove it from the array
+    if (index !== -1) {
+        existingData.splice(index, 1);
+
+        // Save the updated data
+        saveUserAbsences(existingData);
+    }
+}
 
 // Function to read user absences from the file
 function readUserAbsences() {

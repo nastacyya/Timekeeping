@@ -52,7 +52,7 @@ const token = localStorage.getItem('token');
 let cachedAbsenceTypes = null;
 let cachedUserAbsences = null;
 let cachedData = {};
-//let absenceId; //id for deleting
+var absenceId; //id for deleting
 let selectedStartDate = null;
 let selectedEndDate = null;
 let selectedUserId = null;  // a global variable to store the selected user ID
@@ -915,7 +915,7 @@ async function sendUserAbsences() {
                     value: parseInt(value),
                 }),
             })
-            .then(response => response.text())
+            .then(response => response.json())
             .then(message => {
                 console.log(message);
                 location.reload();
@@ -1277,7 +1277,7 @@ document.addEventListener ('DOMContentLoaded', function() {
         });
 
         deleteAbsenceBtn.addEventListener('click', () => {
-                deleteAbsence();  
+                deleteAbsence(absenceId);  
         });
 
         editBtn.addEventListener('click', function() {
@@ -1713,7 +1713,8 @@ async function getAbsence(event) {
                     endDate.setHours(0, 0, 0, 0); 
 
                     selectedAbsenceValue = matchingAbsence.absenceType;
-                    //absenceId = matchingAbsence._id;
+                    absenceId = matchingAbsence._id;
+                    console.log(`${absenceId}`)
                     
                     deleteAbsenceBtn.style.display = 'block';
                     
@@ -1769,7 +1770,7 @@ async function getAbsence(event) {
                     styleSheet.insertRule(startStyle, styleSheet.cssRules.length);
                     styleSheet.insertRule(endStyle, styleSheet.cssRules.length);
                     
-                    //return absenceId; //absence Id which is passed to the deleteAbsence() function
+                    return absenceId; //absence Id which is passed to the deleteAbsence() function
                 } else {
                     if (selectedAbsenceValue !== null) {
                         // Clear existing markings for the previously selected absence
@@ -1792,9 +1793,14 @@ async function getAbsence(event) {
 }                  
 
 // Delete an absence record
-function deleteAbsence() {
-    alert('Successfully deleted absence');
-    location.reload();
+function deleteAbsence(absenceId) {
+    fetch(`/api/user_absences/${absenceId}`, {
+        method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(data => {
+        //location.reload();
+    })
 }
 
 // Return to main view when switching to another employee
