@@ -21,6 +21,10 @@ app.get('/homepage', (req, res) => {
     res.redirect('/templates/homepage.html');
 });
 
+app.get('/admin', (req, res) => {
+    res.redirect('/templates/admin.html');
+});
+
 // New route to handle login logic
 app.post('/api/loginpass', (req, res) => {
     const { username, password } = req.body;
@@ -75,6 +79,24 @@ app.post('/api/loginpass', (req, res) => {
     });
 });
 
+app.get('/api/loginpass', (req, res) => {
+    fs.readFile(path.join(__dirname, 'mock', 'creds.json'), 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading creds.json:', err);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+
+        try {
+            const creds = JSON.parse(data);
+            res.json(creds);
+        } catch (error) {
+            console.error('Error parsing creds.json:', error);
+            res.status(500).send('Internal Server Error');
+        }
+    });
+});
+
 // New route to handle fetching absence types
 app.get('/api/absence_types', (req, res) => {
     // Read absence types from absence_types.json
@@ -96,7 +118,6 @@ app.get('/api/absence_types', (req, res) => {
 });
 
 app.get('/api/users', (req, res) => {
-    // Read absence types from absence_types.json
     fs.readFile(path.join(__dirname, 'mock', 'users.json'), 'utf8', (err, data) => {
         if (err) {
             console.error('Error reading users.json:', err);
@@ -105,8 +126,8 @@ app.get('/api/users', (req, res) => {
         }
 
         try {
-            const absenceTypes = JSON.parse(data);
-            res.json(absenceTypes);
+            const users = JSON.parse(data);
+            res.json(users);
         } catch (error) {
             console.error('Error parsing users.json:', error);
             res.status(500).send('Internal Server Error');
@@ -115,7 +136,6 @@ app.get('/api/users', (req, res) => {
 });
 
 app.get('/api/departments', (req, res) => {
-    // Read absence types from absence_types.json
     fs.readFile(path.join(__dirname, 'mock', 'departments.json'), 'utf8', (err, data) => {
         if (err) {
             console.error('Error reading departments.json:', err);
@@ -124,8 +144,8 @@ app.get('/api/departments', (req, res) => {
         }
 
         try {
-            const absenceTypes = JSON.parse(data);
-            res.json(absenceTypes);
+            const departments = JSON.parse(data);
+            res.json(departments);
         } catch (error) {
             console.error('Error parsing departments.json:', error);
             res.status(500).send('Internal Server Error');
@@ -134,7 +154,6 @@ app.get('/api/departments', (req, res) => {
 });
 
 app.get('/api/user_absences', (req, res) => {
-    // Read absence types from absence_types.json
     fs.readFile(path.join(__dirname, 'mock', 'user_absences.json'), 'utf8', (err, data) => {
         if (err) {
             console.error('Error reading user_absences.json:', err);
@@ -143,8 +162,8 @@ app.get('/api/user_absences', (req, res) => {
         }
 
         try {
-            const absenceTypes = JSON.parse(data);
-            res.json(absenceTypes);
+            const user_absences = JSON.parse(data);
+            res.json(user_absences);
         } catch (error) {
             console.error('Error parsing user_absences.json:', error);
             res.status(500).send('Internal Server Error');

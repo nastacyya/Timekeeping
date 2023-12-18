@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/static/css/admin.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="/static/js/admin.js" defer></script>
+    <link rel="icon" type="image/x-icon" href="/static/img/logo.webp">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title id="admin"></title>
+</head>
+<body>
+    <div class="side-nav">
+        <div class="logout-div">
+            <button class="logout-btn" type="button" id="logout-btn"></button>
+        </div>
+
+        <div class="sections-div">
+            <ul class="sections-list">
+                <li id="users"></li>
+                <li id="auth"></li>
+                <li id="departments"></li>
+                <li id="absence-types"></li>
+            </ul>
+        </div>
+    </div>
+    <main>
+        <div class="new-record">
+            <button class="add-btn" type="button"></button>
+        </div>
+        <div class="database">
+            <div class="list">
+            </div>
+            <div class="form-div">
+                <div class="form">
+                    
+                </div>
+                <div class="buttons">
+                    <button class="delete-btn" type="button" id="delete-btn"></button>
+                    <button class="update-btn" type="button" id="update-btn"></button>
+                    <button class="save-btn" type="button" id="save-btn"></button>
+                </div>
+                <div id="errorText"></div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

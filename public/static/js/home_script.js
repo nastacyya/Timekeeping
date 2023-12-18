@@ -1,7 +1,11 @@
 window.addEventListener('pageshow', function(event) {
     const token = localStorage.getItem('token');
-    if(!token) {
+    const homepage = localStorage.getItem('homepage');
+    const admin = localStorage.getItem('admin');
+    if(!token && !homepage) {
         window.location.href = '/';
+    } else if(token && admin) {
+        window.location.href = '/admin';
     } 
 });
 
@@ -59,7 +63,7 @@ let selectedUserId = null;  // a global variable to store the selected user ID
 let isAddingMode = false;
 let isDeleteMode = false; 
 let isEditMode = false;
-//let absence_id; //id for editing
+let absence_id; //id for editing
 let vocabulary; // A variable to store translations
 
 function toggleSideNav() {
@@ -1452,7 +1456,7 @@ function processAbsenceData(dayDate, target, startInput, endInput, absenceTypeIn
                 overtimeValue.value = "";
             }
 
-            //absence_id = matchingAbsence._id;
+            absence_id = matchingAbsence._id;
             absenceTypeInput.style.cursor = "pointer";
             absenceTypeInput.addEventListener('click', displayList);
             absenceTypeInput.innerHTML = matchingType ? `<span class="color-circle-${matchingType.value}"></span><p>${matchingType.name}</p>` + "<i class='bx bxs-chevron-down' id='selected-arrow'></i>" : "";
@@ -1464,7 +1468,7 @@ function processAbsenceData(dayDate, target, startInput, endInput, absenceTypeIn
                 `;
             styleSheet.insertRule(style, styleSheet.cssRules.length);
             styleSelectedEditAbsence(matchingAbsence);
-            //return absence_id;
+            return absence_id;
               
         } else {
             startInput.value = matchingAbsence.start_date.split(' ')[0]; 

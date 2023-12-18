@@ -1,227 +1,272 @@
 {
-    "title": {
-      "ru": "Вход",
-      "en": "Login page"
-    },
-    "username": {
-      "ru": "Имя пользователя",
-      "en": "Username"
-    },
-    "password": {
-      "ru": "Пароль",
-      "en": "Password"
-    },
-    "submit": {
-      "ru": "Войти",
-      "en": "Login"
-    },
-    "invalid": {
-      "ru": "Неверный логин или пароль",
-      "en": "Invalid login or password"
-    },
-    "fill_in": {
-      "ru": "Пожалуйста, заполните все поля",
-      "en": "Please fill in all fields"
-    },
-    "main_page": {
-      "ru": "Главная",
-      "en": "Main page"
-    },
-    "exit": {
-      "ru": "Выйти",
-      "en": "Logout"
-    },
-    "my_calendar": {
-      "ru": "Мой календарь",
-      "en": "My calendar"
-    },
-    "welcome": {
-      "ru": "Добро пожаловать",
-      "en": "Welcome"
-    },
-    "mon": {
-      "ru": "Пн",
-      "en": "Mon"
-    },
-    "tue": {
-      "ru": "Вт",
-      "en": "Tue"
-    },
-    "wed": {
-      "ru": "Ср",
-      "en": "Wed"
-    },
-    "thu": {
-      "ru": "Чт",
-      "en": "Thu"
-    },
-    "fri": {
-      "ru": "Пт",
-      "en": "Fri"
-    },
-    "sat": {
-      "ru": "Сб",
-      "en": "Sat"
-    },
-    "sun": {
-      "ru": "Вс",
-      "en": "Sun"
-    },
-    "show_txt": {
-      "ru": "Просмотр события",
-      "en": "See absence data"
-    },
-    "edit_txt": {
-      "ru": "Редактирование события",
-      "en": "Edit absence data"
-    },
-    "add": {
-      "ru": "Добавить событие",
-      "en": "Add absence"
-    },
-    "edit": {
-      "ru": "Редактировать событие",
-      "en": "Edit absence"
-    },
-    "delete": {
-      "ru": "Удалить событие",
-      "en": "Delete absence"
-    },
-    "cancel": {
-      "ru": "Отменить",
-      "en": "Cancel"
-    },
-    "update_btn": {
-      "ru": "Обновить",
-      "en": "Edit"
-    },
-    "delete_btn": {
-      "ru": "Удалить",
-      "en": "Delete"
-    },
-    "save_btn": {
-      "ru": "Сохранить",
-      "en": "Save"
-    },
-    "reason": {
-      "ru": "Причина отсутствия:",
-      "en": "Reason for absence:"
-    },
-    "start": {
-      "ru": "Начало:",
-      "en": "Start date:"
-    },
-    "end": {
-      "ru": "Конец:",
-      "en": "End date:"
-    },
-    "overtime": {
-      "ru": "Сверхурочные часы:",
-      "en": "Overtime:"
-    },
-    "notes": {
-      "ru": "Примечания:",
-      "en": "Notes:"
-    },
-    "show_info": {
-      "ru": "Нажмите на событие на календаре для просмотра информации",
-      "en": "Click on an event on the calendar to view information"
-    },
-    "edit_info": {
-      "ru": "Выберите событие на календаре, которое хотите изменить",
-      "en": "Select the calendar event you want to change"
-    },
-    "delete_info": {
-      "ru": "Выберите событие на календаре, которое хотите удалить",
-      "en": "Select the calendar event you want to delete"
-    },
-    "choose_start": {
-      "ru": "Кликните на дату, которая будет начальной",
-      "en": "Select start date"
-    },
-    "choose_end": {
-      "ru": "Выберите дату окончания",
-      "en": "Select end date"
-    },
-    "choose_type": {
-      "ru": "Выберите причину отсутствия",
-      "en": "Select a reason for absence"
-    },
-    "choose_overtime": {
-      "ru": "Введите количество сверхурочных часов",
-      "en": "Enter the number of overtime hours"
-    },
-    "click_save": {
-      "ru": "Нажмите 'Сохранить' или добавьте примечание",
-      "en": "Click 'Save' or add a note"
-    },
-    "add_type": {
-      "ru": "Выбор причины:",
-      "en": "Absence selection:"
-    },
-    "add_start": {
-      "ru": "Начало:",
-      "en": "Start date:"
-    },
-    "add_end": {
-      "ru": "Конец:",
-      "en": "End date:"
-    },
-    "add_overtime": {
-      "ru": "Сверхурочные часы:",
-      "en": "Overtime hours:"
-    },
-    "add_note": {
-      "ru": "Добавить примечание:",
-      "en": "Add a note:"
-    },
-    "dates_placeholder": {
-      "ru": "Выберите на календаре",
-      "en": "Select on calendar"
-    },
-    "fill_required": {
-      "ru": "Пожалуйста, заполните все обязательные поля",
-      "en": "Please fill in all required fields"
-    },
-    "fill_overtime": {
-      "ru": "Пожалуйста, укажите количество сверхурочных часов",
-      "en": "Please fill in the number of overtime hours"
-    },
-    "fill_start": {
-      "ru": "Пожалуйста, укажите начальную дату",
-      "en": "Please fill in start date"
-    },
-    "fill_end": {
-      "ru": "Пожалуйста, укажите конечную дату",
-      "en": "Please fill in end date"
-    },
-    "fill_dates": {
-      "ru": "Пожалуйста, укажите начало и конец события",
-      "en": "Please fill in absence start and end date"
-    },
-    "wrong_date": {
-      "ru": "Год и месяц должны быть текущими",
-      "en": "Year and month must be current"
-    },
-    "wrong_start": {
-      "ru": "Дата начала не может быть больше даты окончания",
-      "en": "Start date cannot be bigger than end date"
-    },
-    "wrong_end": {
-      "ru": "Дата окончания не может быть меньше даты начала",
-      "en": "End date cannot be smaller than start date"
-    },
-    "invalid_date_format": {
-      "ru": "Неверный формат даты (используйте гггг-мм-дд)",
-      "en": "Invalid date format (use yyyy-mm-dd)"
-    },
-    "invalid_date": {
-      "ru": "Недействительная дата",
-      "en": "Invalid date"
-    },
-    "session": {
-      "ru": "Ваша сессия истекла. Пожалуйста, войдите заново.",
-      "en": "Your session has expired. Please login again."
-    }
+  "title": {
+    "ru": "Вход",
+    "en": "Login page"
+  },
+  "username": {
+    "ru": "Имя пользователя",
+    "en": "Username"
+  },
+  "password": {
+    "ru": "Пароль",
+    "en": "Password"
+  },
+  "submit": {
+    "ru": "Войти",
+    "en": "Login"
+  },
+  "invalid": {
+    "ru": "Неверный логин или пароль",
+    "en": "Invalid login or password"
+  },
+  "fill_in": {
+    "ru": "Пожалуйста, заполните все поля",
+    "en": "Please fill in all fields"
+  },
+  "main_page": {
+    "ru": "Главная",
+    "en": "Main page"
+  },
+  "exit": {
+    "ru": "Выйти",
+    "en": "Logout"
+  },
+  "my_calendar": {
+    "ru": "Мой календарь",
+    "en": "My calendar"
+  },
+  "welcome": {
+    "ru": "Добро пожаловать",
+    "en": "Welcome"
+  },
+  "mon": {
+    "ru": "Пн",
+    "en": "Mon"
+  },
+  "tue": {
+    "ru": "Вт",
+    "en": "Tue"
+  },
+  "wed": {
+    "ru": "Ср",
+    "en": "Wed"
+  },
+  "thu": {
+    "ru": "Чт",
+    "en": "Thu"
+  },
+  "fri": {
+    "ru": "Пт",
+    "en": "Fri"
+  },
+  "sat": {
+    "ru": "Сб",
+    "en": "Sat"
+  },
+  "sun": {
+    "ru": "Вс",
+    "en": "Sun"
+  },
+  "show_txt": {
+    "ru": "Просмотр события",
+    "en": "See absence data"
+  },
+  "edit_txt": {
+    "ru": "Редактирование события",
+    "en": "Edit absence data"
+  },
+  "add": {
+    "ru": "Добавить событие",
+    "en": "Add absence"
+  },
+  "edit": {
+    "ru": "Редактировать событие",
+    "en": "Edit absence"
+  },
+  "delete": {
+    "ru": "Удалить событие",
+    "en": "Delete absence"
+  },
+  "cancel": {
+    "ru": "Отменить",
+    "en": "Cancel"
+  },
+  "update_btn": {
+    "ru": "Обновить",
+    "en": "Edit"
+  },
+  "delete_btn": {
+    "ru": "Удалить",
+    "en": "Delete"
+  },
+  "save_btn": {
+    "ru": "Сохранить",
+    "en": "Save"
+  },
+  "reason": {
+    "ru": "Причина отсутствия:",
+    "en": "Reason for absence:"
+  },
+  "start": {
+    "ru": "Начальная дата:",
+    "en": "Start date:"
+  },
+  "end": {
+    "ru": "Конечная дата:",
+    "en": "End date:"
+  },
+  "overtime": {
+    "ru": "Сверхурочные часы:",
+    "en": "Overtime:"
+  },
+  "notes": {
+    "ru": "Примечания:",
+    "en": "Notes:"
+  },
+  "show_info": {
+    "ru": "Нажмите на событие на календаре для просмотра информации",
+    "en": "Click on an event on the calendar to view information"
+  },
+  "edit_info": {
+    "ru": "Выберите событие на календаре, которое хотите изменить",
+    "en": "Select the calendar event you want to change"
+  },
+  "delete_info": {
+    "ru": "Выберите событие на календаре, которое хотите удалить",
+    "en": "Select the calendar event you want to delete"
+  },
+  "choose_start": {
+    "ru": "Кликните на дату, которая будет начальной",
+    "en": "Select start date"
+  },
+  "choose_end": {
+    "ru": "Выберите дату окончания",
+    "en": "Select end date"
+  },
+  "choose_type": {
+    "ru": "Выберите причину отсутствия",
+    "en": "Select a reason for absence"
+  },
+  "choose_overtime": {
+    "ru": "Введите количество сверхурочных часов",
+    "en": "Enter the number of overtime hours"
+  },
+  "click_save": {
+    "ru": "Нажмите 'Сохранить' или добавьте примечание",
+    "en": "Click 'Save' or add a note"
+  },
+  "add_type": {
+    "ru": "Выбор причины:",
+    "en": "Absence selection:"
+  },
+  "add_start": {
+    "ru": "Начало:",
+    "en": "Start date:"
+  },
+  "add_end": {
+    "ru": "Конец:",
+    "en": "End date:"
+  },
+  "add_overtime": {
+    "ru": "Сверхурочные часы:",
+    "en": "Overtime hours:"
+  },
+  "add_note": {
+    "ru": "Добавить примечание:",
+    "en": "Add a note:"
+  },
+  "dates_placeholder": {
+    "ru": "Выберите на календаре",
+    "en": "Select on calendar"
+  },
+  "fill_required": {
+    "ru": "Пожалуйста, заполните все обязательные поля",
+    "en": "Please fill in all required fields"
+  },
+  "fill_overtime": {
+    "ru": "Пожалуйста, укажите количество сверхурочных часов",
+    "en": "Please fill in the number of overtime hours"
+  },
+  "fill_start": {
+    "ru": "Пожалуйста, укажите начальную дату",
+    "en": "Please fill in start date"
+  },
+  "fill_end": {
+    "ru": "Пожалуйста, укажите конечную дату",
+    "en": "Please fill in end date"
+  },
+  "fill_dates": {
+    "ru": "Пожалуйста, укажите начало и конец события",
+    "en": "Please fill in absence start and end date"
+  },
+  "wrong_date": {
+    "ru": "Год и месяц должны быть текущими",
+    "en": "Year and month must be current"
+  },
+  "wrong_start": {
+    "ru": "Дата начала не может быть больше даты окончания",
+    "en": "Start date cannot be bigger than end date"
+  },
+  "wrong_end": {
+    "ru": "Дата окончания не может быть меньше даты начала",
+    "en": "End date cannot be smaller than start date"
+  },
+  "invalid_date": {
+    "ru": "Недействительная дата",
+    "en": "Invalid date"
+  },
+  "admin": {
+    "ru": "Администратор",
+    "en": "Admin page"
+  },
+  "users": {
+    "ru": "Пользователи",
+    "en": "Users"
+  },
+  "auth": {
+    "ru": "Авторизация",
+    "en": "Authorization"
+  },
+  "departments": {
+    "ru": "Участки",
+    "en": "Departments"
+  },
+  "absence_types": {
+    "ru": "Причины отсутствия",
+    "en": "User absences"
+  },
+  "session": {
+    "ru": "Ваша сессия истекла. Пожалуйста, войдите заново.",
+    "en": "Your session has expired. Please login again."
+  },
+  "update": {
+    "ru": "Обновить",
+    "en": "Update"
+  },
+  "choose": {
+    "ru": "Выберите из списка",
+    "en": "Choose from the list"
+  },
+  "add_record": {
+    "ru": "Добавить",
+    "en": "Add"
+  },
+  "new_pw": {
+    "ru": "Введите новый пароль",
+    "en": "Enter a new password"
+  },
+  "not_exist_user": {
+    "ru": "Пользователь не существует в базе данных",
+    "en": "User doesn't exist in the database"
+  },
+  "exist_auth": {
+    "ru": "У пользователя уже есть учетные данные для авторизации",
+    "en": "User aready has authorization credentials"
+  },
+  "prohibited": {
+    "ru": "Запрещено добавлять запись для этого пользователя",
+    "en": "Forbidden to add record for this user"
+  }
+
 
 }

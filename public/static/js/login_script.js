@@ -2,13 +2,17 @@ const username = document.getElementById('login');
 const password = document.getElementById('passw');
 
 window.addEventListener('pageshow', function(event) {
-  if(localStorage.getItem('token')) {
-      window.location.href = '/homepage';
-    } 
-  username.value = "";
-  password.value = "";
-  localStorage.removeItem('lastActivityTime');
-  localStorage.removeItem('loginTime');
+  const token = localStorage.getItem('token');
+  const admin = localStorage.getItem('admin');
+  const homepage = localStorage.getItem('homepage');
+  if (token && admin) {
+    window.location.href = '/admin';
+  } else if (token && homepage) {
+    window.location.href = '/homepage';
+  } 
+    username.value = "";
+    password.value = "";
+    localStorage.removeItem('lastActivityTime');
 });
 
 // Login by clicking on Enter key
@@ -96,7 +100,25 @@ function submitForm() {
       
         localStorage.setItem('user_id', data.user_id);
         localStorage.setItem('token', data.token);
-        window.location.href = '';
+        
+        fetch(`/api/users`)
+        .then(response2 => response2.json())
+        .then(users => {
+          const userFound = users.find(user => user._id === data.user_id);
+            const userRole = userFound.role; // API returns the user's role in a field called 'role'
+            localStorage.setItem('user_role', userRole);
+            
+            // Check user roles permissions
+            if (userRole === 5) {
+              let admin = true;
+              localStorage.setItem('admin', admin);
+              window.location.href = '/admin';
+            } else if (userRole !== 5) {
+              let homepage = true;
+              localStorage.setItem('homepage', homepage);
+              window.location.href = '';
+            }
+          })
         
       })
       .catch(error => {
