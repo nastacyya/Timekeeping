@@ -7,7 +7,7 @@ window.addEventListener('pageshow', function(event) {
     }
 });
 
-let currentLanguage = 'ru'; 
+let currentLanguage = 'lv'; 
 const token = localStorage.getItem('token');
 const logoutBtn = document.getElementById('logout-btn');
 const database = document.querySelector('.database');
@@ -617,30 +617,27 @@ function addRecord(section) {
             .then(users => {
                 const matchedUser = users.find(user => user._id === userId);
                 if (matchedUser) {
-                    if(matchedUser.objectGUID) {
-                        errorText.innerHTML = "<span>* </span>" + vocabulary.prohibited[currentLanguage];
-                    } else {
-                        fetch('/api/loginpass', {
-                        headers: {
-                            'Authorization': "Bearer " + token
-                        }
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            const existingAuth = data.some(auth => userId === auth.user_id);
-                            if (existingAuth) {
-                                errorText.innerHTML = "<span>* </span>" + vocabulary.exist_auth[currentLanguage];
-                            }  else {
-                                var added = {
-                                    login: login,
-                                    passw: pw,
-                                    user_id: userId
-                                };
-
-                                postAuth(endpoint, added);
-                            }
-                        })  
+                    fetch('/api/loginpass', {
+                    headers: {
+                        'Authorization': "Bearer " + token
                     }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        const existingAuth = data.some(auth => userId === auth.user_id);
+                        if (existingAuth) {
+                            errorText.innerHTML = "<span>* </span>" + vocabulary.exist_auth[currentLanguage];
+                        }  else {
+                            var added = {
+                                login: login,
+                                passw: pw,
+                                user_id: userId
+                            };
+
+                            postAuth(endpoint, added);
+                        }
+                    })  
+                    
                 } else {
                     errorText.innerHTML = "<span>* </span>" + vocabulary.not_exist_user[currentLanguage];
                 }

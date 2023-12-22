@@ -9,7 +9,7 @@ window.addEventListener('pageshow', function(event) {
     } 
 });
 
-let currentLang = 'en'; // set current language ('ru' or 'en')
+let currentLang = 'en'; // set current language ('lv' or 'en')
 var typeCount = 16;  //a variable that stores number of existing absence types in the database
 
 const daysTag = document.querySelector(".days");
@@ -129,8 +129,8 @@ currMonth = date.getMonth();
 // storing full name of all months in array
 const translations = {
   months: {
-    "ru": ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль",
-      "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+    "lv": ["Janvāris", "Februāris", "Marts", "Aprīlis", "Maijs", "Jūnijs", "Jūlijs",
+      "Augusts", "Septembris", "Oktobris", "Novembris", "Decembris"],
     "en": ["January", "February", "March", "April", "May", "June", "July",
       "August", "September", "October", "November", "December"]
   }
@@ -1114,7 +1114,7 @@ document.addEventListener ('DOMContentLoaded', function() {
             } else {
                 if (enteredDay < startDay) {
                     errortxtDiv.style.display = "flex";
-                    errortxt.innerText = vocabulary.wrong_end[currentLang];
+                    errortxt.innerText = vocabulary.wrong_start[currentLang];
                 } else {
                     errortxtDiv.style.display = "none";
                     errortxt.innerText = "";

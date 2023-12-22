@@ -23,7 +23,7 @@ document.addEventListener("keypress", function(event) {
   }
 });
 
-let currentLanguage = 'en'; // Установите текущий язык (может быть, например, 'ru' или 'en')
+let currentLanguage = 'en'; // set current language lv or en
 let vocabulary; // Declare a variable to store translations
 var errorText = document.getElementById("errorText");
 

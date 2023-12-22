@@ -1,272 +1,262 @@
 {
   "title": {
-    "ru": "Вход",
+    "lv": "Autorizācija",
     "en": "Login page"
   },
   "username": {
-    "ru": "Имя пользователя",
+    "lv": "Lietotājvārds",
     "en": "Username"
   },
   "password": {
-    "ru": "Пароль",
+    "lv": "Parole",
     "en": "Password"
   },
   "submit": {
-    "ru": "Войти",
+    "lv": "Ienākt",
     "en": "Login"
   },
   "invalid": {
-    "ru": "Неверный логин или пароль",
+    "lv": "Nepareizs lietotājvārds vai parole",
     "en": "Invalid login or password"
   },
   "fill_in": {
-    "ru": "Пожалуйста, заполните все поля",
+    "lv": "Lūdzu, aizpildiet visus laukus",
     "en": "Please fill in all fields"
   },
   "main_page": {
-    "ru": "Главная",
+    "lv": "Galvenā lapa",
     "en": "Main page"
   },
   "exit": {
-    "ru": "Выйти",
+    "lv": "Iziet",
     "en": "Logout"
   },
   "my_calendar": {
-    "ru": "Мой календарь",
+    "lv": "Mans kalendārs",
     "en": "My calendar"
   },
   "welcome": {
-    "ru": "Добро пожаловать",
+    "lv": "Laipni lūdzam",
     "en": "Welcome"
   },
   "mon": {
-    "ru": "Пн",
+    "lv": "Pr",
     "en": "Mon"
   },
   "tue": {
-    "ru": "Вт",
+    "lv": "Ot",
     "en": "Tue"
   },
   "wed": {
-    "ru": "Ср",
+    "lv": "Tr",
     "en": "Wed"
   },
   "thu": {
-    "ru": "Чт",
+    "lv": "Ce",
     "en": "Thu"
   },
   "fri": {
-    "ru": "Пт",
+    "lv": "Pk",
     "en": "Fri"
   },
   "sat": {
-    "ru": "Сб",
+    "lv": "Se",
     "en": "Sat"
   },
   "sun": {
-    "ru": "Вс",
+    "lv": "Sv",
     "en": "Sun"
   },
   "show_txt": {
-    "ru": "Просмотр события",
+    "lv": "Skatīt prombūtnes datus",
     "en": "See absence data"
   },
   "edit_txt": {
-    "ru": "Редактирование события",
+    "lv": "Rediģēt prombūtnes datus",
     "en": "Edit absence data"
   },
   "add": {
-    "ru": "Добавить событие",
+    "lv": "Pievienot prombūtni",
     "en": "Add absence"
   },
   "edit": {
-    "ru": "Редактировать событие",
+    "lv": "Rediģēt prombūtni",
     "en": "Edit absence"
   },
   "delete": {
-    "ru": "Удалить событие",
+    "lv": "Dzēst prombūtni",
     "en": "Delete absence"
   },
   "cancel": {
-    "ru": "Отменить",
+    "lv": "Atcelt",
     "en": "Cancel"
   },
   "update_btn": {
-    "ru": "Обновить",
+    "lv": "Atjaunināt",
     "en": "Edit"
   },
   "delete_btn": {
-    "ru": "Удалить",
+    "lv": "Dzēst",
     "en": "Delete"
   },
   "save_btn": {
-    "ru": "Сохранить",
+    "lv": "Saglabāt",
     "en": "Save"
   },
   "reason": {
-    "ru": "Причина отсутствия:",
+    "lv": "Prombūtnes iemesls:",
     "en": "Reason for absence:"
   },
   "start": {
-    "ru": "Начальная дата:",
+    "lv": "Sākuma datums:",
     "en": "Start date:"
   },
   "end": {
-    "ru": "Конечная дата:",
+    "lv": "Beigu datums:",
     "en": "End date:"
   },
   "overtime": {
-    "ru": "Сверхурочные часы:",
+    "lv": "Virsstundas:",
     "en": "Overtime:"
   },
   "notes": {
-    "ru": "Примечания:",
+    "lv": "Piezīmes:",
     "en": "Notes:"
   },
   "show_info": {
-    "ru": "Нажмите на событие на календаре для просмотра информации",
+    "lv": "Noklikšķiniet uz notikuma kalendārā, lai skatītu informāciju",
     "en": "Click on an event on the calendar to view information"
   },
   "edit_info": {
-    "ru": "Выберите событие на календаре, которое хотите изменить",
+    "lv": "Atlasiet kalendārā notikumu, kuru vēlaties mainīt",
     "en": "Select the calendar event you want to change"
   },
   "delete_info": {
-    "ru": "Выберите событие на календаре, которое хотите удалить",
+    "lv": "Atlasiet kalendārā notikumu, kuru vēlaties dzēst",
     "en": "Select the calendar event you want to delete"
   },
   "choose_start": {
-    "ru": "Кликните на дату, которая будет начальной",
+    "lv": "Noklikšķiniet uz datuma, kas būs sākuma datums",
     "en": "Select start date"
   },
   "choose_end": {
-    "ru": "Выберите дату окончания",
+    "lv": "Izvēlieties beigu datumu",
     "en": "Select end date"
   },
   "choose_type": {
-    "ru": "Выберите причину отсутствия",
+    "lv": "Izvēlieties prombūtnes iemeslu",
     "en": "Select a reason for absence"
   },
   "choose_overtime": {
-    "ru": "Введите количество сверхурочных часов",
+    "lv": "Ievadiet virsstundu skaitu",
     "en": "Enter the number of overtime hours"
   },
   "click_save": {
-    "ru": "Нажмите 'Сохранить' или добавьте примечание",
+    "lv": "Noklikšķiniet uz 'Saglabāt' vai pievienojiet piezīmi",
     "en": "Click 'Save' or add a note"
   },
   "add_type": {
-    "ru": "Выбор причины:",
+    "lv": "Iemesla izvēle:",
     "en": "Absence selection:"
   },
   "add_start": {
-    "ru": "Начало:",
+    "lv": "Sākums:",
     "en": "Start date:"
   },
   "add_end": {
-    "ru": "Конец:",
+    "lv": "Beigas:",
     "en": "End date:"
   },
   "add_overtime": {
-    "ru": "Сверхурочные часы:",
+    "lv": "Virsstundas:",
     "en": "Overtime hours:"
   },
   "add_note": {
-    "ru": "Добавить примечание:",
+    "lv": "Pievienot piezīmi:",
     "en": "Add a note:"
   },
   "dates_placeholder": {
-    "ru": "Выберите на календаре",
+    "lv": "Izvēlieties kalendārā",
     "en": "Select on calendar"
   },
   "fill_required": {
-    "ru": "Пожалуйста, заполните все обязательные поля",
+    "lv": "Lūdzu, aizpildiet visus obligātos laukus",
     "en": "Please fill in all required fields"
   },
   "fill_overtime": {
-    "ru": "Пожалуйста, укажите количество сверхурочных часов",
+    "lv": "Lūdzu, norādiet virsstundu skaitu",
     "en": "Please fill in the number of overtime hours"
   },
   "fill_start": {
-    "ru": "Пожалуйста, укажите начальную дату",
+    "lv": "Lūdzu, ievadiet sākuma datumu",
     "en": "Please fill in start date"
   },
   "fill_end": {
-    "ru": "Пожалуйста, укажите конечную дату",
+    "lv": "Lūdzu, ievadiet beigu datumu",
     "en": "Please fill in end date"
   },
   "fill_dates": {
-    "ru": "Пожалуйста, укажите начало и конец события",
+    "lv": "Lūdzu, ievadiet prombūtnes sākuma un beigu datumu",
     "en": "Please fill in absence start and end date"
   },
   "wrong_date": {
-    "ru": "Год и месяц должны быть текущими",
+    "lv": "Gadam un mēnesim ir jābūt aktuālam",
     "en": "Year and month must be current"
   },
   "wrong_start": {
-    "ru": "Дата начала не может быть больше даты окончания",
+    "lv": "Sākuma datums nevar būt lielāks par beigu datumu",
     "en": "Start date cannot be bigger than end date"
   },
-  "wrong_end": {
-    "ru": "Дата окончания не может быть меньше даты начала",
-    "en": "End date cannot be smaller than start date"
-  },
   "invalid_date": {
-    "ru": "Недействительная дата",
+    "lv": "Nederīgs datums",
     "en": "Invalid date"
   },
   "admin": {
-    "ru": "Администратор",
+    "lv": "Administratora lapa",
     "en": "Admin page"
   },
   "users": {
-    "ru": "Пользователи",
+    "lv": "Lietotāji",
     "en": "Users"
   },
   "auth": {
-    "ru": "Авторизация",
+    "lv": "Autorizācija",
     "en": "Authorization"
   },
   "departments": {
-    "ru": "Участки",
+    "lv": "Departamenti",
     "en": "Departments"
   },
   "absence_types": {
-    "ru": "Причины отсутствия",
-    "en": "User absences"
+    "lv": "Prombūtnes veidi",
+    "en": "Absence types"
   },
   "session": {
-    "ru": "Ваша сессия истекла. Пожалуйста, войдите заново.",
+    "lv": "Jūsu sesija ir beidzies. Lūdzu, piesakieties vēlreiz.",
     "en": "Your session has expired. Please login again."
   },
   "update": {
-    "ru": "Обновить",
+    "lv": "Atjaunināt",
     "en": "Update"
   },
   "choose": {
-    "ru": "Выберите из списка",
+    "lv": "Izvēlieties no saraksta",
     "en": "Choose from the list"
   },
   "add_record": {
-    "ru": "Добавить",
+    "lv": "Pievienot",
     "en": "Add"
   },
   "new_pw": {
-    "ru": "Введите новый пароль",
+    "lv": "Ievadiet jaunu paroli",
     "en": "Enter a new password"
   },
   "not_exist_user": {
-    "ru": "Пользователь не существует в базе данных",
+    "lv": "Tāds lietotājs neeksistē datu bāzē",
     "en": "User doesn't exist in the database"
   },
   "exist_auth": {
-    "ru": "У пользователя уже есть учетные данные для авторизации",
-    "en": "User aready has authorization credentials"
-  },
-  "prohibited": {
-    "ru": "Запрещено добавлять запись для этого пользователя",
-    "en": "Forbidden to add record for this user"
+    "lv": "Šim lietotājam jau ir autorizācijas dati",
+    "en": "User already has authorization credentials"
   }
-
-
 }
