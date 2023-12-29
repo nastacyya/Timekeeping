@@ -1,80 +1,96 @@
 [
   {
+    "_id": 1,
     "name": "Ikgadējais apmaksātais atvaļinājums",
     "value": 1,
     "short_name": "IA"
   },
   {
+    "_id": 2,
     "name": "Bezalgas atvaļinājums",
     "value": 2,
     "short_name": "BA"
   },
   {
+    "_id": 3,
     "name": "Darba nespēja (slim., karant. u.c.) (a)",
     "value": 3,
     "short_name": "DN(b)"
   },
   {
+    "_id": 4,
     "name": "Darba nespēja (slim., karant. u.c.) (b)",
     "value": 4,
     "short_name": "DN(b)"
   },
   {
+    "_id": 5,
     "name": "Atvaļinājums sakarā ar grūtniecību",
     "value": 5,
     "short_name": "ASG"
   },
   {
+    "_id": 6,
     "name": "Mācību atvaļinājums",
     "value": 6,
     "short_name": "MA"
   },
   {
+    "_id": 7,
     "name": "Darbā neierašanās gadījumi",
     "value": 7,
     "short_name": "DNG"
   },
   {
+    "_id": 8,
     "name": "Paternitātes atvaļinājums",
     "value": 8,
     "short_name": "PA"
   },
   {
+    "_id": 9,
     "name": "Atļauts darba kavējums, sakarā ar radinieka nāvi",
     "value": 9,
     "short_name": "ADK"
   },
   {
+    "_id": 10,
     "name": "Valsts svētki",
     "value": 10,
     "short_name": "VS"
   },
   {
+    "_id": 11,
     "name": "Bērna kopšanas atvaļinājums",
     "value": 11,
     "short_name": "BKA"
   },
   {
+    "_id": 12,
     "name": "Komandējums",
     "value": 12,
     "short_name": "K"
   },
   {
+    "_id": 13,
     "name": "Virsstundas",
     "value": 13,
     "short_name": "V"
   },
   {
+    "_id": 14,
     "name": "Papild",
     "value": 14,
     "short_name": "P"
   },
   {
+    "_id": 15,
     "name": "Bernam",
     "value": 15,
     "short_name": "B"
   },
   {
+    "_id": 16,
     "name": "Atval",
     "value": 16,
     "short_name": "A"

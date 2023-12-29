@@ -216,6 +216,90 @@ app.delete('/api/user_absences/:id', (req, res) => {
     res.json({ message: 'Absence deleted successfully' });
 });
 
+// Example route to handle DELETE requests for deleting an absence
+app.delete('/api/users/:id', (req, res) => {
+    const userId = req.params.id;
+   
+    // Implement the logic to delete the absence with the specified ID
+    deleteUserById(userId);
+
+    res.json({ message: 'User deleted successfully' });
+});
+// Endpoint to handle saving user absences
+app.post('/api/users', (req, res) => {
+    const newData = req.body;
+
+    // Read existing data
+    const existingData = readUsers();
+    // Generate a new _id for the absence by taking the last _id and adding +1
+    const newId = existingData.length > 0 ? existingData[existingData.length - 1]._id + 1 : 1;
+    
+    // Conditionally add note and value only if they are not null or empty
+    const newUser = {
+        _id: newId,
+        sn: newData.sn,
+        givenName: newData.givenName,
+        role: newData.role,
+        department: newData.department
+    };
+
+    if (newData.default_hours !== null) {
+        newAbsence.default_hours = newData.default_hours;
+    }
+
+    existingData.push(newUser);
+    
+    // Save the updated data
+    saveUsers(existingData);
+
+    res.send(`${JSON.stringify(existingData, null, 2)}`);
+});
+
+// Function to delete an absence from user_absences.json
+function deleteUserById(userId) {
+    try {
+    // Read existing data
+    const existingData = readUsers();
+
+    // Find the index of the absence with the given id
+    const index = existingData.findIndex((user) => user._id === parseInt(userId));
+    // If the absence is found, remove it from the array
+    if (index !== -1) {
+        existingData.splice(index, 1);
+
+        // Save the updated data
+        saveUsers(existingData);
+        console.log(`User with _id ${userId} deleted successfully.`);
+    } else {
+        console.log(`User with _id ${userId} not found.`);
+    }
+    } catch (error) {
+        console.error('Error deleting user:', error.message);
+    }
+}
+
+// Function to read user absences from the file
+function readUsers() {
+    try {
+        const data = fs.readFileSync(path.join(__dirname, 'mock', 'users.json'), 'utf8');
+        return JSON.parse(data);
+    } catch (error) {
+        console.error('Error reading users:', error.message);
+        return [];
+    }
+}
+
+// Function to save user absences to the file
+function saveUsers(users) {
+    try {
+        const data = JSON.stringify(users, null, 2);
+        fs.writeFileSync(path.join(__dirname, 'mock', 'users.json'), data, 'utf8');
+        console.log('Users saved successfully.');
+    } catch (error) {
+        console.error('Error saving users:', error.message);
+    }
+}
+
 // Function to delete an absence from user_absences.json
 function deleteAbsenceById(absenceId) {
     try {
@@ -238,7 +322,6 @@ function deleteAbsenceById(absenceId) {
         console.error('Error deleting absence:', error.message);
     }
 }
-
 // Function to read user absences from the file
 function readUserAbsences() {
     try {

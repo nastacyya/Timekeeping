@@ -152,7 +152,7 @@
     "en": "Enter the number of overtime hours"
   },
   "click_save": {
-    "lv": "Noklikšķiniet uz 'Saglabāt' vai pievienojiet piezīmi",
+    "lv": "Noklikšķiniet uz “Saglabāt” vai pievienojiet piezīmi",
     "en": "Click 'Save' or add a note"
   },
   "add_type": {
@@ -199,10 +199,6 @@
     "lv": "Lūdzu, ievadiet prombūtnes sākuma un beigu datumu",
     "en": "Please fill in absence start and end date"
   },
-  "wrong_date": {
-    "lv": "Gadam un mēnesim ir jābūt aktuālam",
-    "en": "Year and month must be current"
-  },
   "wrong_start": {
     "lv": "Sākuma datums nevar būt lielāks par beigu datumu",
     "en": "Start date cannot be bigger than end date"
@@ -220,11 +216,11 @@
     "en": "Users"
   },
   "auth": {
-    "lv": "Autorizācija",
-    "en": "Authorization"
+    "lv": "Autorizācijas dati",
+    "en": "Authorization data"
   },
   "departments": {
-    "lv": "Departamenti",
+    "lv": "Nodaļas",
     "en": "Departments"
   },
   "absence_types": {
@@ -240,8 +236,8 @@
     "en": "Update"
   },
   "choose": {
-    "lv": "Izvēlieties no saraksta",
-    "en": "Choose from the list"
+    "lv": "Lūdzu, izvēlieties no saraksta",
+    "en": "Please choose from the list"
   },
   "add_record": {
     "lv": "Pievienot",
@@ -258,5 +254,22 @@
   "exist_auth": {
     "lv": "Šim lietotājam jau ir autorizācijas dati",
     "en": "User already has authorization credentials"
+  },
+  "not_exist_dep": {
+    "lv": "Šī nodaļa neeksistē datubāzē",
+    "en": "This department doesn’t exist in the database"
+  },
+  "invalid_role": {
+    "lv": "Lūdzu, ievadiet lomu 1-5",
+    "en": "Please enter role 1-5"
+  },
+  "exist_value": {
+    "lv": "Šāda vērtība jau eksistē datubāzē",
+    "en": "Value already exists in the database"
+  },
+  "enter_pw": {
+    "lv": "Lūdzu, ievadiet jaunu paroli",
+    "en": "Please enter a new password"
   }
+
 }

@@ -7,7 +7,7 @@ window.addEventListener('pageshow', function(event) {
     }
 });
 
-let currentLanguage = 'lv'; 
+let currentLanguage = 'en'; 
 const token = localStorage.getItem('token');
 const logoutBtn = document.getElementById('logout-btn');
 const database = document.querySelector('.database');
@@ -95,7 +95,7 @@ document.addEventListener ('DOMContentLoaded', function() {
 
     deleteBtn.addEventListener('click', () => {
         if(selectedItem === true) {
-        deleteRecord(selected_id, currentSection);
+            deleteRecord(selected_id, currentSection);
         } else {
             errorText.innerHTML = "<span>* </span>" + vocabulary.choose[currentLanguage];
         }
@@ -105,10 +105,16 @@ document.addEventListener ('DOMContentLoaded', function() {
         if(selectedItem === true) {
             const inputs = document.querySelectorAll('.edit-form input');
             if ([...inputs].every(input => (input.id !== 'def_hours' && input.value !== "") || input.id === 'def_hours')) {
-                updateRecord(selected_id, currentSection);
+                if (errorText.innerHTML != "") {
+                    return;
+                } else {
+                    updateRecord(selected_id, currentSection);
+                }
             } else {
                 if (currentSection === "users") {
                     errorText.innerHTML = "<span>* </span>" + vocabulary.fill_required[currentLanguage];
+                } else if (currentSection === "authorization") {
+                    errorText.innerHTML = "<span>* </span>" + vocabulary.enter_pw[currentLanguage];
                 } else {
                     errorText.innerHTML = "<span>* </span>" + vocabulary.fill_in[currentLanguage];
                 }
@@ -170,7 +176,11 @@ document.addEventListener ('DOMContentLoaded', function() {
     saveBtn.addEventListener('click', () => {
         const inputs = document.querySelectorAll('.edit-form input');
         if ([...inputs].every(input => (input.id !== 'def_hours' && input.value !== "") || input.id === 'def_hours')) {
-            addRecord(currentSection);
+            if (errorText.innerHTML != "") {
+                return;
+            } else {
+                addRecord(currentSection);
+            }
         } else {
             if (currentSection === "users") {
                 errorText.innerHTML = "<span>* </span>" + vocabulary.fill_required[currentLanguage];
@@ -240,9 +250,33 @@ function departmentsList() {
         })
         list.appendChild(ul);
     })
-   
+ 
+    depName.addEventListener('input', () => {
+        errorText.innerHTML = "";
+    });
+
     depValue.addEventListener('input', () => {
         depValue.value = depValue.value.replace(/\D/g, '');
+        fetch('/api/departments')
+        .then(response => response.json())
+        .then(departments => {
+            const enteredValue = depValue.value.trim(); // Trim to remove leading/trailing whitespace
+
+            // Check if entered value exists in the list of departments
+            const departmentExists = departments.some(department => department.value === parseInt(enteredValue));
+            // Check if entered value is equal to the value of the selected department
+            const isSelectedDepartment = selected_id && departments.some(department => department._id === selected_id && department.value === parseInt(enteredValue));
+            
+            // Display error message based on the results
+            if (departmentExists && !isSelectedDepartment) {
+                errorText.innerHTML = "<span>* </span>" + vocabulary.exist_value[currentLanguage];
+            } else {
+                errorText.innerHTML = "";
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching departments:', error);
+        });
     });
 }
 
@@ -285,6 +319,9 @@ function absencesList() {
                 inputs.forEach(input => {
                     input.removeAttribute('readonly');
                     input.style.outlineColor = "rgb(186, 186, 186)";
+                    input.addEventListener('input', () => {
+                        errorText.innerHTML = "";
+                    });
                 })
                 absName.value = absence.name;
                 absValue.value = absence.value;
@@ -295,8 +332,29 @@ function absencesList() {
         })
         list.appendChild(ul);
     })
+   
     absValue.addEventListener('input', () => {
         absValue.value = absValue.value.replace(/\D/g, '');
+        fetch('/api/absence_types')
+        .then(response => response.json())
+        .then(types => {
+            const enteredValue = absValue.value.trim(); // Trim to remove leading/trailing whitespace
+
+            // Check if entered value exists in the list of types
+            const typeExists = types.some(type => type.value === parseInt(enteredValue));
+            // Check if entered value is equal to the value of the selected type
+            const isSelectedType = selected_id && types.some(type => type._id === selected_id && type.value === parseInt(enteredValue));
+            
+            // Display error message based on the results
+            if (typeExists && !isSelectedType) {
+                errorText.innerHTML = "<span>* </span>" + vocabulary.exist_value[currentLanguage];
+            } else {
+                errorText.innerHTML = "";
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching absence types:', error);
+        });
     });
 }
 
@@ -348,6 +406,9 @@ function usersList() {
                 inputs.forEach(input => {
                     input.removeAttribute('readonly');
                     input.style.outlineColor = "rgb(186, 186, 186)";
+                    input.addEventListener('input', () => {
+                        errorText.innerHTML = "";
+                    });
                 })
                 
                 name.value = user.givenName;
@@ -368,12 +429,49 @@ function usersList() {
     })
     dep.addEventListener('input', () => {
         dep.value = dep.value.replace(/\D/g, '');
+        fetch('/api/departments')
+        .then(response => response.json())
+        .then(departments => {
+            const enteredValue = dep.value.trim(); // Trim to remove leading/trailing whitespace
+
+            // Check if entered value exists in the list of departments
+            const departmentExists = departments.some(department => department.value === parseInt(enteredValue));
+
+            // Display error message based on the result
+            if (departmentExists || dep.value === "") {
+                errorText.innerHTML = "";
+            } else {
+                errorText.innerHTML = "<span>* </span>" + vocabulary.not_exist_dep[currentLanguage];
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching departments:', error);
+        });
     });
     role.addEventListener('input', () => {
         role.value = role.value.replace(/\D/g, '');
+        if (role.value > 5) {
+            errorText.innerHTML = "<span>* </span>" + vocabulary.invalid_role[currentLanguage];
+        } else {
+            errorText.innerHTML = "";
+        }
     });
     def_h.addEventListener('input', () => {
-        def_h.value = def_h.value.replace(/\D/g, '');
+        // Remove non-digit characters and allow one decimal point
+        def_h.value = def_h.value.replace(/[^\d.]/g, '');
+
+        // Ensure there's only one decimal point
+        const decimalCount = (def_h.value.match(/\./g) || []).length;
+        if (decimalCount > 1) {
+            def_h.value = def_h.value.slice(0, -1);
+        }
+        // Allow only one digit after the decimal point
+        const decimalIndex = def_h.value.indexOf('.');
+        if (decimalIndex !== -1) {
+            const integerPart = def_h.value.slice(0, decimalIndex);
+            const decimalPart = def_h.value.slice(decimalIndex + 1, decimalIndex + 2);
+            def_h.value = `${integerPart}.${decimalPart}`;
+        }
     });
     
 }
@@ -427,6 +525,9 @@ function authList() {
         })
         list.appendChild(ul);
     })
+    pw.addEventListener('input', () => {
+        errorText.innerText = "";
+    });
     
 }
 
@@ -451,26 +552,10 @@ function deleteRecord(selected_id, section) {
             return;
     }
     fetch(endpoint, {
-        method: 'DELETE',
-        headers: {
-            'Authorization': "Bearer " + token
-        },
-        mode: 'cors'
+        method: 'DELETE'
     })
-    .then(response => {
-        if (response.status === 401) {
-            localStorage.clear();
-            window.location.href = '/';
-            return response.json();
-        } else if (!response.ok) {
-            return Promise.reject('Failed to fetch data');
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        if (data.expired) {
-            localStorage.setItem('expired', data.expired);
-        } 
        location.reload();
     })
     
@@ -537,25 +622,12 @@ function updateRecord(selected_id, section) {
     fetch(endpoint, {
         method: 'PUT',
         headers: {
-            "Content-Type": "application/json",
-            'Authorization': "Bearer " + token
+            "Content-Type": "application/json"
         },
         body: JSON.stringify(updated)
     })
-    .then(response => {
-        if (response.status === 401) {
-            localStorage.clear();
-            window.location.href = '/';
-            return response.json();
-        } else if (!response.ok) {
-            return Promise.reject('Failed to fetch data');
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        if (data.expired) {
-            localStorage.setItem('expired', data.expired);
-        } 
         location.reload();
     })
     
@@ -608,23 +680,15 @@ function addRecord(section) {
             const login = document.getElementById("login").value;
             const pw = document.getElementById("password").value;
             const userId = document.getElementById("user_id").value;
-            fetch('/api/users', {
-                headers: {
-                    'Authorization': "Bearer " + token
-                }
-            })
+            fetch('/api/users')
             .then(response => response.json())
             .then(users => {
-                const matchedUser = users.find(user => user._id === userId);
+                const matchedUser = users.find(user => user._id === parseInt(userId));
                 if (matchedUser) {
-                    fetch('/api/loginpass', {
-                    headers: {
-                        'Authorization': "Bearer " + token
-                    }
-                    })
+                    fetch('/api/loginpass')
                     .then(response => response.json())
                     .then(data => {
-                        const existingAuth = data.some(auth => userId === auth.user_id);
+                        const existingAuth = data.some(auth => parseInt(userId) === auth.user_id);
                         if (existingAuth) {
                             errorText.innerHTML = "<span>* </span>" + vocabulary.exist_auth[currentLanguage];
                         }  else {
@@ -656,25 +720,12 @@ function postAuth(endpoint, added) {
     fetch(endpoint, {
             method: 'POST',
             headers: {
-                "Content-Type": "application/json",
-                'Authorization': "Bearer " + token
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(added)
         })
-        .then(response => {
-            if (response.status === 401) {
-                localStorage.clear();
-                window.location.href = '/';
-                return response.json();
-            } else if (!response.ok) {
-                return Promise.reject('Failed to fetch data');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.expired) {
-                localStorage.setItem('expired', data.expired);
-            }    
+        .then(response => response.json())
+        .then(data => {  
            location.reload();
         })
 }
