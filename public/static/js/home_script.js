@@ -175,9 +175,12 @@ prevNextIcon.forEach(icon => {
     icon.addEventListener("click", () => {
         currMonth = icon.id === "prev" ? currMonth - 1 : currMonth + 1;
 
-        if(currMonth < 0 || currMonth > 11) { 
-            currYear = date.getFullYear();
-            currMonth = date.getMonth();
+        if(currMonth < 0) { 
+            currYear -= 1;
+            currMonth = 11; // Set to December
+        } else if (currMonth > 11) {
+            currYear += 1;
+            currMonth = 0; // Set to January
         } 
         
         renderCalendar();
@@ -293,7 +296,7 @@ function handleDateSelection(event) {
 
             // If already selected start contains class end-{i}, i value will be read
             const selectedStart = document.querySelector(".selected-start");
-            const startIsEnd  = selectedStart.className.match(/end-(\d+)/);
+            const startIsEnd = selectedStart ? selectedStart.className.match(/end-(\d+)/) : null;
             const matching = startIsEnd ? parseInt(startIsEnd[1]) : null;
                    
             if (absenceValueMatch) {
@@ -1127,6 +1130,7 @@ document.addEventListener ('DOMContentLoaded', function() {
     
 
     value.addEventListener('input', function() {
+        value.value = value.value.replace(/\D/g, '');
         var number = parseInt(this.value);
         if(number) {
             infoText.textContent = vocabulary.click_save[currentLang];
@@ -1142,6 +1146,7 @@ document.addEventListener ('DOMContentLoaded', function() {
     });
 
     overtimeValue.addEventListener('input', function() {
+        overtimeValue.value = overtimeValue.value.replace(/\D/g, '');
         var number = parseInt(this.value);
         if(number) {
             errortxtDiv.style.display = "none";
@@ -2015,10 +2020,28 @@ function updateAbsence() {
 
             const startDateValue = `${currentYear}-${currentMonth}-${formattedStartDate}`;
             const endDateValue = `${currentYear}-${currentMonth}-${formattedEndDate}`;
-
-            alert(`Successfully updated absence:
-${startDateValue} ${endDateValue} ${absenceType} ${noteValue} ${value}`);
-            window.location.reload(true);
+            const updatedAbsenceData = {
+                absenceType: parseInt(absenceType),
+                start_date: startDateValue,
+                end_date: endDateValue,
+                person_id: selectedUserId,
+                value: parseInt(value),
+                note: noteValue
+            };
+            fetch(`/api/user_absences/${absence_id}`, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+    
+                body: JSON.stringify(updatedAbsenceData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                location.reload();
+            })
+            .catch(error => console.error('Error updating user absence:', error));
+        
         }
 }
 
@@ -2074,7 +2097,7 @@ function checkUserActivity() {
   var timeDifference = currentTime - lastActivityTime;
 
   // If more than 11 minutes pass without activity, clear localStorage and redirect
-  if (timeDifference > 5 * 60 * 1000) {
+  if (timeDifference > 11 * 60 * 1000) {
     localStorage.clear();
     localStorage.setItem('expired', true);
     window.location.href = "/templates/login.html";

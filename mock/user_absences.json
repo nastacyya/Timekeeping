@@ -29,13 +29,6 @@
     "person_id": 3
   },
   {
-    "_id": 6,
-    "absenceType": 15,
-    "start_date": "2023-12-20",
-    "end_date": "2023-12-23",
-    "person_id": 3
-  },
-  {
     "_id": 7,
     "absenceType": 14,
     "start_date": "2023-12-02",
@@ -63,5 +56,49 @@
     "end_date": "2023-12-24",
     "person_id": 2,
     "note": "njkn"
+  },
+  {
+    "_id": 13,
+    "absenceType": 10,
+    "start_date": "2024-01-01",
+    "end_date": "2024-01-02",
+    "person_id": 2,
+    "note": "Jaunais Gads"
+  },
+  {
+    "_id": 14,
+    "absenceType": 3,
+    "start_date": "2024-01-02",
+    "end_date": "2024-01-03",
+    "person_id": 8
+  },
+  {
+    "_id": 16,
+    "absenceType": 10,
+    "start_date": "2023-12-24",
+    "end_date": "2023-12-26",
+    "person_id": 3
+  },
+  {
+    "_id": 17,
+    "absenceType": 2,
+    "start_date": "2023-12-13",
+    "end_date": "2023-12-15",
+    "person_id": 3
+  },
+  {
+    "_id": 18,
+    "absenceType": 13,
+    "start_date": "2023-12-08",
+    "end_date": "2023-12-08",
+    "person_id": 3,
+    "value": 2
+  },
+  {
+    "_id": 19,
+    "absenceType": 1,
+    "start_date": "2024-01-11",
+    "end_date": "2024-01-13",
+    "person_id": 8
   }
 ]

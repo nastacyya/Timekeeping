@@ -84,16 +84,18 @@ function submitForm() {
     username.style.border = "2px solid #ccc";
     password.style.border = "2px solid #ccc";
     errorText.innerText = "";
-    
+    var creds = {
+      "username": username.value,
+      "password": password.value
+    }
+
       fetch('/api/loginpass', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            username: username.value,
-            password: password.value,
-        }),
+          "Content-Type": "application/json",
+          "Set-cookies": "HttpOnly; Secure",
+          "Authorization": "Basic " + btoa(JSON.stringify(creds))
+        }
       }) 
       .then(response => response.json())
       .then(data => {
@@ -105,7 +107,7 @@ function submitForm() {
         .then(response2 => response2.json())
         .then(users => {
           const userFound = users.find(user => user._id === data.user_id);
-            const userRole = userFound.role; // API returns the user's role in a field called 'role'
+            const userRole = userFound.role; // API returns the user's role 
             localStorage.setItem('user_role', userRole);
             
             // Check user roles permissions

@@ -265,8 +265,10 @@ function departmentsList() {
             // Check if entered value exists in the list of departments
             const departmentExists = departments.some(department => department.value === parseInt(enteredValue));
             // Check if entered value is equal to the value of the selected department
-            const isSelectedDepartment = selected_id && departments.some(department => department._id === selected_id && department.value === parseInt(enteredValue));
-            
+            var isSelectedDepartment = selected_id && departments.some(department => department._id === selected_id && department.value === parseInt(enteredValue));
+            if(addMode === true){
+                isSelectedDepartment = null;
+            }
             // Display error message based on the results
             if (departmentExists && !isSelectedDepartment) {
                 errorText.innerHTML = "<span>* </span>" + vocabulary.exist_value[currentLanguage];
@@ -343,8 +345,10 @@ function absencesList() {
             // Check if entered value exists in the list of types
             const typeExists = types.some(type => type.value === parseInt(enteredValue));
             // Check if entered value is equal to the value of the selected type
-            const isSelectedType = selected_id && types.some(type => type._id === selected_id && type.value === parseInt(enteredValue));
-            
+            var isSelectedType = selected_id && types.some(type => type._id === selected_id && type.value === parseInt(enteredValue));
+            if(addMode === true){
+                isSelectedType = null;
+            }
             // Display error message based on the results
             if (typeExists && !isSelectedType) {
                 errorText.innerHTML = "<span>* </span>" + vocabulary.exist_value[currentLanguage];
@@ -450,9 +454,12 @@ function usersList() {
     });
     role.addEventListener('input', () => {
         role.value = role.value.replace(/\D/g, '');
+        console.log(role.value)
         if (role.value > 5) {
+            console.log("bigger")
             errorText.innerHTML = "<span>* </span>" + vocabulary.invalid_role[currentLanguage];
         } else {
+            console.log("not big")
             errorText.innerHTML = "";
         }
     });

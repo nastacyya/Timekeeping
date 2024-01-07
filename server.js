@@ -2,9 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 const port = 3000;
+const secretKey = 'your-secret-key';
 
 // Middleware to parse JSON data from requests
 app.use(bodyParser.json());
@@ -27,56 +29,45 @@ app.get('/admin', (req, res) => {
 
 // New route to handle login logic
 app.post('/api/loginpass', (req, res) => {
-    const { username, password } = req.body;
+    const authHeader = req.headers.authorization;
 
-    // Read credentials from creds.json
-    fs.readFile(path.join(__dirname, 'mock', 'creds.json'), 'utf8', (err, data) => {
-        if (err) {
-            console.error('Error reading creds.json:', err);
-            res.status(500).send('Internal Server Error');
-            return;
-        }
+    if (!authHeader) {
+        return res.status(401).send('Authorization header missing');
+    }
+    try {
+        const credentialsBuffer = Buffer.from(authHeader.split(' ')[1], 'base64').toString('utf-8');
+        const credentials = JSON.parse(credentialsBuffer);
 
-        try {
-            const credentials = JSON.parse(data);
+        const { username, password } = credentials;
 
+        // Read credentials from creds.json
+        fs.readFile(path.join(__dirname, 'mock', 'creds.json'), 'utf8', (err, data) => {
+            if (err) {
+                console.error('Error reading creds.json:', err);
+                res.status(500).send('Internal Server Error');
+                return;
+            }
+            const storeCredentials = JSON.parse(data);
+            
             // Find user by username and password
-            const existing = credentials.find(access => access.username === username && access.password === password);
+            const existing = storeCredentials.find(access => access.username === username && access.password === password);
 
             if (existing) {
-                // Read tokens from token.json
-                fs.readFile(path.join(__dirname, 'mock', 'token.json'), 'utf8', (err, tokenData) => {
-                    if (err) {
-                        console.error('Error reading token.json:', err);
-                        res.status(500).send('Internal Server Error');
-                        return;
-                    }
+                // Generate a JWT token and associate it with the user's ID
+                const token = jwt.sign({ user_id: existing.user_id }, secretKey, { expiresIn: '11min' });
 
-                    try {
-                        const tokens = JSON.parse(tokenData);
-
-                        // Find user's token by user_id
-                        const userToken = tokens.find(token => token.user_id === existing.user_id);
-
-                        if (userToken) {
-                            // Send the token and user_id to the client
-                            res.json({ user_id: existing.user_id, token: userToken.token });
-                        } else {
-                            res.status(401).send('Token not found');
-                        }
-                    } catch (error) {
-                        console.error('Error parsing token.json:', error);
-                        res.status(500).send('Internal Server Error');
-                    }
-                });
+                // Send the token as a response
+                res.json({ token: token, user_id: existing.user_id });
+            
             } else {
                 res.status(401).send('Invalid credentials');
             }
-        } catch (error) {
-            console.error('Error parsing creds.json:', error);
-            res.status(500).send('Internal Server Error');
-        }
-    });
+        }) 
+    } catch (error) {
+        console.error('Error parsing credentials:', error);
+        res.status(400).send('Invalid credentials format');
+    }
+
 });
 
 app.get('/api/loginpass', (req, res) => {
@@ -210,95 +201,45 @@ app.post('/api/save_user_absence', (req, res) => {
 app.delete('/api/user_absences/:id', (req, res) => {
     const absenceId = req.params.id;
    
-    // Implement the logic to delete the absence with the specified ID
     deleteAbsenceById(absenceId);
 
     res.json({ message: 'Absence deleted successfully' });
 });
 
-// Example route to handle DELETE requests for deleting an absence
-app.delete('/api/users/:id', (req, res) => {
-    const userId = req.params.id;
-   
-    // Implement the logic to delete the absence with the specified ID
-    deleteUserById(userId);
-
-    res.json({ message: 'User deleted successfully' });
-});
-// Endpoint to handle saving user absences
-app.post('/api/users', (req, res) => {
+// Example route to handle PUT requests for editing an absence
+app.put('/api/user_absences/:id', (req, res) => {
+    const absenceId = req.params.id;
     const newData = req.body;
-
-    // Read existing data
-    const existingData = readUsers();
-    // Generate a new _id for the absence by taking the last _id and adding +1
-    const newId = existingData.length > 0 ? existingData[existingData.length - 1]._id + 1 : 1;
+    try {
+        // Read existing data
+        const existingData = readUserAbsences();
     
-    // Conditionally add note and value only if they are not null or empty
-    const newUser = {
-        _id: newId,
-        sn: newData.sn,
-        givenName: newData.givenName,
-        role: newData.role,
-        department: newData.department
-    };
-
-    if (newData.default_hours !== null) {
-        newAbsence.default_hours = newData.default_hours;
-    }
-
-    existingData.push(newUser);
+        // Conditionally add note and value only if they are not null or empty
+        const updatedAbsence = {
+            _id: absenceId,
+            absenceType: newData.absenceType,
+            start_date: newData.start_date,
+            end_date: newData.end_date,
+            person_id: newData.person_id
+        };
     
-    // Save the updated data
-    saveUsers(existingData);
-
-    res.send(`${JSON.stringify(existingData, null, 2)}`);
+        if (newData.note !== "") {
+            newAbsence.note = newData.note;
+        }
+    
+        if (newData.value !== null) {
+            newAbsence.value = newData.value;
+        }
+    
+        existingData.push(updatedAbsence);
+            // Save the updated data
+            saveUserAbsences(existingData);
+            console.log(`Absence with _id ${absenceId} updated successfully.`);
+        
+        } catch (error) {
+            console.error('Error updating absence:', error.message);
+        }
 });
-
-// Function to delete an absence from user_absences.json
-function deleteUserById(userId) {
-    try {
-    // Read existing data
-    const existingData = readUsers();
-
-    // Find the index of the absence with the given id
-    const index = existingData.findIndex((user) => user._id === parseInt(userId));
-    // If the absence is found, remove it from the array
-    if (index !== -1) {
-        existingData.splice(index, 1);
-
-        // Save the updated data
-        saveUsers(existingData);
-        console.log(`User with _id ${userId} deleted successfully.`);
-    } else {
-        console.log(`User with _id ${userId} not found.`);
-    }
-    } catch (error) {
-        console.error('Error deleting user:', error.message);
-    }
-}
-
-// Function to read user absences from the file
-function readUsers() {
-    try {
-        const data = fs.readFileSync(path.join(__dirname, 'mock', 'users.json'), 'utf8');
-        return JSON.parse(data);
-    } catch (error) {
-        console.error('Error reading users:', error.message);
-        return [];
-    }
-}
-
-// Function to save user absences to the file
-function saveUsers(users) {
-    try {
-        const data = JSON.stringify(users, null, 2);
-        fs.writeFileSync(path.join(__dirname, 'mock', 'users.json'), data, 'utf8');
-        console.log('Users saved successfully.');
-    } catch (error) {
-        console.error('Error saving users:', error.message);
-    }
-}
 
 // Function to delete an absence from user_absences.json
 function deleteAbsenceById(absenceId) {
@@ -344,6 +285,90 @@ function saveUserAbsences(absences) {
     }
 }
 
+// Endpoint to handle saving users
+app.post('/api/users', (req, res) => {
+    const newData = req.body;
+
+    // Read existing data
+    const existingData = readUsers();
+    // Generate a new _id for the user by taking the last _id and adding +1
+    const newId = existingData.length > 0 ? existingData[existingData.length - 1]._id + 1 : 1;
+    
+    // Conditionally add default hours only if it is not null 
+    const newUser = {
+        _id: newId,
+        sn: newData.sn,
+        givenName: newData.givenName,
+        role: newData.role,
+        department: newData.department
+    };
+
+    if (newData.default_hours !== null) {
+        newAbsence.default_hours = newData.default_hours;
+    }
+
+    existingData.push(newUser);
+    
+    // Save the updated data
+    saveUsers(existingData);
+
+    res.send(`${JSON.stringify(existingData, null, 2)}`);
+});
+
+// Example route to handle DELETE requests for deleting an absence
+app.delete('/api/users/:id', (req, res) => {
+    const userId = req.params.id;
+   
+    // Implement the logic to delete the absence with the specified ID
+    deleteUserById(userId);
+
+    res.json({ message: 'User deleted successfully' });
+});
+
+// Function to delete an absence from user_absences.json
+function deleteUserById(userId) {
+    try {
+    // Read existing data
+    const existingData = readUsers();
+
+    // Find the index of the user with the given id
+    const index = existingData.findIndex((user) => user._id === parseInt(userId));
+    // If the user is found, remove it from the array
+    if (index !== -1) {
+        existingData.splice(index, 1);
+
+        // Save the updated data
+        saveUsers(existingData);
+        console.log(`User with _id ${userId} deleted successfully.`);
+    } else {
+        console.log(`User with _id ${userId} not found.`);
+    }
+    } catch (error) {
+        console.error('Error deleting user:', error.message);
+    }
+}
+
+// Function to read users from the file
+function readUsers() {
+    try {
+        const data = fs.readFileSync(path.join(__dirname, 'mock', 'users.json'), 'utf8');
+        return JSON.parse(data);
+    } catch (error) {
+        console.error('Error reading users:', error.message);
+        return [];
+    }
+}
+
+// Function to save users to the file
+function saveUsers(users) {
+    try {
+        const data = JSON.stringify(users, null, 2);
+        fs.writeFileSync(path.join(__dirname, 'mock', 'users.json'), data, 'utf8');
+        console.log('Users saved successfully.');
+    } catch (error) {
+        console.error('Error saving users:', error.message);
+    }
+}
 // Start the server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

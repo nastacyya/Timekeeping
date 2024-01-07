@@ -79,20 +79,20 @@
   },
   {
     "_id": 14,
-    "name": "Papild",
+    "name": "Papildus atvaļinājums par bērnu līdz 14 gadiem",
     "value": 14,
     "short_name": "P"
   },
   {
     "_id": 15,
-    "name": "Bernam",
+    "name": "Veselu maiņu dīkst",
     "value": 15,
-    "short_name": "B"
+    "short_name": "VM"
   },
   {
     "_id": 16,
-    "name": "Atval",
+    "name": "Donora diena",
     "value": 16,
-    "short_name": "A"
+    "short_name": "DD"
   }
 ]

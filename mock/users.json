@@ -4,41 +4,62 @@
     "sn": "Saveika",
     "givenName": "Anastasija",
     "role": 5,
-    "department": 3
-  },
-  {
-    "_id": 3,
-    "sn": "Magomedov",
-    "givenName": "Nurlan",
-    "role": 4,
     "department": 2
   },
   {
-    "_id": 4,
-    "sn": "Sheeran",
-    "givenName": "Ed",
+    "_id": 3,
+    "sn": "Kažoke",
+    "givenName": "Vilija",
     "role": 1,
-    "department": 3
+    "department": 2
   },
   {
     "_id": 5,
-    "sn": "Harlow",
-    "givenName": "Jack",
-    "role": 2,
+    "sn": "Capkevičs",
+    "givenName": "Mārtiņš",
+    "role": 1,
     "department": 2
   },
   {
     "_id": 6,
-    "sn": "Abols",
-    "givenName": "Janis",
-    "role": 2,
+    "sn": "Veckalne",
+    "givenName": "Sarmīte",
+    "role": 1,
     "department": 2
   },
   {
     "_id": 7,
-    "sn": "kuka",
-    "givenName": "lena",
+    "sn": "Cilevičs",
+    "givenName": "Reinis",
+    "role": 2,
+    "department": 2
+  },
+  {
+    "_id": 8,
+    "sn": "Kaļva",
+    "givenName": "Markuss",
     "role": 3,
-    "department": 4
+    "department": 1
+  },
+  {
+    "_id": 9,
+    "sn": "Ribene",
+    "givenName": "Karīna",
+    "role": 1,
+    "department": 1
+  },
+  {
+    "_id": 10,
+    "sn": "Šaplake",
+    "givenName": "Emīlija",
+    "role": 1,
+    "department": 1
+  },
+  {
+    "_id": 11,
+    "sn": "Bļodnieks",
+    "givenName": "Uģis",
+    "role": 1,
+    "department": 1
   }
 ]
