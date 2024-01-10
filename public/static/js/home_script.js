@@ -7,6 +7,7 @@ window.addEventListener('pageshow', function(event) {
     } else if(token && admin) {
         window.location.href = '/admin';
     } 
+    colorLegend();
 });
 
 let currentLang = 'en'; // set current language ('lv' or 'en')
@@ -182,7 +183,6 @@ prevNextIcon.forEach(icon => {
             currYear += 1;
             currMonth = 0; // Set to January
         } 
-        
         renderCalendar();
        // Check if a user is selected, then mark their absences
        if (selectedUserId) {
@@ -191,10 +191,15 @@ prevNextIcon.forEach(icon => {
     });
 });
 
+
 function colorLegend() {
     fetch('/api/absence_types')
     .then(response => response.json())
     .then(data => {
+        // Sort the data array based on absence values in ascending order 
+        // (in case admin edits one of the absence type records and record moves to the list end)
+        data.sort((a, b) => a.value - b.value);
+
         const colorDiv = document.querySelector(".color-legend");
         const absencesList = colorDiv.querySelector(".colors-ul")
         data.forEach(absenceType => {
@@ -205,15 +210,20 @@ function colorLegend() {
             absencesList.appendChild(listItem);
           });
     })
-
-    for (let i = 1; i <= typeCount; i++) {
-        const style = `
-          .circle-${i} {
-            background: var(--absence-${i});
-          }
-        `;
-        styleSheet.insertRule(style, styleSheet.cssRules.length);
-    }
+    .then(() => {
+        // Ensure styles are loaded before manipulating
+        for (let i = 1; i <= typeCount; i++) {
+            const style = `
+            .circle-${i} {
+                background: var(--absence-${i});
+            }
+            `;
+            styleSheet.insertRule(style, styleSheet.cssRules.length);
+        }
+    })
+    .catch(error => {
+        console.error("Error fetching colors:", error);
+    });
 }
 
 //Choose dates and write them to the form
@@ -416,6 +426,7 @@ function absenceTypeSelect() {
       selectedOption.value = null;
       // Loop through the absence types and create an option element for each
       data.forEach(absenceType => {
+        data.sort((a, b) => a.value - b.value);
         const absenceValue = absenceType.value;
         const listItem = document.createElement('li');
        
@@ -707,7 +718,7 @@ function supervisorRolePermissions(userRole) {
         try {
             const response = await fetch('/api/departments');
             const data = await response.json();
-
+            data.sort((a, b) => a.value - b.value);
             for (const department of data) {
                 const dropdown = document.createElement('div');
                 dropdown.classList.add('dropdown');
@@ -731,7 +742,6 @@ function supervisorRolePermissions(userRole) {
             console.error('Error fetching departments:', error);
         }
     }
-
   
     async function fetchEmployeesByDepartment(departmentId, subMenu) {
 
@@ -1056,7 +1066,7 @@ document.addEventListener ('DOMContentLoaded', function() {
       .catch(error => console.error('Error:', error));
 
     absenceTypeSelect();
-    colorLegend();
+    
     renderCalendar();
     editAbsenceType();
     startInput.setAttribute('readonly', 'true');
@@ -1455,7 +1465,15 @@ function processAbsenceData(dayDate, target, startInput, endInput, absenceTypeIn
                     border-left: 1px solid #BBB;
                 }
                 `;
+                const boxShadow = `
+                input[type="number"]::-webkit-inner-spin-button:hover,
+                input[type="number"]::-webkit-inner-spin-button:active{
+                    box-shadow: 0 0 2px rgb(37, 37, 37, 0.5);
+                    opacity: .8;
+                }
+                `;
                 styleSheet.insertRule(buttonStyle, styleSheet.cssRules.length);
+                styleSheet.insertRule(boxShadow, styleSheet.cssRules.length);
             } else {
                 valueDiv.style.display = "none"; 
                 overtimeValue.value = "";
@@ -1494,13 +1512,21 @@ function processAbsenceData(dayDate, target, startInput, endInput, absenceTypeIn
         if (matchingAbsence.value) {
             valueDiv.style.display = "block"; 
             overtimeValue.value = matchingAbsence.value;
+            const boxShadow = `
+            input[type="number"]::-webkit-inner-spin-button:hover,
+            input[type="number"]::-webkit-inner-spin-button:active{
+                box-shadow: none;
+                opacity: 0;
+            }
+            `;
             const buttonStyle = `
                 .absence_data input[type="number"]::-webkit-outer-spin-button, 
                 .absence_data input[type="number"]::-webkit-inner-spin-button{
                     background: none;
                     border-left: none;
                 }
-            `;
+                `;
+            styleSheet.insertRule(boxShadow, styleSheet.cssRules.length);
             styleSheet.insertRule(buttonStyle, styleSheet.cssRules.length);
         } else {
             valueDiv.style.display = "none"; 
@@ -1895,6 +1921,7 @@ function editAbsenceType() {
     fetch('/api/absence_types')
     .then(response => response.json())
     .then(data => {
+      data.sort((a, b) => a.value - b.value);
       const absenceSelect = document.querySelector('.absence_select');
       const absenceTypeInput = absenceSelect.querySelector('.absence_type');
       const absencesList = absenceSelect.querySelector('.absences_list');
@@ -1970,7 +1997,7 @@ function updateAbsence() {
 
         function formatSingleDigit(value) {
             // Add a leading zero if the value is a single digit
-            return value < 10 ? `0${value}` : value;
+            return value.length === 1 ? `0${value}` : value;
         }
           
         const formattedEndDate = formatSingleDigit(endDate);  //So the Safari converted date correctly
@@ -2033,7 +2060,6 @@ function updateAbsence() {
                 headers: {
                     "Content-Type": "application/json"
                 },
-    
                 body: JSON.stringify(updatedAbsenceData)
             })
             .then(response => response.json())

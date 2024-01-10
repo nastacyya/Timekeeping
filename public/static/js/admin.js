@@ -152,9 +152,6 @@ document.addEventListener ('DOMContentLoaded', function() {
             inputs.forEach(input => {
                 input.removeAttribute('readonly');
                 input.value = "";
-                input.addEventListener('input', () => {
-                    errorText.innerHTML = "";
-                })
                 input.style.outlineColor = "rgb(186, 186, 186)";
             })
             addBtn.textContent = vocabulary.cancel[currentLanguage];
@@ -221,6 +218,7 @@ function departmentsList() {
     fetch('/api/departments',)
     .then(response => response.json())
     .then(departments => {
+        departments.sort((a, b) => a.value - b.value);
         const ul = document.createElement('ul');
         inputs.forEach(input => {
             input.setAttribute('readonly', 'true');
@@ -251,9 +249,6 @@ function departmentsList() {
         list.appendChild(ul);
     })
  
-    depName.addEventListener('input', () => {
-        errorText.innerHTML = "";
-    });
 
     depValue.addEventListener('input', () => {
         depValue.value = depValue.value.replace(/\D/g, '');
@@ -300,6 +295,7 @@ function absencesList() {
     fetch('/api/absence_types')
     .then(response => response.json())
     .then(absences => {
+        absences.sort((a, b) => a.value - b.value);
         const ul = document.createElement('ul');
         inputs.forEach(input => {
             input.setAttribute('readonly', 'true');
@@ -321,9 +317,6 @@ function absencesList() {
                 inputs.forEach(input => {
                     input.removeAttribute('readonly');
                     input.style.outlineColor = "rgb(186, 186, 186)";
-                    input.addEventListener('input', () => {
-                        errorText.innerHTML = "";
-                    });
                 })
                 absName.value = absence.name;
                 absValue.value = absence.value;
@@ -410,9 +403,6 @@ function usersList() {
                 inputs.forEach(input => {
                     input.removeAttribute('readonly');
                     input.style.outlineColor = "rgb(186, 186, 186)";
-                    input.addEventListener('input', () => {
-                        errorText.innerHTML = "";
-                    });
                 })
                 
                 name.value = user.givenName;
@@ -455,11 +445,9 @@ function usersList() {
     role.addEventListener('input', () => {
         role.value = role.value.replace(/\D/g, '');
         console.log(role.value)
-        if (role.value > 5) {
-            console.log("bigger")
+        if (role.value > 5 || role.value < 1) {
             errorText.innerHTML = "<span>* </span>" + vocabulary.invalid_role[currentLanguage];
         } else {
-            console.log("not big")
             errorText.innerHTML = "";
         }
     });
@@ -533,6 +521,12 @@ function authList() {
         list.appendChild(ul);
     })
     pw.addEventListener('input', () => {
+        errorText.innerText = "";
+    });
+    login.addEventListener('input', () => {
+        errorText.innerText = "";
+    });
+    userId.addEventListener('input', () => {
         errorText.innerText = "";
     });
     
@@ -618,7 +612,7 @@ function updateRecord(selected_id, section) {
             var updated = {
                 login: login,
                 passw: pw,
-                user_id: userId
+                user_id: parseInt(userId)
             };
             break;
         default:
@@ -683,7 +677,7 @@ function addRecord(section) {
             };
             break;
         case 'authorization':
-            endpoint = '/api/create_user';
+            endpoint = '/api/auth_data';
             const login = document.getElementById("login").value;
             const pw = document.getElementById("password").value;
             const userId = document.getElementById("user_id").value;
@@ -697,12 +691,12 @@ function addRecord(section) {
                     .then(data => {
                         const existingAuth = data.some(auth => parseInt(userId) === auth.user_id);
                         if (existingAuth) {
-                            errorText.innerHTML = "<span>* </span>" + vocabulary.exist_auth[currentLanguage];
+                            errorText.innerHTML = "<span>* </span>" + vocabulary.exist_auth[currentLanguage]; //error message that user already has auth credentials
                         }  else {
                             var added = {
                                 login: login,
                                 passw: pw,
-                                user_id: userId
+                                user_id: parseInt(userId)
                             };
 
                             postAuth(endpoint, added);

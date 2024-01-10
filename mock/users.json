@@ -1,17 +1,23 @@
 [
   {
+    "_id": 1,
+    "sn": "AdminAdmin",
+    "givenName": "Admin",
+    "role": 5
+  },
+  {
     "_id": 2,
     "sn": "Saveika",
     "givenName": "Anastasija",
-    "role": 5,
+    "role": 2,
     "department": 2
   },
   {
     "_id": 3,
     "sn": "Kažoke",
     "givenName": "Vilija",
-    "role": 1,
-    "department": 2
+    "role": 4,
+    "department": 5
   },
   {
     "_id": 5,
@@ -21,25 +27,11 @@
     "department": 2
   },
   {
-    "_id": 6,
-    "sn": "Veckalne",
-    "givenName": "Sarmīte",
-    "role": 1,
-    "department": 2
-  },
-  {
     "_id": 7,
     "sn": "Cilevičs",
     "givenName": "Reinis",
-    "role": 2,
+    "role": 1,
     "department": 2
-  },
-  {
-    "_id": 8,
-    "sn": "Kaļva",
-    "givenName": "Markuss",
-    "role": 3,
-    "department": 1
   },
   {
     "_id": 9,
@@ -60,6 +52,21 @@
     "sn": "Bļodnieks",
     "givenName": "Uģis",
     "role": 1,
-    "department": 1
+    "department": 3
+  },
+  {
+    "_id": 12,
+    "sn": "Leimane",
+    "givenName": "Anita",
+    "role": 1,
+    "department": 4
+  },
+  {
+    "_id": 8,
+    "sn": "Kaļva",
+    "givenName": "Markuss",
+    "role": 3,
+    "department": 4,
+    "default_hours": 7.3
   }
 ]

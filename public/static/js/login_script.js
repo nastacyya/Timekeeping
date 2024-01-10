@@ -1,5 +1,8 @@
 const username = document.getElementById('login');
 const password = document.getElementById('passw');
+let currentLanguage = 'en'; // Set current language lv or en
+let vocabulary; // Declare a variable to store translations
+var errorText = document.getElementById("errorText");
 
 window.addEventListener('pageshow', function(event) {
   const token = localStorage.getItem('token');
@@ -22,10 +25,6 @@ document.addEventListener("keypress", function(event) {
     document.getElementById("submit").click();
   }
 });
-
-let currentLanguage = 'en'; // set current language lv or en
-let vocabulary; // Declare a variable to store translations
-var errorText = document.getElementById("errorText");
 
 document.addEventListener('DOMContentLoaded', function() {
   fetch('/static/translate/translations.json')  
@@ -94,7 +93,7 @@ function submitForm() {
         headers: {
           "Content-Type": "application/json",
           "Set-cookies": "HttpOnly; Secure",
-          "Authorization": "Basic " + btoa(JSON.stringify(creds))
+          "Authorization": "Basic " + btoa(JSON.stringify(creds))  //encode username and password to base64
         }
       }) 
       .then(response => response.json())
