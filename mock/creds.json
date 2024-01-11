@@ -6,6 +6,12 @@
     "user_id": 1
   },
   {
+    "_id": 2,
+    "username": "123",
+    "password": "321",
+    "user_id": 2
+  },
+  {
     "_id": 3,
     "username": "234",
     "password": "432",
@@ -16,11 +22,5 @@
     "username": "456",
     "password": "654",
     "user_id": 8
-  },
-  {
-    "_id": 2,
-    "username": "123",
-    "password": "321",
-    "user_id": 2
   }
 ]

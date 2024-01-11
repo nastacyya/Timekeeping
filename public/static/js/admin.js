@@ -606,14 +606,8 @@ function updateRecord(selected_id, section) {
             break;
         case 'authorization':
             endpoint = `/api/loginpass/${selected_id}`;
-            const login = document.getElementById("login").value;
             const pw = document.getElementById("password").value;
-            const userId = document.getElementById("user_id").value;
-            var updated = {
-                login: login,
-                passw: pw,
-                user_id: parseInt(userId)
-            };
+            var updated = { password: pw };
             break;
         default:
             console.error('Invalid section');

@@ -197,7 +197,6 @@ function colorLegend() {
     .then(response => response.json())
     .then(data => {
         // Sort the data array based on absence values in ascending order 
-        // (in case admin edits one of the absence type records and record moves to the list end)
         data.sort((a, b) => a.value - b.value);
 
         const colorDiv = document.querySelector(".color-legend");
@@ -930,7 +929,6 @@ async function sendUserAbsences() {
             })
             .then(response => response.json())
             .then(message => {
-                console.log(message);
                 location.reload();
             })
             .catch(error => {

@@ -92,18 +92,10 @@ app.put('/api/loginpass/:id', (req, res) => {
     const authId = req.params.id;
     const newData = req.body;
     try {
-        deleteAuthById(authId);
-        
         const existingData = readAuthData();
-
-        const updatedAuth = {
-            _id: parseInt(authId),
-            username: newData.login,
-            password: newData.passw,
-            user_id: newData.user_id
-        };
-    
-        existingData.push(updatedAuth);
+        const editingIndex = existingData.findIndex(record => record._id === parseInt(authId));
+        const editingPw = existingData[editingIndex];
+        editingPw.password = newData.password;
     
         saveAuthData(existingData);
         console.log(`Authorization record with _id ${authId} updated successfully.`);
@@ -210,14 +202,14 @@ app.get('/api/user_absences', (req, res) => {
 
 // Endpoint to handle saving user absences
 app.post('/api/save_user_absence', (req, res) => {
-    const newData = req.body;
+    const newData = req.body; 
+   
+    check_overlapping_absence(newData);
 
     const existingData = readUserAbsences();
-
     // Find the maximum _id from the existing data
     const maxId = existingData.reduce((max, record) => Math.max(max, record._id), 0);
     const newId = maxId + 1;
-    
     
     const newAbsence = {
         _id: newId,
@@ -242,6 +234,63 @@ app.post('/api/save_user_absence', (req, res) => {
     res.send(`${JSON.stringify(existingData, null, 2)}`);
 });
 
+function check_overlapping_absence(newData) {
+    const existingData = readUserAbsences();
+    const overlappingIndex = existingData.findIndex(record =>
+        record.start_date <= newData.end_date && record.end_date >= newData.start_date && record.person_id === newData.person_id
+    );
+
+    // If there is an overlap, adjust the end_date of the existing absence
+    if (overlappingIndex !== -1) {
+        const existingAbsence = existingData[overlappingIndex];
+        if (existingAbsence.start_date < newData.start_date && existingAbsence.end_date <= newData.end_date) {
+            existingAbsence.end_date = new Date(newData.start_date);
+            existingAbsence.end_date.setDate(existingAbsence.end_date.getDate() - 1);
+            existingAbsence.end_date = existingAbsence.end_date.toISOString().split('T')[0];
+            saveUserAbsences(existingData);
+        } else if (existingAbsence.start_date >= newData.start_date && existingAbsence.end_date <= newData.end_date) {
+            deleteAbsenceById(existingAbsence._id); //delete the overlapping absence if new one covers it
+        } else if (existingAbsence.start_date < newData.start_date && existingAbsence.end_date > newData.end_date){  //split the existing absence
+            //shorten the existing absence by changing its end date
+            const prev_end_date = existingAbsence.end_date;
+            existingAbsence.end_date = new Date(newData.start_date);
+            existingAbsence.end_date.setDate(existingAbsence.end_date.getDate() - 1);
+            existingAbsence.end_date = existingAbsence.end_date.toISOString().split('T')[0];
+            saveUserAbsences(existingData);
+            
+            const maxId = existingData.reduce((max, record) => Math.max(max, record._id), 0);
+            const newId = maxId + 1;
+            var new_start_date = new Date(newData.end_date);
+            new_start_date.setDate(new_start_date.getDate() + 1);
+            new_start_date = new_start_date.toISOString().split('T')[0];
+            const second_half = {        //after first part was shortened, second part must be created 
+                _id: newId,
+                absenceType: existingAbsence.absenceType,
+                start_date: new_start_date,
+                end_date: prev_end_date,
+                person_id: existingAbsence.person_id
+            };
+            // add note and value if deleted overlapping absence had them
+            if (existingAbsence.note !== "") {
+                second_half.note = existingAbsence.note;
+            }
+            if (existingAbsence.value !== null) {
+                second_half.value = existingAbsence.value;
+            }
+        
+            existingData.push(second_half);
+            saveUserAbsences(existingData);
+        } else {
+            existingAbsence.start_date = new Date(newData.end_date);
+            existingAbsence.start_date.setDate(existingAbsence.start_date.getDate() + 1);
+            existingAbsence.start_date = existingAbsence.start_date.toISOString().split('T')[0];
+            saveUserAbsences(existingData);
+        }
+    } else {
+        return;
+    }
+}
+
 app.delete('/api/user_absences/:id', (req, res) => {
     const absenceId = req.params.id;
    
@@ -254,27 +303,26 @@ app.put('/api/user_absences/:id', (req, res) => {
     const absenceId = req.params.id;
     const newData = req.body;
     try {
-        deleteAbsenceById(absenceId);
+        check_overlapping_absence(newData);
         
         const existingData = readUserAbsences();
+        const editingIndex = existingData.findIndex(record => record._id === parseInt(absenceId));
+        const editingAbsence = existingData[editingIndex];
+        editingAbsence.absenceType = newData.absenceType;
+        editingAbsence.start_date = newData.start_date;
+        editingAbsence.end_date = newData.end_date;
 
-        const updatedAbsence = {
-            _id: parseInt(absenceId),
-            absenceType: newData.absenceType,
-            start_date: newData.start_date,
-            end_date: newData.end_date,
-            person_id: newData.person_id
-        };
-        // Conditionally add note and value only if they are not null or empty
-        if (newData.note !== "") {
-            updatedAbsence.note = newData.note;
+        if (newData.note === "") {
+            delete editingAbsence.note;  // remove the field from the record
+        } else {
+            editingAbsence.note = newData.note;
         }
-    
-        if (newData.value !== null) {
-            updatedAbsence.value = newData.value;
+
+        if (newData.absenceType !== 13) {
+            delete editingAbsence.value;
+        } else {
+            editingAbsence.value = newData.value;
         }
-    
-        existingData.push(updatedAbsence);
     
         saveUserAbsences(existingData);
         console.log(`Absence with _id ${absenceId} updated successfully.`);
@@ -380,23 +428,19 @@ app.put('/api/users/:id', (req, res) => {
     const userId = req.params.id;
     const newData = req.body;
 
-    deleteUserById(userId);
-
     const existingData = readUsers();
-    
-    const updatedUser = {
-        _id: parseInt(userId),
-        sn: newData.sn,
-        givenName: newData.givenName,
-        role: newData.role,
-        department: newData.department
-    };
-    // Conditionally add default hours only if it is not null 
-    if (newData.default_hours !== null) {
-        updatedUser.default_hours = newData.default_hours;
-    }
+    const editingIndex = existingData.findIndex(record => record._id === parseInt(userId));
+    const editingUser = existingData[editingIndex];
+    editingUser.sn = newData.sn;
+    editingUser.givenName = newData.givenName;
+    editingUser.role = newData.role;
+    editingUser.department = newData.department;
 
-    existingData.push(updatedUser);
+    if (newData.default_hours === null) {
+        delete editingUser.default_hours;  // remove the field from the record
+    } else {
+        editingUser.default_hours = newData.default_hours;
+    }
     
     saveUsers(existingData);
     console.log('Updated user record.');
@@ -499,16 +543,11 @@ app.put('/api/departments/:id', (req, res) => {
     const depId = req.params.id;
     const newData = req.body;
 
-    deleteDepartmentById(depId);  // delete the choosed department before adding the edited version
-
     const existingData = readDepartments();
-    
-    const updatedDep = {
-        _id: parseInt(depId),
-        name: newData.name,
-        value: newData.value,
-    };
-    existingData.push(updatedDep);
+    const editingIndex = existingData.findIndex(record => record._id === parseInt(depId));
+    const editingDepartment = existingData[editingIndex];
+    editingDepartment.name = newData.name;
+    editingDepartment.value = newData.value;
     
     saveDepartments(existingData);
     console.log('Updated department record.');
@@ -611,17 +650,12 @@ app.put('/api/absence_types/:id', (req, res) => {
     const typeId = req.params.id;
     const newData = req.body;
 
-    deleteTypeById(typeId);  // delete the choosed absnece type before adding the edited version
-
     const existingData = readAbsenceTypes();
-    
-    const updatedType = {
-        _id: parseInt(typeId),
-        name: newData.name,
-        value: newData.value,
-        short_name: newData.short_name
-    };
-    existingData.push(updatedType);
+    const editingIndex = existingData.findIndex(record => record._id === parseInt(typeId));
+    const editingType = existingData[editingIndex];
+    editingType.name = newData.name;
+    editingType.value = newData.value;
+    editingType.short_name = newData.short_name;
     
     saveAbsenceTypes(existingData);
     console.log('Updated absence type record.');
