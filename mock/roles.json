@@ -1,5 +1,5 @@
 [{
-  "name": "strādnieks",
+  "name": "darbinieks",
   "value": 1
 },
 {
@@ -7,11 +7,11 @@
   "value": 2
 },
 {
-  "name": "vadības_novērotāji",
+  "name": "vadība",
   "value": 3
 },
 {
-  "name": "vadības_redaktori",
+  "name": "augstākā_vadība",
   "value": 4
 },
 {

@@ -30,6 +30,12 @@
     "short_name": "ASG"
   },
   {
+    "_id": 6,
+    "name": "Mācību atvaļinājums",
+    "value": 6,
+    "short_name": "MA"
+  },
+  {
     "_id": 7,
     "name": "Darbā neierašanās gadījumi",
     "value": 7,
@@ -72,6 +78,12 @@
     "short_name": "V"
   },
   {
+    "_id": 14,
+    "name": "Papildus atvaļinājums par bērnu līdz 14 gadiem",
+    "value": 14,
+    "short_name": "P"
+  },
+  {
     "_id": 15,
     "name": "Veselu maiņu dīkst",
     "value": 15,
@@ -82,17 +94,5 @@
     "name": "Donora diena",
     "value": 16,
     "short_name": "DD"
-  },
-  {
-    "_id": 14,
-    "name": "Papildus atvaļinājums par bērnu līdz 14 gadiem",
-    "value": 14,
-    "short_name": "P"
-  },
-  {
-    "_id": 6,
-    "name": "Mācību atvaļinājums",
-    "value": 6,
-    "short_name": "MA"
   }
 ]

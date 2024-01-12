@@ -16,56 +16,56 @@
     "_id": 3,
     "sn": "Kažoke",
     "givenName": "Vilija",
-    "role": 4,
+    "role": 3,
     "department": 5
   },
   {
-    "_id": 5,
+    "_id": 4,
     "sn": "Capkevičs",
     "givenName": "Mārtiņš",
     "role": 1,
     "department": 2
   },
   {
-    "_id": 7,
+    "_id": 5,
     "sn": "Cilevičs",
     "givenName": "Reinis",
     "role": 1,
     "department": 2
   },
   {
-    "_id": 9,
+    "_id": 6,
     "sn": "Ribene",
     "givenName": "Karīna",
     "role": 1,
     "department": 1
   },
   {
-    "_id": 10,
+    "_id": 7,
     "sn": "Šaplake",
     "givenName": "Emīlija",
     "role": 1,
     "department": 1
   },
   {
-    "_id": 11,
+    "_id": 8,
     "sn": "Bļodnieks",
     "givenName": "Uģis",
     "role": 1,
     "department": 3
   },
   {
-    "_id": 12,
+    "_id": 9,
     "sn": "Leimane",
     "givenName": "Anita",
     "role": 1,
     "department": 4
   },
   {
-    "_id": 8,
+    "_id": 10,
     "sn": "Kaļva",
     "givenName": "Markuss",
-    "role": 3,
+    "role": 4,
     "department": 4,
     "default_hours": 7.3
   }

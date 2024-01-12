@@ -65,9 +65,9 @@ let isAddingMode = false;
 let isDeleteMode = false; 
 let isEditMode = false;
 let absence_id; //id for editing
-let vocabulary; // A variable to store translations
+let vocabulary; // a variable to store translations
 
-function toggleSideNav() {
+function toggleSideNav() {      //hide and show navbar for responsive design
     const menu = document.querySelector('.menu-box');
     var sideNav = document.querySelector('.side-nav');
     sideNav.classList.toggle('active');
@@ -184,7 +184,7 @@ prevNextIcon.forEach(icon => {
             currMonth = 0; // Set to January
         } 
         renderCalendar();
-       // Check if a user is selected, then mark their absences
+       // Check if a user is selected, then mark his absences
        if (selectedUserId) {
         markUserAbsencesOnCalendar(selectedUserId);
         }
@@ -855,7 +855,7 @@ function supervisorRolePermissions(userRole) {
 function logout() {
     localStorage.clear();
     // Redirect to the login page 
-    window.location.href = '/templates/login.html';
+    window.location.href = '/';
 }
 
 //Color change of the logout button when hovering
