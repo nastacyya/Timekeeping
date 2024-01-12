@@ -68,5 +68,12 @@
     "role": 4,
     "department": 4,
     "default_hours": 7.3
+  },
+  {
+    "_id": 11,
+    "sn": "Barinskis",
+    "givenName": "Raivis",
+    "role": 1,
+    "department": 2
   }
 ]

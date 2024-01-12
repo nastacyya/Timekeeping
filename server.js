@@ -303,8 +303,6 @@ app.put('/api/user_absences/:id', (req, res) => {
     const absenceId = req.params.id;
     const newData = req.body;
     try {
-        check_overlapping_absence(newData);
-        
         const existingData = readUserAbsences();
         const editingIndex = existingData.findIndex(record => record._id === parseInt(absenceId));
         const editingAbsence = existingData[editingIndex];
@@ -711,7 +709,6 @@ function saveAbsenceTypes(types) {
         console.error('Error saving absence types:', error.message);
     }
 }
-
 
 // Start the server
 app.listen(port, () => {
