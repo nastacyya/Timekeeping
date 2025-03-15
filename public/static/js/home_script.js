@@ -192,7 +192,7 @@ prevNextIcon.forEach(icon => {
 });
 
 
-function colorLegend() {
+async function colorLegend() {
     fetch('/api/absence_types')
     .then(response => response.json())
     .then(data => {

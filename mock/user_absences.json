@@ -152,10 +152,31 @@
   },
   {
     "_id": 22,
-    "absenceType": 1,
+    "absenceType": 4,
     "start_date": "2025-02-01",
     "end_date": "2025-02-04",
     "person_id": 2,
     "note": "learning"
+  },
+  {
+    "_id": 23,
+    "absenceType": 7,
+    "start_date": "2025-02-11",
+    "end_date": "2025-02-13",
+    "person_id": 10
+  },
+  {
+    "_id": 24,
+    "absenceType": 2,
+    "start_date": "2025-02-08",
+    "end_date": "2025-02-09",
+    "person_id": 10
+  },
+  {
+    "_id": 25,
+    "absenceType": 5,
+    "start_date": "2025-03-19",
+    "end_date": "2025-03-21",
+    "person_id": 10
   }
 ]
