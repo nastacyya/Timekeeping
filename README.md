@@ -29,7 +29,7 @@ The system includes 5 user roles:
 
 You can check out the live version of this project here:
 
-👉 [timesheet-production-98e3.up.railway.app]
+👉 [timesheet-production-98e3.up.railway.app](timesheet-production-98e3.up.railway.app)
 
 No setup needed — just open the link in your browser!
 
