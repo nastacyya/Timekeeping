@@ -45,12 +45,13 @@ Example:
   Username: a.saveika  
   Password: 234
 
-- Role: Senior management  
+- Role: Senior Management  
   Username: m.kalva  
   Password: 456
-
-- Role: Administrator
-  Username: admin
+  
+- Role: Administrator  
+  Username: admin 
   Password: admin
+
 
 
