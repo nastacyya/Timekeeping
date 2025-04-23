@@ -2,101 +2,102 @@
   {
     "_id": 1,
     "absenceType": 6,
-    "start_date": "2023-11-02",
-    "end_date": "2023-11-05",
+    "start_date": "2025-03-02",
+    "end_date": "2025-03-05",
     "person_id": 2
   },
   {
     "_id": 2,
     "absenceType": 3,
-    "start_date": "2023-12-08",
-    "end_date": "2023-12-08",
+    "start_date": "2025-03-08",
+    "end_date": "2025-03-08",
     "person_id": 2
   },
   {
     "_id": 3,
     "absenceType": 13,
-    "start_date": "2023-12-10",
-    "end_date": "2023-12-12",
+    "start_date": "2025-04-10",
+    "end_date": "2025-04-12",
     "person_id": 2,
     "value": 6
   },
   {
     "_id": 4,
     "absenceType": 9,
-    "start_date": "2023-11-10",
-    "end_date": "2023-11-12",
+    "start_date": "2025-03-10",
+    "end_date": "2025-03-12",
     "person_id": 3
   },
   {
     "_id": 5,
     "absenceType": 14,
-    "start_date": "2023-12-02",
-    "end_date": "2023-12-06",
+    "start_date": "2025-03-02",
+    "end_date": "2025-03-06",
     "person_id": 4
   },
   {
     "_id": 6,
     "absenceType": 11,
-    "start_date": "2023-12-20",
-    "end_date": "2023-12-22",
+    "start_date": "2025-03-20",
+    "end_date": "2025-03-22",
     "person_id": 4
   },
   {
     "_id": 7,
     "absenceType": 2,
-    "start_date": "2023-12-14",
-    "end_date": "2023-12-15",
+    "start_date": "2025-03-14",
+    "end_date": "2025-03-15",
     "person_id": 4
   },
   {
     "_id": 8,
-    "absenceType": 4,
-    "start_date": "2023-12-22",
-    "end_date": "2023-12-24",
-    "person_id": 2
+    "absenceType": 12,
+    "start_date": "2025-04-22",
+    "end_date": "2025-04-24",
+    "person_id": 2,
+    "note": "Lidojums uz Spāniju"
   },
   {
     "_id": 9,
     "absenceType": 10,
-    "start_date": "2023-12-24",
-    "end_date": "2023-12-26",
+    "start_date": "2025-04-24",
+    "end_date": "2025-04-26",
     "person_id": 3
   },
   {
     "_id": 10,
     "absenceType": 2,
-    "start_date": "2023-12-13",
-    "end_date": "2023-12-15",
+    "start_date": "2025-04-13",
+    "end_date": "2025-04-15",
     "person_id": 3
   },
   {
     "_id": 11,
     "absenceType": 13,
-    "start_date": "2023-12-08",
-    "end_date": "2023-12-08",
+    "start_date": "2025-04-08",
+    "end_date": "2025-04-08",
     "person_id": 3,
     "value": 2
   },
   {
     "_id": 12,
     "absenceType": 7,
-    "start_date": "2024-01-04",
-    "end_date": "2024-01-05",
+    "start_date": "2025-03-04",
+    "end_date": "2025-03-05",
     "person_id": 10
   },
   {
     "_id": 13,
     "absenceType": 10,
-    "start_date": "2024-01-17",
-    "end_date": "2024-01-17",
+    "start_date": "2025-03-17",
+    "end_date": "2025-03-17",
     "person_id": 10
   },
   {
     "_id": 14,
     "absenceType": 12,
-    "start_date": "2024-01-23",
-    "end_date": "2024-01-26",
+    "start_date": "2025-02-23",
+    "end_date": "2025-02-26",
     "person_id": 3
   },
   {
@@ -110,59 +111,59 @@
   {
     "_id": 16,
     "absenceType": 13,
-    "start_date": "2024-01-08",
-    "end_date": "2024-01-09",
+    "start_date": "2025-03-02",
+    "end_date": "2025-03-04",
     "person_id": 3,
     "value": 2
   },
   {
     "_id": 17,
     "absenceType": 4,
-    "start_date": "2024-01-02",
-    "end_date": "2024-01-03",
+    "start_date": "2025-01-02",
+    "end_date": "2025-01-03",
     "person_id": 3
   },
   {
     "_id": 18,
     "absenceType": 4,
-    "start_date": "2024-01-18",
-    "end_date": "2024-01-19",
+    "start_date": "2025-04-18",
+    "end_date": "2025-04-19",
     "person_id": 10
   },
   {
     "_id": 19,
     "absenceType": 6,
-    "start_date": "2024-01-03",
-    "end_date": "2024-01-06",
+    "start_date": "2025-04-03",
+    "end_date": "2025-04-06",
     "person_id": 4
   },
   {
     "_id": 20,
     "absenceType": 2,
-    "start_date": "2024-01-12",
-    "end_date": "2024-01-16",
+    "start_date": "2025-04-12",
+    "end_date": "2025-04-16",
     "person_id": 5
   },
   {
     "_id": 21,
     "absenceType": 3,
-    "start_date": "2024-01-09",
-    "end_date": "2024-01-10",
+    "start_date": "2025-04-09",
+    "end_date": "2025-04-10",
     "person_id": 4
   },
   {
     "_id": 22,
     "absenceType": 4,
-    "start_date": "2025-02-01",
-    "end_date": "2025-02-04",
+    "start_date": "2025-04-01",
+    "end_date": "2025-04-04",
     "person_id": 2,
-    "note": "learning"
+    "note": "studying"
   },
   {
     "_id": 23,
     "absenceType": 7,
-    "start_date": "2025-02-11",
-    "end_date": "2025-02-13",
+    "start_date": "2025-04-11",
+    "end_date": "2025-04-13",
     "person_id": 10
   },
   {
