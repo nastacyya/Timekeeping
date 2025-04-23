@@ -50,7 +50,7 @@ Example:
   Password: 456
   
 - Role: Administrator  
-  Username: admin 
+  Username: admin
   Password: admin
 
 
